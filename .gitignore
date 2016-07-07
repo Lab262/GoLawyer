@@ -1,3 +1,7 @@
+#ignore vim files
+*.swp
+*.swo
+
 # Built application files
 *.apk
 *.ap_
@@ -36,6 +40,14 @@ captures/
 *.iml
 .idea/workspace.xml
 .idea/libraries
+*.ipr
+*.iws
+.idea/
 
 # Keystore files
 *.jks
+
+.gradle
+/local.properties
+.DS_Store
+/captures
