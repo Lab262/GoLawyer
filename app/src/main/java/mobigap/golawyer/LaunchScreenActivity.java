@@ -19,7 +19,7 @@ public class LaunchScreenActivity extends Activity {
             @Override
             public void run() {
 
-                Intent intent = new Intent(LaunchScreenActivity.this, MainActivity.class);
+                Intent intent = new Intent(LaunchScreenActivity.this, LoginActivity.class);
                 startActivity(intent);
 
                 finish();
