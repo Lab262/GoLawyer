@@ -14,7 +14,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:src="@drawable/welcomeimage" />
+        android:src="@drawable/welcomeimage"
+        android:adjustViewBounds="false" />
 
 
     <LinearLayout
@@ -25,7 +26,8 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/linearLayout">
 
 
         <EditText
@@ -37,7 +39,8 @@
             android:drawableLeft="@drawable/icon_email"
             android:gravity="center"
             android:text="Email"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:inputType="textEmailAddress" />
 
         <EditText
             android:id="@+id/passwordEditText"
@@ -47,17 +50,22 @@
             android:drawableLeft="@drawable/icon_padlock"
             android:gravity="center"
             android:text="Senha"
-            android:textColor="@color/white" />
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:text="Esqueçeu a Senha?"
             android:textColor="@color/white"
-            android:id="@+id/textView" />
+            android:inputType="textPassword" />
+
+
+        <Button
+            android:id="@+id/forgotPasswordButton"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="2dp"
+
+            android:background="@android:color/transparent"
+            android:text="@string/password_forgot"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:clickable="true" />
+
 
         <ImageButton
             android:id="@+id/registerButton"
@@ -65,7 +73,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/register_image" />
+            android:src="@drawable/register_image"
+            android:clickable="true" />
 
         <ImageButton
             android:id="@+id/loginButton"
@@ -73,7 +82,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/login_image" />
+            android:src="@drawable/login_image"
+            android:clickable="true"
+            android:adjustViewBounds="false" />
 
     </LinearLayout>
 
