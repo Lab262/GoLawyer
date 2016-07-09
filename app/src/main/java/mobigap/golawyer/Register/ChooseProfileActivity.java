@@ -1,9 +1,12 @@
-package mobigap.golawyer;
+package mobigap.golawyer.Register;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
+
+import mobigap.golawyer.Enums.TypeProfile;
+import mobigap.golawyer.R;
 
 public class ChooseProfileActivity extends Activity implements View.OnClickListener {
 

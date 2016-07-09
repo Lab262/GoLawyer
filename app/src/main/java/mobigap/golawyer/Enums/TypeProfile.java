@@ -1,4 +1,4 @@
-package mobigap.golawyer;
+package mobigap.golawyer.Enums;
 
 /**
  * Created by luisresende on 08/07/16.

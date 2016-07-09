@@ -3,8 +3,9 @@ package mobigap.golawyer;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import mobigap.golawyer.Login.LoginActivity;
 
 public class LaunchScreenActivity extends Activity {
 
