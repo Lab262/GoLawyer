@@ -14,8 +14,6 @@
         app:ael_interpolator="linear"
         app:ael_orientation="vertical">
 
-    </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
-
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -91,5 +89,7 @@
         </LinearLayout>
 
     </RadioGroup>
+
+    </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
 
 </LinearLayout>

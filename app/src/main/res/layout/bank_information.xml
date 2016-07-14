@@ -7,11 +7,11 @@
     android:background="@color/white">
 
     <com.github.aakira.expandablelayout.ExpandableRelativeLayout
-        android:id="@+id/office_information"
+        android:id="@+id/bank_information"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:ael_duration="200"
-        app:ael_expanded="true"
+        app:ael_expanded="false"
         app:ael_interpolator="linear"
         app:ael_orientation="vertical">
 
