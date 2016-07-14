@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="mobigap.golawyer.Register.RegisterActivity"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/register_profile_photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/registerProfilePhoto"
+            android:layout_gravity="top|center" />
+
+        <include layout="@layout/header_register"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/headerPersonalInformation"
+            android:layout_gravity="top|center" />
+
+        <include layout="@layout/personal_information"
+            android:layout_gravity="top|center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <include layout="@layout/header_register"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/headerWhereFound"
+            android:layout_gravity="top|center" />
+
+        <include layout="@layout/where_found"
+            android:layout_gravity="top|center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <include layout="@layout/header_register"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/headerOfficeInformation"
+            android:layout_gravity="top|center" />
+
+        <include layout="@layout/office_information"
+            android:layout_gravity="top|center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <include layout="@layout/header_register"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/headerBankInformation"
+            android:layout_gravity="top|center" />
+
+        <include layout="@layout/bank_information"
+            android:layout_gravity="top|center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <include layout="@layout/header_register"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/headerTermsUse"
+            android:layout_gravity="top|center" />
+
+        <include layout="@layout/terms_use"
+            android:layout_gravity="top|center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageButton
+            android:id="@+id/finalizeRegisterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@drawable/button_register"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp" />
+
+    </LinearLayout>
+
+
+</ScrollView>
