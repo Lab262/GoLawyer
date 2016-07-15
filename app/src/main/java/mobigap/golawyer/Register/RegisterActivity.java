@@ -8,11 +8,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import mobigap.golawyer.Enums.WhereFound;
 import mobigap.golawyer.Extensions.CameraConfiguration;
 import mobigap.golawyer.R;
 
@@ -26,6 +28,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     ImageButton cameraButton;
     CircleImageView circleImageViewProfile;
     ImageView backgroundImageViewProfile;
+    WhereFound whereFound;
+    RadioButton cellPhoneRadioButton,officeRadioButton,bothRadioButton,agreeRadioButton,disagreeRadioButton;
+    Boolean agreeTerms;
 
 
     @Override
@@ -44,6 +49,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         headerWhereFound = findViewById(R.id.headerWhereFound);
         nameWhereFound = (TextView) headerWhereFound.findViewById(R.id.nameHeader);
         expandableWhereFound = (ExpandableRelativeLayout) findViewById(R.id.where_found);
+        cellPhoneRadioButton = (RadioButton) expandableWhereFound.findViewById(R.id.cellPhoneRadioButton);
+        officeRadioButton = (RadioButton) expandableWhereFound.findViewById(R.id.officeRadioButton);
+        bothRadioButton = (RadioButton) expandableWhereFound.findViewById(R.id.bothRadioButton);
 
         headerOfficeInformation = findViewById(R.id.headerOfficeInformation);
         nameOfficeInformation = (TextView) headerOfficeInformation.findViewById(R.id.nameHeader);
@@ -56,6 +64,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         headerTermsUse = findViewById(R.id.headerTermsUse);
         nameTermsUse = (TextView) headerTermsUse.findViewById(R.id.nameHeader);
         expandableTermsUse = (ExpandableRelativeLayout) findViewById(R.id.terms_use);
+        agreeRadioButton = (RadioButton) expandableTermsUse.findViewById(R.id.agreeRadioButton);
+        disagreeRadioButton = (RadioButton) expandableTermsUse.findViewById(R.id.disagreeRadioButton);
 
         registerProfilePhoto = findViewById(R.id.registerProfilePhoto);
         cameraButton = (ImageButton) registerProfilePhoto.findViewById(R.id.cameraButton);
@@ -79,6 +89,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         headerTermsUse.setOnClickListener(this);
 
         cameraButton.setOnClickListener(this);
+
+        cellPhoneRadioButton.setOnClickListener(this);
+        officeRadioButton.setOnClickListener(this);
+        bothRadioButton.setOnClickListener(this);
+        agreeRadioButton.setOnClickListener(this);
+        disagreeRadioButton.setOnClickListener(this);
     }
 
     @Override
@@ -102,6 +118,53 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             case R.id.cameraButton:
                 CameraConfiguration.getPicture(this);
                 break;
+            case R.id.cellPhoneRadioButton:
+                whereFound = WhereFound.CELL_PHONE;
+                unselectedWhereFoundRadioButtons();
+                break;
+            case R.id.officeRadioButton:
+                whereFound = WhereFound.OFFICE;
+                unselectedWhereFoundRadioButtons();
+                break;
+            case R.id.bothRadioButton:
+                whereFound = WhereFound.CELL_AND_OFFICE;
+                unselectedWhereFoundRadioButtons();
+                break;
+            case R.id.agreeRadioButton:
+                agreeTerms = true;
+                unselectedTermsRadioButtons();
+                break;
+            case R.id.disagreeRadioButton:
+                agreeTerms = false;
+                unselectedTermsRadioButtons();
+                break;
+        }
+    }
+
+    private void unselectedWhereFoundRadioButtons(){
+        switch (whereFound){
+            case CELL_PHONE:
+                officeRadioButton.setChecked(false);
+                bothRadioButton.setChecked(false);
+                break;
+            case OFFICE:
+                cellPhoneRadioButton.setChecked(false);
+                bothRadioButton.setChecked(false);
+                break;
+            case CELL_AND_OFFICE:
+                cellPhoneRadioButton.setChecked(false);
+                officeRadioButton.setChecked(false);
+                break;
+        }
+
+    }
+
+    private void unselectedTermsRadioButtons(){
+
+        if (agreeTerms){
+            disagreeRadioButton.setChecked(false);
+        }else {
+            agreeRadioButton.setChecked(false);
         }
     }
 

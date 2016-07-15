@@ -69,7 +69,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:buttonTint="@color/white"
-                        android:id="@+id/desagreeRadioButton" />
+                        android:id="@+id/disagreeRadioButton" />
                 </LinearLayout>
 
             </RadioGroup>
