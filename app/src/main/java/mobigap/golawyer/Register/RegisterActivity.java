@@ -2,9 +2,7 @@ package mobigap.golawyer.Register;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.DrawableContainer;
 import android.net.Uri;
-import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,9 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import mobigap.golawyer.Extensions.CameraConfiguration;
@@ -31,12 +26,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     ImageButton cameraButton;
     CircleImageView circleImageViewProfile;
     ImageView backgroundImageViewProfile;
-    private static int RESULT_IMAGE_CLICK = 1;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +34,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_register);
         getInstanceViews();
         setPropertiesViews();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     private void getInstanceViews() {

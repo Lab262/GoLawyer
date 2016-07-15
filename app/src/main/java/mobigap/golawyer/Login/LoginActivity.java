@@ -45,9 +45,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.emailEditText:
                 emailEditText.setText("");
+                emailEditText.setOnClickListener(null);
                 break;
             case R.id.passwordEditText:
                 passwordEditText.setText("");
+                passwordEditText.setOnClickListener(null);
                 break;
         }
     }
