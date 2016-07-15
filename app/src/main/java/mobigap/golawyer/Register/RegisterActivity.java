@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
@@ -32,6 +33,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     RadioButton cellPhoneRadioButton,officeRadioButton,bothRadioButton,agreeRadioButton,disagreeRadioButton;
     Boolean agreeTerms;
 
+    private final int SIZE_PROFILE_PHOTO = 350;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_register);
         getInstanceViews();
         setPropertiesViews();
+        adjustLayoutHeader();
     }
 
     private void getInstanceViews() {
@@ -95,6 +99,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         bothRadioButton.setOnClickListener(this);
         agreeRadioButton.setOnClickListener(this);
         disagreeRadioButton.setOnClickListener(this);
+    }
+
+    private void adjustLayoutHeader(){
+        View informationView = registerProfilePhoto.findViewById(R.id.informationView);
+        informationView.setVisibility(View.INVISIBLE);
+
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) circleImageViewProfile.getLayoutParams();
+        params.height = SIZE_PROFILE_PHOTO;
+        params.width = SIZE_PROFILE_PHOTO;
+        params.addRule(RelativeLayout.CENTER_VERTICAL);
+        params.addRule(RelativeLayout.ALIGN_TOP, 0);
+        circleImageViewProfile.setLayoutParams(params);
     }
 
     @Override

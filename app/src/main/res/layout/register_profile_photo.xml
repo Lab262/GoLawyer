@@ -5,7 +5,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="250dp">
 
         <ImageView
             android:id="@+id/backgroundPhotoImage"
@@ -39,8 +39,50 @@
             android:src="@drawable/placeholder_image"
             app:civ_border_width="2dp"
             app:civ_border_color="#FF000000"
-            android:layout_centerVertical="true"
+            android:layout_alignTop="@+id/cameraButton"
             android:layout_centerHorizontal="true" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/profileImage"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/informationView">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/nameTextView"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:text="Mariana Rezende Cortez"
+                android:layout_below="@+id/profileImage"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Especialista em Direito do Consumidor"
+                android:id="@+id/specialtyTextView"
+                android:textColor="@color/white"
+                android:alpha="0.8"
+                android:layout_below="@+id/nameTextView"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Possui OAB"
+                android:id="@+id/hasOABTextView"
+                android:alpha="0.8"
+                android:textColor="@color/white"
+                android:layout_below="@+id/specialtyTextView"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
 
     </RelativeLayout>
 
