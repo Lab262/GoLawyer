@@ -77,7 +77,8 @@
                     android:hint="Endereço"
                     android:imeOptions="actionNext"
                     android:id="@+id/adressEditText"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:inputType="textNoSuggestions" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
