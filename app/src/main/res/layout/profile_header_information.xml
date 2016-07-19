@@ -68,7 +68,9 @@
                 <ImageButton
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/ratingButton" />
+                    android:id="@+id/ratingButton"
+                    android:src="@drawable/rating_stars_5"
+                    android:background="@color/greyBackground" />
 
             </LinearLayout>
 

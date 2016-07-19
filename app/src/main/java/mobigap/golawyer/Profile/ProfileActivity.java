@@ -17,7 +17,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     View headerCellphone, headerEmail, headerDetailUser;
     TextView nameHeaderCellphone, nameHeaderEmail, nameHeaderDetailUser;
     ExpandableRelativeLayout expandableDetailsUser;
-    EditText curriculumText;
+    TextView curriculumText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         nameHeaderEmail = (TextView) headerEmail.findViewById(R.id.nameHeaderProfile);
         nameHeaderDetailUser = (TextView) headerDetailUser.findViewById(R.id.nameHeaderProfile);
         expandableDetailsUser = (ExpandableRelativeLayout) findViewById(R.id.curriculum_information);
-        curriculumText = (EditText) expandableDetailsUser.findViewById(R.id.curriculumText);
+        curriculumText = (TextView) expandableDetailsUser.findViewById(R.id.curriculumText);
     }
 
     private void setPropertiesViews(){
