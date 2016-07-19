@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,23 +16,23 @@ import android.widget.TextView;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import mobigap.golawyer.Enums.WhereFound;
+import mobigap.golawyer.Enums.TypeProfile;
 import mobigap.golawyer.Extensions.CameraConfiguration;
 import mobigap.golawyer.R;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
-    View headerPersonalInformation, headerWhereFound, headerOfficeInformation, headerBankInformation, headerTermsUse;
-    TextView namePersonalInformation, nameWhereFound, nameOfficeInformation, nameBankInformation, nameTermsUse;
-    ExpandableRelativeLayout expandablePersonalInformation, expandableWhereFound, expandableOfficeInformation,
+    View headerPersonalInformation, headerOfficeInformation, headerBankInformation, headerTermsUse;
+    TextView namePersonalInformation, nameOfficeInformation, nameBankInformation, nameTermsUse;
+    ExpandableRelativeLayout expandablePersonalInformation, expandableOfficeInformation,
             expandableBankInformation, expandableTermsUse;
     View registerProfilePhoto;
     ImageButton cameraButton;
     CircleImageView circleImageViewProfile;
     ImageView backgroundImageViewProfile;
-    WhereFound whereFound;
-    RadioButton cellPhoneRadioButton,officeRadioButton,bothRadioButton,agreeRadioButton,disagreeRadioButton;
+    RadioButton agreeRadioButton,disagreeRadioButton;
     Boolean agreeTerms;
+    TypeProfile typeProfile;
 
     private final int SIZE_PROFILE_PHOTO = 350;
 
@@ -43,19 +44,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         getInstanceViews();
         setPropertiesViews();
         adjustLayoutHeader();
+        adjustLayoutTypeProfile();
     }
 
     private void getInstanceViews() {
         headerPersonalInformation = findViewById(R.id.headerPersonalInformation);
         namePersonalInformation = (TextView) headerPersonalInformation.findViewById(R.id.nameHeader);
         expandablePersonalInformation = (ExpandableRelativeLayout) findViewById(R.id.personal_information);
-
-        headerWhereFound = findViewById(R.id.headerWhereFound);
-        nameWhereFound = (TextView) headerWhereFound.findViewById(R.id.nameHeader);
-        expandableWhereFound = (ExpandableRelativeLayout) findViewById(R.id.where_found);
-        cellPhoneRadioButton = (RadioButton) expandableWhereFound.findViewById(R.id.cellPhoneRadioButton);
-        officeRadioButton = (RadioButton) expandableWhereFound.findViewById(R.id.officeRadioButton);
-        bothRadioButton = (RadioButton) expandableWhereFound.findViewById(R.id.bothRadioButton);
 
         headerOfficeInformation = findViewById(R.id.headerOfficeInformation);
         nameOfficeInformation = (TextView) headerOfficeInformation.findViewById(R.id.nameHeader);
@@ -81,22 +76,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         setTitle(R.string.title_activity_register);
 
         namePersonalInformation.setText(R.string.name_personal_information);
-        nameWhereFound.setText(R.string.name_where_found);
         nameOfficeInformation.setText(R.string.name_office_information);
         nameBankInformation.setText(R.string.name_bank_information);
         nameTermsUse.setText(R.string.name_terms_use);
 
         headerPersonalInformation.setOnClickListener(this);
-        headerWhereFound.setOnClickListener(this);
         headerOfficeInformation.setOnClickListener(this);
         headerBankInformation.setOnClickListener(this);
         headerTermsUse.setOnClickListener(this);
 
         cameraButton.setOnClickListener(this);
 
-        cellPhoneRadioButton.setOnClickListener(this);
-        officeRadioButton.setOnClickListener(this);
-        bothRadioButton.setOnClickListener(this);
         agreeRadioButton.setOnClickListener(this);
         disagreeRadioButton.setOnClickListener(this);
     }
@@ -113,14 +103,26 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         circleImageViewProfile.setLayoutParams(params);
     }
 
+    private void adjustLayoutTypeProfile(){
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        typeProfile = TypeProfile.getTypeProfileByOrdinal(bundle.getInt("typeProfile"));
+
+        if (typeProfile == TypeProfile.CLIENT){
+            headerOfficeInformation.setVisibility(View.INVISIBLE);
+            headerBankInformation.setVisibility(View.INVISIBLE);
+            LinearLayout mainLinearLayout = (LinearLayout) findViewById(R.id.mainLinearLayout);
+            mainLinearLayout.removeView(headerOfficeInformation);
+            mainLinearLayout.removeView(headerBankInformation);
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.headerPersonalInformation:
                 toggleExpandableLayout(expandablePersonalInformation, headerPersonalInformation);
-                break;
-            case R.id.headerWhereFound:
-                toggleExpandableLayout(expandableWhereFound, headerWhereFound);
                 break;
             case R.id.headerOfficeInformation:
                 toggleExpandableLayout(expandableOfficeInformation, headerOfficeInformation);
@@ -134,18 +136,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             case R.id.cameraButton:
                 CameraConfiguration.getPicture(this);
                 break;
-            case R.id.cellPhoneRadioButton:
-                whereFound = WhereFound.CELL_PHONE;
-                unselectedWhereFoundRadioButtons();
-                break;
-            case R.id.officeRadioButton:
-                whereFound = WhereFound.OFFICE;
-                unselectedWhereFoundRadioButtons();
-                break;
-            case R.id.bothRadioButton:
-                whereFound = WhereFound.CELL_AND_OFFICE;
-                unselectedWhereFoundRadioButtons();
-                break;
             case R.id.agreeRadioButton:
                 agreeTerms = true;
                 unselectedTermsRadioButtons();
@@ -155,24 +145,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 unselectedTermsRadioButtons();
                 break;
         }
-    }
-
-    private void unselectedWhereFoundRadioButtons(){
-        switch (whereFound){
-            case CELL_PHONE:
-                officeRadioButton.setChecked(false);
-                bothRadioButton.setChecked(false);
-                break;
-            case OFFICE:
-                cellPhoneRadioButton.setChecked(false);
-                bothRadioButton.setChecked(false);
-                break;
-            case CELL_AND_OFFICE:
-                cellPhoneRadioButton.setChecked(false);
-                officeRadioButton.setChecked(false);
-                break;
-        }
-
     }
 
     private void unselectedTermsRadioButtons(){

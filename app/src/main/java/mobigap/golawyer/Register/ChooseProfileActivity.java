@@ -14,7 +14,6 @@ public class ChooseProfileActivity extends Activity implements View.OnClickListe
 
     RadioButton clientRadioButton;
     RadioButton lawyerRadioButton;
-    RadioButton lawyerClientRadioButton;
     ImageButton forwardButton;
     TypeProfile typeProfile;
 
@@ -29,14 +28,12 @@ public class ChooseProfileActivity extends Activity implements View.OnClickListe
     private void getInstanceViews(){
         clientRadioButton = (RadioButton) findViewById(R.id.clientRadioButton);
         lawyerRadioButton = (RadioButton) findViewById(R.id.lawyerRadioButton);
-        lawyerClientRadioButton = (RadioButton) findViewById(R.id.lawyerClientRadioButton);
         forwardButton = (ImageButton) findViewById(R.id.forwardButton);
     }
 
     private void setPropertiesViews(){
         clientRadioButton.setOnClickListener(this);
         lawyerRadioButton.setOnClickListener(this);
-        lawyerClientRadioButton.setOnClickListener(this);
         forwardButton.setOnClickListener(this);
     }
 
@@ -44,15 +41,9 @@ public class ChooseProfileActivity extends Activity implements View.OnClickListe
         switch (typeProfile){
             case CLIENT:
                 lawyerRadioButton.setChecked(false);
-                lawyerClientRadioButton.setChecked(false);
                 break;
             case LAWYER:
                 clientRadioButton.setChecked(false);
-                lawyerClientRadioButton.setChecked(false);
-                break;
-            case CLIENT_LAWYER:
-                clientRadioButton.setChecked(false);
-                lawyerRadioButton.setChecked(false);
                 break;
         }
 
@@ -70,12 +61,11 @@ public class ChooseProfileActivity extends Activity implements View.OnClickListe
                 typeProfile = TypeProfile.LAWYER;
                 unselectedRadioButtons();
                 break;
-            case R.id.lawyerClientRadioButton:
-                typeProfile = TypeProfile.CLIENT_LAWYER;
-                unselectedRadioButtons();
-                break;
             case R.id.forwardButton:
                 Intent intent = new Intent(ChooseProfileActivity.this, RegisterActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("typeProfile",typeProfile.ordinal());
+                intent.putExtras(bundle);
                 startActivity(intent);
                 break;
         }

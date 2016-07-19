@@ -9,14 +9,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="password_forgot">Esqueçeu a Senha?</string>
     <string name="name_personal_information">Informações Pessoais</string>
-    <string name="name_where_found">Aonde deseja ser encontrado?</string>
     <string name="name_office_information">Informações do Escritório</string>
     <string name="name_bank_information">Informações Bancárias</string>
     <string name="name_terms_use">Termos de Uso</string>
-    <string name="placeholder_curriculum">Digite aqui um breve curriculo:</string>
-    <string name="placeholder_radiobutton_cellpone">No celular</string>
-    <string name="placeholder_radiobutton_office">No escritório</string>
-    <string name="placeholder_radiobutton_both">Nos dois</string>
+    <string name="placeholder_curriculum">Digite aqui um breve curriculo:*</string>
     <string name="placeholder_radiobutton_agree">Concordo</string>
     <string name="placeholder_radiobutton_disagree">Discordo</string>
     <string name="title_activity_register">Novo Cadastro</string>
