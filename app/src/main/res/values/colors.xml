@@ -8,6 +8,8 @@
     <color name="greenSelected">#97de32</color>
     <color name="greyNotSelected">#dfacaaaa</color>
     <color name="blueApp">#032b56</color>
-    <color name="grey_100">#F5F5F5</color>
-    <color name="grey_300">#E0E0E0</color>
+    <color name="blueLightApp">#1ca8fd</color>
+    <color name="greyBackground">#f9f9f9</color>
+    <color name="grey_100">#f5f5f5</color>
+    <color name="grey_300">#e0e0e0</color>
 </resources>
