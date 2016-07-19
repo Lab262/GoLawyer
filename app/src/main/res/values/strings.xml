@@ -19,6 +19,7 @@
     <string name="placeholder_attendance">Atendimentos</string>
     <string name="placeholder_evaluation">Avaliação</string>
     <string name="placeholder_completed">Concluídos</string>
+    <string name="placeholder_details_user">Detalhes usuário</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
