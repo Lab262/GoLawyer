@@ -1,0 +1,23 @@
+package mobigap.golawyer.Extensions;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+
+/**
+ * Created by luisresende on 19/07/16.
+ */
+public class ActivityManager {
+
+    public static void changeActivity(Context sourceActivity, Class<?> destinyActivity){
+        Intent intent = new Intent(sourceActivity, destinyActivity);
+        sourceActivity.startActivity(intent);
+    }
+
+    public static void changeActivity(Context sourceActivity, Class<?> destinyActivity, Bundle bundleExtras){
+        Intent intent = new Intent(sourceActivity, destinyActivity);
+        intent.putExtras(bundleExtras);
+        sourceActivity.startActivity(intent);
+    }
+
+}

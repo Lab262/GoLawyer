@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Register.ChooseProfileActivity;
 import mobigap.golawyer.R;
 
@@ -40,8 +41,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.registerButton:
-                Intent intent = new Intent(LoginActivity.this, ChooseProfileActivity.class);
-                startActivity(intent);
+                ActivityManager.changeActivity(LoginActivity.this, ChooseProfileActivity.class);
                 break;
             case R.id.emailEditText:
                 emailEditText.setText("");

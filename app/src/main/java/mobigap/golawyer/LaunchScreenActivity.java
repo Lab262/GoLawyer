@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Bundle;
 
+import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Login.LoginActivity;
 
 public class LaunchScreenActivity extends Activity {
@@ -20,8 +21,7 @@ public class LaunchScreenActivity extends Activity {
             @Override
             public void run() {
 
-                Intent intent = new Intent(LaunchScreenActivity.this, LoginActivity.class);
-                startActivity(intent);
+                ActivityManager.changeActivity(LaunchScreenActivity.this, LoginActivity.class);
 
                 finish();
 

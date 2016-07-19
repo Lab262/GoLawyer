@@ -8,6 +8,7 @@ import android.widget.ImageButton;
 import android.widget.RadioButton;
 
 import mobigap.golawyer.Enums.TypeProfile;
+import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.R;
 
 public class ChooseProfileActivity extends Activity implements View.OnClickListener {
@@ -62,11 +63,9 @@ public class ChooseProfileActivity extends Activity implements View.OnClickListe
                 unselectedRadioButtons();
                 break;
             case R.id.forwardButton:
-                Intent intent = new Intent(ChooseProfileActivity.this, RegisterActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("typeProfile",typeProfile.ordinal());
-                intent.putExtras(bundle);
-                startActivity(intent);
+                ActivityManager.changeActivity(ChooseProfileActivity.this, RegisterActivity.class, bundle);
                 break;
         }
     }

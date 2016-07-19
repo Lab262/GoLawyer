@@ -17,7 +17,9 @@ import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import mobigap.golawyer.Enums.TypeProfile;
+import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Extensions.CameraConfiguration;
+import mobigap.golawyer.Profile.ProfileActivity;
 import mobigap.golawyer.R;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
@@ -27,7 +29,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     ExpandableRelativeLayout expandablePersonalInformation, expandableOfficeInformation,
             expandableBankInformation, expandableTermsUse;
     View registerProfilePhoto;
-    ImageButton cameraButton;
+    ImageButton cameraButton, finalizeRegisterButton;
     CircleImageView circleImageViewProfile;
     ImageView backgroundImageViewProfile;
     RadioButton agreeRadioButton,disagreeRadioButton;
@@ -70,6 +72,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         cameraButton = (ImageButton) registerProfilePhoto.findViewById(R.id.cameraButton);
         circleImageViewProfile = (CircleImageView) registerProfilePhoto.findViewById(R.id.profileImage);
         backgroundImageViewProfile = (ImageView) registerProfilePhoto.findViewById(R.id.backgroundPhotoImage);
+
+        finalizeRegisterButton = (ImageButton) findViewById(R.id.finalizeRegisterButton);
     }
 
     private void setPropertiesViews() {
@@ -89,6 +93,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         agreeRadioButton.setOnClickListener(this);
         disagreeRadioButton.setOnClickListener(this);
+
+        finalizeRegisterButton.setOnClickListener(this);
     }
 
     private void adjustLayoutHeader(){
@@ -143,6 +149,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             case R.id.disagreeRadioButton:
                 agreeTerms = false;
                 unselectedTermsRadioButtons();
+                break;
+            case R.id.finalizeRegisterButton:
+                ActivityManager.changeActivity(RegisterActivity.this, ProfileActivity.class);
                 break;
         }
     }
