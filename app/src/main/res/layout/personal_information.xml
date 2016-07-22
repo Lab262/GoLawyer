@@ -74,7 +74,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="Confirmar Senha*"
+                    android:hint="Confirmar senha*"
                     android:imeOptions="actionNext"
                     android:id="@+id/confirmPasswordEditText"
                     android:singleLine="true"
@@ -159,7 +159,6 @@
                     android:gravity="top|left"
                     android:padding="10dp"
                     android:singleLine="false"
-                    android:background="@color/shadow_mid_color"
                     android:id="@+id/curriculumEditText" />
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>

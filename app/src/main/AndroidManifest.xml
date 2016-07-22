@@ -42,7 +42,9 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".Profile.ProfileActivity"></activity>
+        <activity android:name=".Profile.ProfileActivity" />
+        <activity android:name=".BottomBarActivity" />
+        <activity android:name=".Profile.DetailEvaluationActivity"></activity>
     </application>
 
 </manifest>
