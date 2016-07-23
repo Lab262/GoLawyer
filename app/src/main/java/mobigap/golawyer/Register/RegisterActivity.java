@@ -151,7 +151,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 unselectedTermsRadioButtons();
                 break;
             case R.id.finalizeRegisterButton:
-                ActivityManager.changeActivity(RegisterActivity.this, ProfileActivity.class);
+                ActivityManager.changeActivityAndRemoveParentActivity(RegisterActivity.this, ProfileActivity.class);
                 break;
         }
     }

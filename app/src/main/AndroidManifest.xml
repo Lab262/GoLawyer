@@ -7,6 +7,8 @@
         android:name="android.hardware.camera"
         android:required="true" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -44,7 +46,10 @@
 
         <activity android:name=".Profile.ProfileActivity" />
         <activity android:name=".BottomBarActivity" />
-        <activity android:name=".Profile.DetailEvaluationActivity"></activity>
+
+        <service
+            android:name=".Persistence.JsonSpiceService"
+            android:exported="false" />
     </application>
 
 </manifest>
