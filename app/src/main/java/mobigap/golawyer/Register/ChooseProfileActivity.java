@@ -34,6 +34,8 @@ public class ChooseProfileActivity extends Activity implements View.OnClickListe
 
     private void setPropertiesViews(){
         clientRadioButton.setOnClickListener(this);
+        typeProfile = TypeProfile.CLIENT;
+        clientRadioButton.setChecked(true);
         lawyerRadioButton.setOnClickListener(this);
         forwardButton.setOnClickListener(this);
     }
