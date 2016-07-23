@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import mobigap.golawyer.BottomBarActivity;
 import mobigap.golawyer.Enums.TypeProfile;
 import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Extensions.CameraConfiguration;
@@ -151,7 +152,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 unselectedTermsRadioButtons();
                 break;
             case R.id.finalizeRegisterButton:
-                ActivityManager.changeActivityAndRemoveParentActivity(RegisterActivity.this, ProfileActivity.class);
+                ActivityManager.changeActivityAndRemoveParentActivity(RegisterActivity.this, BottomBarActivity.class);
                 break;
         }
     }
