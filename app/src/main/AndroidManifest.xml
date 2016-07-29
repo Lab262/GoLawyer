@@ -50,6 +50,8 @@
         <service
             android:name=".Persistence.JsonSpiceService"
             android:exported="false" />
+
+        <activity android:name=".LawyerServiceRequest.LawyerServiceRequestListActivity"></activity>
     </application>
 
 </manifest>

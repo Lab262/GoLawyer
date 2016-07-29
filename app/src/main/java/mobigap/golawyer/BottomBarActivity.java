@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.aurelhubert.ahbottomnavigation.*;
 
 import mobigap.golawyer.Enums.BottomBarOption;
+import mobigap.golawyer.LawyerServiceRequest.LawyerServiceRequestListFragment;
 import mobigap.golawyer.Profile.ProfileFragment;
 import mobigap.golawyer.Protocols.OnFragmentInteractionListener;
 
@@ -59,12 +60,21 @@ public class BottomBarActivity extends AppCompatActivity implements AHBottomNavi
 
     @Override
     public boolean onTabSelected(int position, boolean wasSelected) {
+
         if (position==BottomBarOption.PROFILE.ordinal()){
             if (bottomBarOption!=BottomBarOption.PROFILE){
                 bottomBarOption = BottomBarOption.PROFILE;
                 getSupportActionBar().setTitle(R.string.name_bottom_bar_profile);
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, ProfileFragment.newInstance("", ""))
+                        .commit();
+            }
+        } else if (position==BottomBarOption.SERVICE.ordinal()) {
+            if (bottomBarOption != BottomBarOption.SERVICE) {
+                bottomBarOption = BottomBarOption.SERVICE;
+                getSupportActionBar().setTitle(R.string.name_bottom_bar_service);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, LawyerServiceRequestListFragment.newInstance())
                         .commit();
             }
         }
