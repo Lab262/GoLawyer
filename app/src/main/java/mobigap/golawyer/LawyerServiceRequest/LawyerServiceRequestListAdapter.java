@@ -69,6 +69,8 @@ public class LawyerServiceRequestListAdapter extends BaseAdapter {
 
         if (!currentModel.isWarning) {
             row.serviceRequestAlertImage.setVisibility(View.INVISIBLE);
+        } else {
+            row.serviceRequestAlertImage.setVisibility(View.VISIBLE);
         }
         //TODO: Set the real image
 //        row.serviceRequesetRowProfileImageView.setImageBitmap();
