@@ -20,6 +20,12 @@
     <string name="placeholder_evaluation">Avaliação</string>
     <string name="placeholder_completed">Concluídos</string>
     <string name="placeholder_details_user">Detalhes usuário</string>
+    <string name="placeholder_demand">Demanda</string>
+    <string name="placeholder_payment">Pagamento</string>
+    <string name="placeholder_chat">Chat</string>
+    <string name="placeholder_delivery">Entrega</string>
+    <string name="placeholder_rate">Avaliação</string>
+
     <string name="name_bottom_bar_map">Mapa</string>
     <string name="name_bottom_bar_service">Serviço</string>
     <string name="name_bottom_bar_profile">Perfil</string>

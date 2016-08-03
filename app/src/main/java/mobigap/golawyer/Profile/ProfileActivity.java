@@ -1,9 +1,8 @@
 package mobigap.golawyer.Profile;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,7 +28,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void getInstanceViews(){
-        View profileInformationHeader = findViewById(R.id.profileInformationHeader);
+            View profileInformationHeader = findViewById(R.id.profileInformationHeader);
         headerCellphone = profileInformationHeader.findViewById(R.id.headerCellphone);
         headerEmail = profileInformationHeader.findViewById(R.id.headerEmail);
         headerDetailUser = profileInformationHeader.findViewById(R.id.headerDetailUser);

@@ -10,7 +10,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -34,8 +33,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".Register.ChooseProfileActivity" />
+        <activity android:name=".Register.ChooseProfileActivity" /> LawyerServiceStatusActivity
         <activity android:name=".Register.RegisterActivity" />
+
+        <activity android:name=".LawyerServiceFollowing.LawyerServiceStatusActivity" />
+
+
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.

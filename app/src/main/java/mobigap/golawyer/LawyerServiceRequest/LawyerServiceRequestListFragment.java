@@ -1,14 +1,15 @@
 package mobigap.golawyer.LawyerServiceRequest;
 
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
-import butterknife.InjectView;
+import mobigap.golawyer.Extensions.ActivityManager;
+import mobigap.golawyer.LawyerServiceFollowing.LawyerServiceStatusActivity;
 import mobigap.golawyer.Model.ServiceRequestModel;
 import mobigap.golawyer.R;
 
@@ -16,6 +17,16 @@ public class LawyerServiceRequestListFragment extends Fragment {
 
     ListView listView;
     View view;
+
+    public AdapterView.OnItemClickListener clickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            Bundle requestedServiceData = new Bundle();
+            requestedServiceData.putInt("requestedServiceId", position);
+            ActivityManager.changeActivity(getContext(), LawyerServiceStatusActivity.class, requestedServiceData);
+        }
+    };
 
     public static LawyerServiceRequestListFragment newInstance() {
         LawyerServiceRequestListFragment fragment = new LawyerServiceRequestListFragment();
@@ -32,6 +43,7 @@ public class LawyerServiceRequestListFragment extends Fragment {
 
         this.listView = (ListView) this.view.findViewById(R.id.serviceRequestListView);
 
+        this.listView.setOnItemClickListener(this.clickListener);
         return this.view;
     }
 
