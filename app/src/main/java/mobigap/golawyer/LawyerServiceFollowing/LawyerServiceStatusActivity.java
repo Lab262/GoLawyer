@@ -72,7 +72,6 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
     private void setPropertiesViews(){
 
         cameraButton.setVisibility(View.INVISIBLE);
-        lawyerServiceStatusDemandDetailFragment.setupTextsFields("Fórum de Novo Gama","Criação de contrato", "R$: 500,00","Correios -> Carta","R$: 1500,00");
     }
 
     public void setupServiceStatusSegment() {
@@ -81,6 +80,8 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
                 demandImage.setImageResource(R.drawable.back_arrow);
                 demandDescription.setTextColor(ContextCompat.getColor(this, R.color.blueApp));
 
+                lawyerServiceStatusDemandDetailFragment.setupTextsFields("Fórum de Novo Gama","Criação de contrato", "R$: 500,00","Correios -> Carta","R$: 1500,00");
+                lawyerServiceStatusDemandDetailFragment.setVisibility(View.VISIBLE);
                 break;
             case PAYMENT:
                 demandImage.setImageResource(R.drawable.down_mini_arrow);
