@@ -29,6 +29,7 @@
     <string name="placeholder_service_type">Tipo de Serviço</string>
     <string name="placeholder_service_value">Valor do Serviço</string>
     <string name="placeholder_service_delivery">Modo de Envio</string>
+    <string name="placeholder_service_propose_total_value">Valor total da proposta: </string>
 
     <string name="name_bottom_bar_map">Mapa</string>
     <string name="name_bottom_bar_service">Serviço</string>

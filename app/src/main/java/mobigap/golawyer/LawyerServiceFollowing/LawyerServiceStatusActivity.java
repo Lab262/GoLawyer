@@ -23,6 +23,8 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
     ImageView demandImage, paymentImage, chatImage, deliveryImage, rateImage;
     TextView demandDescription, paymentDescription, chatDescription, deliveryDescription, rateDescription;
 
+    LawyerServiceStatusDemandDetailFragment lawyerServiceStatusDemandDetailFragment;
+
     private int requestedServiceId;
     private ServiceStatusEnum currentStatus = ServiceStatusEnum.DEMAND;
 
@@ -63,11 +65,14 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
         deliveryDescription = (TextView) serviceStatusSegment.findViewById(R.id.deliveryDescription);
         rateDescription = (TextView) serviceStatusSegment.findViewById(R.id.rateDescription);
 
+        lawyerServiceStatusDemandDetailFragment = (LawyerServiceStatusDemandDetailFragment) findViewById(R.id.demandInformationFragment);
+
     }
 
     private void setPropertiesViews(){
 
         cameraButton.setVisibility(View.INVISIBLE);
+        lawyerServiceStatusDemandDetailFragment.setupTextsFields("Fórum de Novo Gama","Criação de contrato", "R$: 500,00","Correios -> Carta","R$: 1500,00");
     }
 
     public void setupServiceStatusSegment() {
