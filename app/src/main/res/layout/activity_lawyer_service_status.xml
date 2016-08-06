@@ -28,13 +28,15 @@
                 android:id="@+id/lawyerServiceStatusSegment"
                 android:layout_gravity="top|center" />
 
-            <include layout="@layout/fragment_lawyer_service_status_demand_detail"
+
+            <ViewStub
+                android:id="@+id/serviceStatusInfoStub"
+                android:inflatedId="@+id/serviceStatusInfoLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/demandInformationFragment"
-                android:layout_gravity="top|center"
-                android:visibility="invisible"
-                />
+                android:layout_gravity="top|center" />
+
+
         </LinearLayout>
     </ScrollView>
 

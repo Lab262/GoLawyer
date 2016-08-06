@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import mobigap.golawyer.Enums.ServiceStatusEnum;
+import mobigap.golawyer.Extensions.LayoutManagerExtension;
 import mobigap.golawyer.R;
 
 public class LawyerServiceStatusActivity extends AppCompatActivity {
@@ -23,10 +24,8 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
     ImageView demandImage, paymentImage, chatImage, deliveryImage, rateImage;
     TextView demandDescription, paymentDescription, chatDescription, deliveryDescription, rateDescription;
 
-    LawyerServiceStatusDemandDetailFragment lawyerServiceStatusDemandDetailFragment;
-
     private int requestedServiceId;
-    private ServiceStatusEnum currentStatus = ServiceStatusEnum.DEMAND;
+    private ServiceStatusEnum currentStatus = ServiceStatusEnum.PAYMENT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +64,6 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
         deliveryDescription = (TextView) serviceStatusSegment.findViewById(R.id.deliveryDescription);
         rateDescription = (TextView) serviceStatusSegment.findViewById(R.id.rateDescription);
 
-        lawyerServiceStatusDemandDetailFragment = (LawyerServiceStatusDemandDetailFragment) findViewById(R.id.demandInformationFragment);
 
     }
 
@@ -80,8 +78,10 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
                 demandImage.setImageResource(R.drawable.back_arrow);
                 demandDescription.setTextColor(ContextCompat.getColor(this, R.color.blueApp));
 
+                LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_demand_detail);
+                LawyerServiceStatusDemandDetailFragment lawyerServiceStatusDemandDetailFragment = (LawyerServiceStatusDemandDetailFragment) findViewById(R.id.serviceStatusInfoLayout);
                 lawyerServiceStatusDemandDetailFragment.setupTextsFields("Fórum de Novo Gama","Criação de contrato", "R$: 500,00","Correios -> Carta","R$: 1500,00");
-                lawyerServiceStatusDemandDetailFragment.setVisibility(View.VISIBLE);
+
                 break;
             case PAYMENT:
                 demandImage.setImageResource(R.drawable.down_mini_arrow);
@@ -89,6 +89,8 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
 
                 paymentImage.setImageResource(R.drawable.back_arrow);
                 paymentDescription.setTextColor(ContextCompat.getColor(this, R.color.blueApp));
+
+                LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_payment);
 
                 break;
             case CHAT:
