@@ -62,5 +62,8 @@
     <string name="action_settings">Settings</string>
     <string name="camerabutton">cameraButton</string>
     <string name="digite_aqui_sua_mensagem">Digite aqui sua mensagem</string>
+    <string name="voc_poder_cancelar_a_demanda_a_qualquer_momento_o_pagamento_ser_extornado_mas_fique_atento_para_n_o_ser_classificado_negativamente">Você poderá cancelar a demanda a qualquer momento, o pagamento será extornado, mas fique atento para não ser classificado negativamente</string>
+    <string name="por_favor_aguarde_a_finaliza_o_da_demanda">Por favor, aguarde a finalização da demanda</string>
+    <string name="iniciado_em_31_05_2016_s_13_00h">Iniciado em 31/05/2016 ás 13:00h</string>
 
 </resources>

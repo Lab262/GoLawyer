@@ -25,7 +25,7 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
     TextView demandDescription, paymentDescription, chatDescription, deliveryDescription, rateDescription;
 
     private int requestedServiceId;
-    private ServiceStatusEnum currentStatus = ServiceStatusEnum.CHAT;
+    private ServiceStatusEnum currentStatus = ServiceStatusEnum.DELIVERY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +119,10 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
 
                 deliveryImage.setImageResource(R.drawable.back_arrow);
                 deliveryDescription.setTextColor(ContextCompat.getColor(this, R.color.blueApp));
+
+                LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_delivery);
+                LawyerServiceStatusDeliveryFragment lawyerServiceStatusDeliveryFragment = (LawyerServiceStatusDeliveryFragment) findViewById(R.id.serviceStatusInfoLayout);
+                lawyerServiceStatusDeliveryFragment.setupTextsFields("Por favor, aguarde a finalização da demanda","Iniciado em 31/05/2016 ás 13:00 h", "Você poderá cancelar a demanda a qualquer momento. O pagamento será extornado mas fique atento para não ser classificado negativamente.");
 
                 break;
             case RATE:

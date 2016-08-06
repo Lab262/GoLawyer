@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mobigap.golawyer.LawyerServiceFollowing.LawyerServiceStatusDeliveryFragment
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/headerRegister"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blueApp"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:text="@string/por_favor_aguarde_a_finaliza_o_da_demanda"
+                android:paddingBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="18sp"
+                android:id="@+id/seviceStatusDeliveryTitleTextView"
+                android:paddingTop="5dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blueLightApp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:text="@string/iniciado_em_31_05_2016_s_13_00h"
+            android:paddingBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="14sp"
+            android:id="@+id/seviceStatusDeliveryDateTextView"
+            android:paddingTop="5dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/greyNotSelected"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:text="@string/voc_poder_cancelar_a_demanda_a_qualquer_momento_o_pagamento_ser_extornado_mas_fique_atento_para_n_o_ser_classificado_negativamente"
+            android:paddingBottom="25dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="16sp"
+            android:id="@+id/seviceStatusDeliveryDescriptionTextView"
+            android:paddingTop="5dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:id="@+id/deliveryConfirmButton"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:id="@+id/deliveryCancelButton"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+    </LinearLayout>
+</mobigap.golawyer.LawyerServiceFollowing.LawyerServiceStatusDeliveryFragment>
