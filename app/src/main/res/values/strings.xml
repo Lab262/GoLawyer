@@ -29,7 +29,11 @@
     <string name="placeholder_service_type">Tipo de Serviço</string>
     <string name="placeholder_service_value">Valor do Serviço</string>
     <string name="placeholder_service_delivery">Modo de Envio</string>
-    <string name="placeholder_service_propose_total_value">Valor total da proposta: </string>
+    <string name="placeholder_credit_card_name">Nome do cartão: </string>
+    <string name="placeholder_credit_card_number">Número do cartão: </string>
+    <string name="placeholder_credit_card_expire_date">Validade do cartão: </string>
+    <string name="placeholder_credit_card_cvv">CVV: </string>
+    <string name="placeholder_credit_card_cellphone_number">Número do celular: </string>
 
     <string name="accept">Aceitar </string>
     <string name="refuse">Recusar </string>

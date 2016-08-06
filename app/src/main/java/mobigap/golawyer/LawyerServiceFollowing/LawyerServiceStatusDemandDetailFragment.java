@@ -33,7 +33,7 @@ public class LawyerServiceStatusDemandDetailFragment extends LinearLayout {
         }
     };
 
-    private OnClickListener againsProposalClickListener = new OnClickListener() {
+    private OnClickListener againstProposalClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
 
@@ -77,7 +77,7 @@ public class LawyerServiceStatusDemandDetailFragment extends LinearLayout {
         this.refuseButton = (ImageButton)findViewById(R.id.refuseButton);
         this.refuseButton.setOnClickListener(refuseClickListener);
         this.againstProposalButton = (ImageButton)findViewById(R.id.againstProposalButton);
-        this.againstProposalButton.setOnClickListener(againsProposalClickListener);
+        this.againstProposalButton.setOnClickListener(againstProposalClickListener);
     }
 
     public void setupTextsFields(String forumName, String serviceTypeName, String serviceValue, String serviceDeliveryType, String serviceTotalValue){
