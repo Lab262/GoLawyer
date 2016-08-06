@@ -8,6 +8,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import mobigap.golawyer.Model.ServiceStatusChatModel;
 import mobigap.golawyer.R;
 
@@ -17,9 +21,31 @@ public class LawyerServiceStatusChatListFragment extends LinearLayout {
     Button sendChatMessageButton;
     EditText newChatMessageEditText;
 
+    ServiceStatusChatModel[] chatModels = this.getDummyData();
+
     private View.OnClickListener sendChatMessageClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
+            ServiceStatusChatModel[] newChatModels = new ServiceStatusChatModel[chatModels.length + 1];
+
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Calendar cal = Calendar.getInstance();
+            String currentDate =dateFormat.format(cal.getTime());
+
+            String typedText = newChatMessageEditText.getText().toString();
+
+            //apend in array
+            System.arraycopy( chatModels, 0, newChatModels, 1, chatModels.length );
+            newChatModels[0] = new ServiceStatusChatModel("Usuario atual",currentDate ,typedText);
+
+            chatModels = newChatModels;
+            loadChatItemsList(chatModels);
+
+            newChatMessageEditText.setText("");
+            newChatMessageEditText.clearComposingText();
+            newChatMessageEditText.clearFocus();
+
 
         }
     };
@@ -40,7 +66,7 @@ public class LawyerServiceStatusChatListFragment extends LinearLayout {
         this.newChatMessageEditText = (EditText) this.findViewById(R.id.chatMessageEditText);
         this.sendChatMessageButton = (Button) this.findViewById(R.id.sendMessageChatButton);
         this.sendChatMessageButton.setOnClickListener(sendChatMessageClickListener);
-        this.loadChatItemsList(this.getDummyData());
+        this.loadChatItemsList(this.chatModels);
 
     }
     
