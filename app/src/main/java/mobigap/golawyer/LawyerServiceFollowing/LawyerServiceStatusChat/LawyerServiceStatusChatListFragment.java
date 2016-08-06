@@ -46,7 +46,6 @@ public class LawyerServiceStatusChatListFragment extends LinearLayout {
             newChatMessageEditText.clearComposingText();
             newChatMessageEditText.clearFocus();
 
-
         }
     };
 
@@ -71,8 +70,13 @@ public class LawyerServiceStatusChatListFragment extends LinearLayout {
     }
     
     private void loadChatItemsList(ServiceStatusChatModel[] chatItemsRequested) {
+        LawyerServiceStatusChatActionButtonsView header = (LawyerServiceStatusChatActionButtonsView)listView.inflate(getContext(),R.layout.view_lawyer_service_chat_action_button,null);
+        listView.addHeaderView(header);
+
         LawyerServiceStatusChatListAdapter adapter = new LawyerServiceStatusChatListAdapter(getContext(), chatItemsRequested);
         listView.setAdapter(adapter);
+
+
     }
 
     private ServiceStatusChatModel[] getDummyData() {
