@@ -25,7 +25,7 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
     TextView demandDescription, paymentDescription, chatDescription, deliveryDescription, rateDescription;
 
     private int requestedServiceId;
-    private ServiceStatusEnum currentStatus = ServiceStatusEnum.PAYMENT;
+    private ServiceStatusEnum currentStatus = ServiceStatusEnum.CHAT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +102,9 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
 
                 chatImage.setImageResource(R.drawable.back_arrow);
                 chatDescription.setTextColor(ContextCompat.getColor(this, R.color.blueApp));
+
+                LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_chat_list);
+
 
                 break;
             case DELIVERY:

@@ -60,5 +60,6 @@
         "seams, divides space, and indicates moving parts.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="camerabutton">cameraButton</string>
 
 </resources>

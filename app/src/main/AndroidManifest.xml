@@ -33,10 +33,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".Register.ChooseProfileActivity" /> LawyerServiceStatusActivity
+        <activity android:name=".Register.ChooseProfileActivity" />
         <activity android:name=".Register.RegisterActivity" />
 
-        <activity android:name=".LawyerServiceFollowing.LawyerServiceStatusActivity" />
+        <activity android:name=".LawyerServiceFollowing.LawyerServiceStatusActivity"
+            android:windowSoftInputMode="adjustPan" />
 
 
         <!--

@@ -12,7 +12,7 @@
 
     <include layout="@layout/register_profile_photo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="250dp"
         android:id="@+id/registerProfilePhoto"
         android:layout_gravity="top|center" />
 

@@ -40,6 +40,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     //compile 'com.roughike:bottom-bar:1.4.0.1'
     compile 'com.jakewharton:butterknife:6.1.0'
+    compile 'com.github.paolorotolo:expandableheightlistview:1.0.0'
 
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.github.aakira:expandable-layout:1.5.1@aar'
