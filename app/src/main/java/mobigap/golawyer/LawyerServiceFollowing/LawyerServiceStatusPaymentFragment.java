@@ -5,12 +5,12 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import mobigap.golawyer.R;
 
 
-public class LawyerServiceStatusPaymentFragment extends LinearLayout {
+public class LawyerServiceStatusPaymentFragment extends ScrollView {
 
 
     private EditText creditCardName, creditCardNumber, creditCardExpireDate, creditCardCVV, creditCardCellphoneNumber;

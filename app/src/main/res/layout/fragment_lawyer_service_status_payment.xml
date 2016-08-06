@@ -9,6 +9,11 @@
     android:padding="10dp">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -281,5 +286,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/moipInfoImage"
             android:layout_weight="1" />
+    </LinearLayout>
+
     </LinearLayout>
 </mobigap.golawyer.LawyerServiceFollowing.LawyerServiceStatusPaymentFragment>

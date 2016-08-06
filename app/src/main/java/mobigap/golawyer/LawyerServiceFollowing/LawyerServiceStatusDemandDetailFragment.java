@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import mobigap.golawyer.R;
@@ -12,7 +12,7 @@ import mobigap.golawyer.R;
 /**
  * Created by thiagoMB on 8/3/16.
  */
-public class LawyerServiceStatusDemandDetailFragment extends LinearLayout {
+public class LawyerServiceStatusDemandDetailFragment extends ScrollView {
 
 
     private TextView forumTextView, serviceTypeTextView, serviceValueTextView, serviceDeliveryTypeTextView, serviceTotalValueTextView;
