@@ -1,73 +1,87 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    tools:context="mobigap.golawyer.LawyerServiceRequest.LawyerServiceRequestListRow"
+    android:layout_height="wrap_content"
+    tools:context="mobigap.golawyer.LawyerServiceFollowing.LawyerServiceStatusChat.LawyerServiceStatusChatListRow"
     android:orientation="horizontal"
-    android:padding="0dp">
+    android:padding="0dp"
+    android:weightSum="100">
 
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/serviceRequestRowProfileImageView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/placeholder_image"
-        app:civ_border_width="2dp"
-        app:civ_border_color="#FF000000"
-        android:layout_gravity="left|center_vertical"
-        android:layout_weight="0" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
+        android:paddingLeft="10dp"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/greyNotSelected"
+                android:layout_marginLeft="7dp"></FrameLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:id="@+id/imageView"
+                android:src="@android:drawable/presence_online" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
+
         android:baselineAligned="false"
         android:foregroundGravity="center"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="0.5">
+        android:layout_gravity="center_vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Troy Beck"
-            android:id="@+id/serviceRequestRowTitle"
+            android:id="@+id/serviceStatusChatRowTitle"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:layout_gravity="center_vertical"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="0dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Informação do pedido"
-            android:id="@+id/serviceRequestRowDescription"
+            android:id="@+id/serviceStatusChatRowDescription"
             android:textSize="14sp"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/blueLightApp"
             android:paddingTop="0dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="0dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Informação do pedido"
+            android:id="@+id/serviceStatusChatRowContent"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/greyNotSelected"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="0dp"
+            android:layout_marginBottom="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginTop="10dp" />
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:id="@+id/serviceRequestAlertImage"
-        android:src="@drawable/abc_ic_go_search_api_material"
-        android:layout_gravity="center_vertical|right"
-        android:layout_weight="0" />
-
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:id="@+id/serviceRequestRowSelectorIndicator"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/abc_ic_go_search_api_material"
-        android:layout_weight="0" />
 
 </LinearLayout>
