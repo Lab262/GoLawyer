@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mobigap.golawyer.LawyerServiceFollowing.LawyerServiceStatusRateFragment
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/headerRegister"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blueApp"
+                android:textAlignment="gravity"
+                android:textStyle="bold"
+                android:text="@string/avalie_o_atendimento_do_profissional"
+                android:paddingBottom="5dp"
+                android:textSize="18sp"
+                android:id="@+id/serviceStatusRateTitle"
+                android:paddingTop="5dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:phoneNumber="true" />
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratingBar"
+            android:layout_gravity="center"
+            android:progressTint="@android:color/holo_orange_light"
+            android:numStars="5"
+            android:stepSize="1.0" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:id="@+id/serviceStatusRateCommentEditText"
+            android:hint="@string/deixe_aqui_o_seu_coment_rio"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="top|left"
+            android:background="@color/grey_300"
+            android:inputType="textMultiLine"
+            android:textStyle="bold"
+            android:textColorHint="@color/greyNotSelected"
+            android:textColor="@android:color/black"
+            android:gravity="top"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/greyNotSelected"
+            android:textAlignment="gravity"
+            android:textStyle="bold"
+            android:text="@string/ap_s_efetuar_sua_avalia_o_o_pagamento_ser_liberado_para_o_advogado_automaticamente"
+            android:paddingBottom="25dp"
+            android:textSize="16sp"
+            android:id="@+id/seviceStatusDeliveryDescriptionTextView"
+            android:paddingTop="5dp"
+            android:layout_gravity="center"
+            android:gravity="center_vertical|center_horizontal" />
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:id="@+id/rateConfirmButton"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+</mobigap.golawyer.LawyerServiceFollowing.LawyerServiceStatusRateFragment>

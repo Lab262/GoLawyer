@@ -34,7 +34,26 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+
         this.requestedServiceId = bundle.getInt("requestedServiceId");
+
+        switch (this.requestedServiceId) {
+            case 0:
+                currentStatus = ServiceStatusEnum.DEMAND;
+                break;
+            case 1:
+                currentStatus = ServiceStatusEnum.PAYMENT;
+                break;
+            case 2:
+                currentStatus = ServiceStatusEnum.CHAT;
+                break;
+            case 3:
+                currentStatus = ServiceStatusEnum.DELIVERY;
+                break;
+            case 4:
+                currentStatus = ServiceStatusEnum.RATE;
+                break;
+        }
 
         this.getViewInstances();
         this.setPropertiesViews();
@@ -140,6 +159,11 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
 
                 rateImage.setImageResource(R.drawable.back_arrow);
                 rateDescription.setTextColor(ContextCompat.getColor(this, R.color.blueApp));
+
+                LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_rate);
+                LawyerServiceStatusRateFragment lawyerServiceStatusRateFragment = (LawyerServiceStatusRateFragment) findViewById(R.id.serviceStatusInfoLayout);
+                lawyerServiceStatusRateFragment.setupTextsFields("Avalie o atendimento do profissional","", "Após efetuar sua avaliação o pagamento será liberado para o advogado automaticamente.");
+
 
                 break;
         }
