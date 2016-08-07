@@ -94,7 +94,7 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
     public void setupServiceStatusSegment() {
         switch (currentStatus) {
             case DEMAND:
-                demandImage.setImageResource(R.drawable.back_arrow);
+                demandImage.setImageResource(R.drawable.ic_demand_active);
                 demandDescription.setTextColor(ContextCompat.getColor(this, R.color.blueApp));
 
                 LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_demand_detail);
@@ -103,23 +103,23 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
 
                 break;
             case PAYMENT:
-                demandImage.setImageResource(R.drawable.down_mini_arrow);
+                demandImage.setImageResource(R.drawable.ic_demand_passed);
                 demandDescription.setTextColor(ContextCompat.getColor(this, R.color.blueLightApp));
 
-                paymentImage.setImageResource(R.drawable.back_arrow);
+                paymentImage.setImageResource(R.drawable.ic_payment_active);
                 paymentDescription.setTextColor(ContextCompat.getColor(this, R.color.blueApp));
 
                 LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_payment);
 
                 break;
             case CHAT:
-                demandImage.setImageResource(R.drawable.down_mini_arrow);
+                demandImage.setImageResource(R.drawable.ic_demand_passed);
                 demandDescription.setTextColor(ContextCompat.getColor(this, R.color.blueLightApp));
 
-                paymentImage.setImageResource(R.drawable.down_mini_arrow);
+                paymentImage.setImageResource(R.drawable.ic_payment_passed);
                 paymentDescription.setTextColor(ContextCompat.getColor(this, R.color.blueLightApp));
 
-                chatImage.setImageResource(R.drawable.back_arrow);
+                chatImage.setImageResource(R.drawable.chat_active);
                 chatDescription.setTextColor(ContextCompat.getColor(this, R.color.blueApp));
 
                 LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_chat_list);
@@ -127,16 +127,16 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
 
                 break;
             case DELIVERY:
-                demandImage.setImageResource(R.drawable.down_mini_arrow);
+                demandImage.setImageResource(R.drawable.ic_demand_passed);
                 demandDescription.setTextColor(ContextCompat.getColor(this, R.color.blueLightApp));
 
-                paymentImage.setImageResource(R.drawable.down_mini_arrow);
+                paymentImage.setImageResource(R.drawable.ic_payment_passed);
                 paymentDescription.setTextColor(ContextCompat.getColor(this, R.color.blueLightApp));
 
-                chatImage.setImageResource(R.drawable.down_mini_arrow);
+                chatImage.setImageResource(R.drawable.chat_passed);
                 chatDescription.setTextColor(ContextCompat.getColor(this, R.color.blueLightApp));
 
-                deliveryImage.setImageResource(R.drawable.back_arrow);
+                deliveryImage.setImageResource(R.drawable.ic_delivery_active);
                 deliveryDescription.setTextColor(ContextCompat.getColor(this, R.color.blueApp));
 
                 LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_delivery);
@@ -145,19 +145,19 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
 
                 break;
             case RATE:
-                demandImage.setImageResource(R.drawable.down_mini_arrow);
+                demandImage.setImageResource(R.drawable.ic_demand_passed);
                 demandDescription.setTextColor(ContextCompat.getColor(this, R.color.blueLightApp));
 
-                paymentImage.setImageResource(R.drawable.down_mini_arrow);
+                paymentImage.setImageResource(R.drawable.ic_payment_passed);
                 paymentDescription.setTextColor(ContextCompat.getColor(this, R.color.blueLightApp));
 
-                chatImage.setImageResource(R.drawable.down_mini_arrow);
+                chatImage.setImageResource(R.drawable.chat_passed);
                 chatDescription.setTextColor(ContextCompat.getColor(this, R.color.blueLightApp));
 
-                deliveryImage.setImageResource(R.drawable.down_mini_arrow);
+                deliveryImage.setImageResource(R.drawable.chat_passed);
                 deliveryDescription.setTextColor(ContextCompat.getColor(this, R.color.blueLightApp));
 
-                rateImage.setImageResource(R.drawable.back_arrow);
+                rateImage.setImageResource(R.drawable.ic_rate_active);
                 rateDescription.setTextColor(ContextCompat.getColor(this, R.color.blueApp));
 
                 LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_rate);

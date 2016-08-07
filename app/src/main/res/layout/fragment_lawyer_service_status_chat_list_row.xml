@@ -25,11 +25,13 @@
                 android:layout_marginLeft="7dp"></FrameLayout>
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:paddingTop="10dp"
                 android:id="@+id/imageView"
-                android:src="@android:drawable/presence_online" />
+                android:src="@drawable/ic_blue_ball_timeline"
+                android:scaleType="fitCenter"
+                android:paddingRight="13dp" />
         </RelativeLayout>
 
     </LinearLayout>

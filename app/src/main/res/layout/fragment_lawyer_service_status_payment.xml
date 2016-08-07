@@ -256,7 +256,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="125dp"
+        android:layout_height="500dp"
         android:orientation="vertical"
         android:weightSum="2">
 
@@ -270,22 +270,29 @@
 
             <ImageButton
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="65dp"
                 android:id="@+id/paymentConfirmButton"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:src="@drawable/ic_button_confirm"
+                android:scaleType="fitXY"
+                android:background="@android:color/transparent" />
 
             <ImageButton
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="65dp"
                 android:id="@+id/paymentCancelButton"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/button_cancel"
+                android:scaleType="fitXY" />
         </LinearLayout>
 
-        <ImageButton
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="400dp"
             android:id="@+id/moipInfoImage"
-            android:layout_weight="1" />
+            android:src="@drawable/image_moip_info"
+            android:scaleType="fitCenter" />
     </LinearLayout>
 
     </LinearLayout>

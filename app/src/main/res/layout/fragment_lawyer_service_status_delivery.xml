@@ -63,13 +63,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:id="@+id/deliveryConfirmButton"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/button_finalize" />
 
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:id="@+id/deliveryCancelButton"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/button_cancel" />
         </LinearLayout>
 
     </LinearLayout>
