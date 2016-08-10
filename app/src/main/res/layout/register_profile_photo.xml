@@ -5,8 +5,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/placeholder_image"
+        android:layout_height="wrap_content"
         android:focusable="false">
 
         <ImageView
@@ -47,7 +46,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/profileImage"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"

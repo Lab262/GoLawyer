@@ -9,12 +9,12 @@
         android:icon="@drawable/ic_update_service_page"
         android:orderInCategory="100"
         app:showAsAction="always"
-        android:title="@string/map" />
+        android:title="@string/title_activity_map" />
 
     <item
         android:id="@+id/action_map"
         android:icon="@drawable/ic_superior_map"
         android:orderInCategory="100"
         app:showAsAction="always"
-        android:title="@string/map" />
+        android:title="@string/title_activity_map" />
 </menu>

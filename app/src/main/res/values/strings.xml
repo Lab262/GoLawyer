@@ -45,6 +45,9 @@
     <string name="name_bottom_bar_service">Serviço</string>
     <string name="name_bottom_bar_profile">Perfil</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="permission_gps">O aplicativo precisa da sua permissão para acessar o GPS.</string>
+    <string name="permission_gps_accepted">Permitir</string>
+    <string name="permission_gps_denied">Não Permitir</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -68,6 +71,6 @@
     <string name="deixe_aqui_o_seu_coment_rio">Deixe aqui o seu comentário</string>
     <string name="avalie_o_atendimento_do_profissional">Avalie o atendimento do profissional</string>
     <string name="ap_s_efetuar_sua_avalia_o_o_pagamento_ser_liberado_para_o_advogado_automaticamente">Após efetuar sua avaliação o pagamento será liberado para o advogado automaticamente.</string>
-    <string name="map">Map</string>
+    <string name="title_activity_map">Map</string>
 
 </resources>

@@ -6,10 +6,10 @@ package mobigap.golawyer.Enums;
 public enum BottomBarOption {
     MAP, SERVICE,PROFILE;
 
-    public static TypeProfile getBottomBarOptionByOrdinal(int number){
-        for (TypeProfile typeProfile : TypeProfile.values()){
-            if (typeProfile.ordinal() == number){
-                return typeProfile;
+    public static BottomBarOption getBottomBarOptionByOrdinal(int number){
+        for (BottomBarOption bottomBarOption : BottomBarOption.values()){
+            if (bottomBarOption.ordinal() == number){
+                return bottomBarOption;
             }
         }
         return null;
