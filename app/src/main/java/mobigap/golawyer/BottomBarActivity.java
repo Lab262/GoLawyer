@@ -4,15 +4,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.*;
 
 import mobigap.golawyer.Enums.BottomBarOption;
+import mobigap.golawyer.Map.MapFragment;
 import mobigap.golawyer.Profile.ProfileFragment;
 import mobigap.golawyer.Protocols.OnFragmentInteractionListener;
 
@@ -28,6 +25,7 @@ public class BottomBarActivity extends AppCompatActivity implements AHBottomNavi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom_bar);
         initializeProperties();
+        changeFragmentOptionBottomBar();
     }
 
     private void initializeProperties(){
@@ -59,15 +57,18 @@ public class BottomBarActivity extends AppCompatActivity implements AHBottomNavi
 
     @Override
     public boolean onTabSelected(int position, boolean wasSelected) {
-        if (position==BottomBarOption.PROFILE.ordinal()){
+        if (position==BottomBarOption.MAP.ordinal()){
+            if (bottomBarOption!=BottomBarOption.MAP){
+                bottomBarOption = BottomBarOption.MAP;
+                changeFragmentOptionBottomBar();
+            }
+        }else if (position==BottomBarOption.PROFILE.ordinal()){
             if (bottomBarOption!=BottomBarOption.PROFILE){
                 bottomBarOption = BottomBarOption.PROFILE;
-                getSupportActionBar().setTitle(R.string.name_bottom_bar_profile);
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, ProfileFragment.newInstance("", ""))
-                        .commit();
+                changeFragmentOptionBottomBar();
             }
         }
+
         return true;
     }
 
@@ -76,5 +77,28 @@ public class BottomBarActivity extends AppCompatActivity implements AHBottomNavi
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment).addToBackStack("")
                 .commit();
+    }
+
+    private void changeFragmentOptionBottomBar(){
+        switch (bottomBarOption){
+            case MAP:
+                getSupportActionBar().setTitle(R.string.name_bottom_bar_map);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, MapFragment.newInstance("", ""))
+                        .commit();
+                break;
+            case SERVICE:
+//                getSupportActionBar().setTitle(R.string.name_bottom_bar_map);
+//                fragmentManager.beginTransaction()
+//                        .replace(R.id.container, MapFragment.newInstance("", ""))
+//                        .commit();
+                break;
+            case PROFILE:
+                getSupportActionBar().setTitle(R.string.name_bottom_bar_profile);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, ProfileFragment.newInstance("", ""))
+                        .commit();
+                break;
+        }
     }
 }
