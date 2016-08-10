@@ -1,0 +1,89 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="mobigap.golawyer.LawyerServiceFollowing.LawyerServiceStatusChat.LawyerServiceStatusChatListRow"
+    android:orientation="horizontal"
+    android:padding="0dp"
+    android:weightSum="100">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:paddingLeft="10dp"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/greyNotSelected"
+                android:layout_marginLeft="7dp"></FrameLayout>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:paddingTop="10dp"
+                android:id="@+id/imageView"
+                android:src="@drawable/ic_blue_ball_timeline"
+                android:scaleType="fitCenter"
+                android:paddingRight="13dp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+
+        android:baselineAligned="false"
+        android:foregroundGravity="center"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Troy Beck"
+            android:id="@+id/serviceStatusChatRowTitle"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="0dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Informação do pedido"
+            android:id="@+id/serviceStatusChatRowDescription"
+            android:textSize="14sp"
+            android:textColor="@color/blueLightApp"
+            android:paddingTop="0dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Informação do pedido"
+            android:id="@+id/serviceStatusChatRowContent"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/greyNotSelected"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="0dp"
+            android:layout_marginBottom="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
+
+</LinearLayout>

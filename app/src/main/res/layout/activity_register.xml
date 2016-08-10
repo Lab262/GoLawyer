@@ -9,7 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/mainLinearLayout">
 
         <include layout="@layout/register_profile_photo"
             android:layout_width="match_parent"
@@ -31,24 +32,14 @@
         <include layout="@layout/header_register"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/headerWhereFound"
-            android:layout_gravity="top|center" />
-
-        <include layout="@layout/where_found"
-            android:layout_gravity="top|center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <include layout="@layout/header_register"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/headerOfficeInformation"
             android:layout_gravity="top|center" />
 
         <include layout="@layout/office_information"
             android:layout_gravity="top|center"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:id="@+id/includeOfficeInformation" />
 
         <include layout="@layout/header_register"
             android:layout_width="match_parent"
@@ -59,7 +50,8 @@
         <include layout="@layout/bank_information"
             android:layout_gravity="top|center"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:id="@+id/includeBankInformation" />
 
         <include layout="@layout/header_register"
             android:layout_width="match_parent"

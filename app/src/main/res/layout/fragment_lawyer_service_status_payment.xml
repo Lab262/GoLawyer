@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mobigap.golawyer.LawyerServiceFollowing.LawyerServiceStatusPaymentFragment
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/headerRegister"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:gravity="center_vertical">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="17dp"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/darker_gray"
+                android:textStyle="bold"
+                android:text="@string/placeholder_credit_card_name"
+                android:paddingBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/textViewCreditCardName"
+                android:paddingTop="5dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="-10dp"
+                android:paddingBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:ems="10"
+                android:id="@+id/editTextCreditCardName" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/grey_300"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="0.1dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:gravity="center_vertical">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="17dp"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/darker_gray"
+                android:textStyle="bold"
+                android:text="@string/placeholder_credit_card_number"
+                android:paddingBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/textViewCreditCardNumber"
+                android:paddingTop="5dp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="-10dp"
+                android:paddingBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:ems="10"
+                android:id="@+id/editTextCreditCardNumber" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/grey_300"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="0.1dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:gravity="center_vertical">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="17dp"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/darker_gray"
+                android:textStyle="bold"
+                android:text="@string/placeholder_credit_card_expire_date"
+                android:paddingBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/textViewCreditCardExpireDate"
+                android:paddingTop="5dp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="-10dp"
+                android:paddingBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:ems="10"
+                android:id="@+id/editTextCreditCardExpireDate" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/grey_300"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="0.1dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:gravity="center_vertical">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="17dp"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/darker_gray"
+                android:textStyle="bold"
+                android:text="@string/placeholder_credit_card_cvv"
+                android:paddingBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/textViewCreditCardCVV"
+                android:paddingTop="5dp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="-10dp"
+                android:paddingBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:ems="10"
+                android:id="@+id/editTextCreditCardCVV" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/grey_300"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="0.1dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:gravity="center_vertical">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="17dp"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/darker_gray"
+                android:textStyle="bold"
+                android:text="@string/placeholder_credit_card_cellphone_number"
+                android:paddingBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/textViewCreditCardCellPhoneNumber"
+                android:paddingTop="5dp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="-10dp"
+                android:paddingBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:ems="10"
+                android:id="@+id/editTextCreditCardCellPhoneNumber" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/grey_300"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="0.1dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:orientation="vertical"
+        android:weightSum="2">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:id="@+id/paymentConfirmButton"
+                android:layout_weight="1"
+                android:src="@drawable/ic_button_confirm"
+                android:scaleType="fitXY"
+                android:background="@android:color/transparent" />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:id="@+id/paymentCancelButton"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/button_cancel"
+                android:scaleType="fitXY" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:id="@+id/moipInfoImage"
+            android:src="@drawable/image_moip_info"
+            android:scaleType="fitCenter" />
+    </LinearLayout>
+
+    </LinearLayout>
+</mobigap.golawyer.LawyerServiceFollowing.LawyerServiceStatusPaymentFragment>

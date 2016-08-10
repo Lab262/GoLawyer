@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="130dp"
+                android:layout_height="100dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/greyBackground">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="37dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/placeholder_attendance"
+                    android:id="@+id/textView2"
+                    android:gravity="bottom|center_horizontal"
+                    android:textColor="@color/blueApp"
+                    android:textStyle="bold"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="61dp"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="70"
+                    android:id="@+id/numberAttendanceTextView"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textSize="35dp"
+                    android:textColor="@color/blueLightApp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="130dp"
+                android:layout_height="100dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/greyBackground" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="37dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/placeholder_evaluation"
+                    android:id="@+id/textView3"
+                    android:gravity="bottom|center_horizontal"
+                    android:textColor="@color/blueApp"
+                    android:textStyle="bold"
+                    android:textSize="16dp" />
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/ratingButton"
+                    android:src="@drawable/rating_stars_5"
+                    android:background="@color/greyBackground" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="130dp"
+                android:layout_height="100dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/greyBackground" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="37dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/placeholder_completed"
+                    android:id="@+id/textView5"
+                    android:gravity="bottom|center_horizontal"
+                    android:textColor="@color/blueApp"
+                    android:textStyle="bold"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="61dp"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="68"
+                    android:id="@+id/numberCompletedTextView"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textSize="35dp"
+                    android:textColor="@color/blueLightApp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/greyNotSelected" />
+
+    </LinearLayout>
+
+</RelativeLayout>

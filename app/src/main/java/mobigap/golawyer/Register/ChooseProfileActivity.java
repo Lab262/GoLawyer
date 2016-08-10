@@ -8,13 +8,13 @@ import android.widget.ImageButton;
 import android.widget.RadioButton;
 
 import mobigap.golawyer.Enums.TypeProfile;
+import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.R;
 
 public class ChooseProfileActivity extends Activity implements View.OnClickListener {
 
     RadioButton clientRadioButton;
     RadioButton lawyerRadioButton;
-    RadioButton lawyerClientRadioButton;
     ImageButton forwardButton;
     TypeProfile typeProfile;
 
@@ -29,14 +29,14 @@ public class ChooseProfileActivity extends Activity implements View.OnClickListe
     private void getInstanceViews(){
         clientRadioButton = (RadioButton) findViewById(R.id.clientRadioButton);
         lawyerRadioButton = (RadioButton) findViewById(R.id.lawyerRadioButton);
-        lawyerClientRadioButton = (RadioButton) findViewById(R.id.lawyerClientRadioButton);
         forwardButton = (ImageButton) findViewById(R.id.forwardButton);
     }
 
     private void setPropertiesViews(){
         clientRadioButton.setOnClickListener(this);
+        typeProfile = TypeProfile.CLIENT;
+        clientRadioButton.setChecked(true);
         lawyerRadioButton.setOnClickListener(this);
-        lawyerClientRadioButton.setOnClickListener(this);
         forwardButton.setOnClickListener(this);
     }
 
@@ -44,15 +44,9 @@ public class ChooseProfileActivity extends Activity implements View.OnClickListe
         switch (typeProfile){
             case CLIENT:
                 lawyerRadioButton.setChecked(false);
-                lawyerClientRadioButton.setChecked(false);
                 break;
             case LAWYER:
                 clientRadioButton.setChecked(false);
-                lawyerClientRadioButton.setChecked(false);
-                break;
-            case CLIENT_LAWYER:
-                clientRadioButton.setChecked(false);
-                lawyerRadioButton.setChecked(false);
                 break;
         }
 
@@ -70,13 +64,10 @@ public class ChooseProfileActivity extends Activity implements View.OnClickListe
                 typeProfile = TypeProfile.LAWYER;
                 unselectedRadioButtons();
                 break;
-            case R.id.lawyerClientRadioButton:
-                typeProfile = TypeProfile.CLIENT_LAWYER;
-                unselectedRadioButtons();
-                break;
             case R.id.forwardButton:
-                Intent intent = new Intent(ChooseProfileActivity.this, RegisterActivity.class);
-                startActivity(intent);
+                Bundle bundle = new Bundle();
+                bundle.putInt("typeProfile",typeProfile.ordinal());
+                ActivityManager.changeActivity(ChooseProfileActivity.this, RegisterActivity.class, bundle);
                 break;
         }
     }

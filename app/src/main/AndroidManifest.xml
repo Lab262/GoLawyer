@@ -3,10 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="mobigap.golawyer">
 
-    <uses-feature android:name="android.hardware.camera"
-        android:required="true"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -31,11 +34,28 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".Register.ChooseProfileActivity" />
-        <activity android:name=".Register.RegisterActivity"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <activity android:name=".Register.RegisterActivity" />
+
+        <activity android:name=".LawyerServiceFollowing.LawyerServiceStatusActivity"
+            android:windowSoftInputMode="adjustPan" />
+
+
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".Profile.ProfileActivity" />
+        <activity android:name=".BottomBarActivity" />
+
+        <service
+            android:name=".Persistence.JsonSpiceService"
+            android:exported="false" />
+
+        <activity android:name=".LawyerServiceRequest.LawyerServiceRequestListActivity"></activity>
     </application>
 
 </manifest>

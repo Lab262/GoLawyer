@@ -29,11 +29,56 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nome"
+                    android:hint="Nome*"
                     android:imeOptions="actionNext"
                     android:inputType="textNoSuggestions|textPersonName"
                     android:id="@+id/nameEditText"
                     android:singleLine="true" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="Email*"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:id="@+id/emailEditText"
+                    android:singleLine="true" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="Senha*"
+                    android:imeOptions="actionNext"
+                    android:id="@+id/registerPasswordEditText"
+                    android:singleLine="true"
+                    android:inputType="textPassword" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="Confirmar senha*"
+                    android:imeOptions="actionNext"
+                    android:id="@+id/confirmPasswordEditText"
+                    android:singleLine="true"
+                    android:inputType="textPassword" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -58,7 +103,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="CPF"
+                    android:hint="CPF*"
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:maxLength="11"
@@ -74,7 +119,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="Telefone"
+                    android:hint="Telefone*"
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:id="@+id/phoneEditText"
@@ -89,24 +134,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="Endereço"
+                    android:hint="Endereço*"
                     android:imeOptions="actionNext"
                     android:id="@+id/adressEditText"
-                    android:singleLine="true" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:hint="Email"
-                    android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
-                    android:id="@+id/emailEditText"
                     android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
 
@@ -129,7 +159,6 @@
                     android:gravity="top|left"
                     android:padding="10dp"
                     android:singleLine="false"
-                    android:background="@color/shadow_mid_color"
                     android:id="@+id/curriculumEditText" />
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>

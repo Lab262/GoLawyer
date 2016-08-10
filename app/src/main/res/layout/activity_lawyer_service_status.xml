@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="mobigap.golawyer.LawyerServiceFollowing.LawyerServiceStatusActivity"
+    android:windowSoftInputMode="adjustPan"
+    >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/register_profile_photo"
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:id="@+id/lawyerProfilePhoto"
+                android:layout_gravity="top|center" />
+
+            <include layout="@layout/service_status_segment"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:id="@+id/lawyerServiceStatusSegment"
+                android:layout_gravity="center|center" />
+
+
+            <ViewStub
+                android:id="@+id/serviceStatusInfoStub"
+                android:inflatedId="@+id/serviceStatusInfoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>
