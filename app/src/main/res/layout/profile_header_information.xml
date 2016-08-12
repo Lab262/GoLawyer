@@ -11,7 +11,8 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/greyBackground">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -43,7 +44,14 @@
                     android:textSize="35dp"
                     android:textColor="@color/blueLightApp"
                     android:textStyle="bold" />
+
             </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="18dp"
+                android:background="@color/greyNotSelected"
+                android:layout_marginTop="20dp" />
 
             <LinearLayout
                 android:orientation="vertical"
@@ -73,6 +81,12 @@
                     android:background="@color/greyBackground" />
 
             </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="18dp"
+                android:background="@color/greyNotSelected"
+                android:layout_marginTop="20dp" />
 
             <LinearLayout
                 android:orientation="vertical"

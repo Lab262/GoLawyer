@@ -44,10 +44,9 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".Register.ChooseProfileActivity" />
         <activity android:name=".Register.RegisterActivity" />
-
-        <activity android:name=".LawyerServiceFollowing.LawyerServiceStatusActivity"
+        <activity
+            android:name=".LawyerServiceFollowing.LawyerServiceStatusActivity"
             android:windowSoftInputMode="adjustPan" />
-
 
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
@@ -75,7 +74,8 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".Profile.DetailEvaluationActivity"></activity>
+        <activity android:name=".Profile.DetailEvaluationActivity" />
+        <activity android:name=".Map.MapListActivity"></activity>
     </application>
 
 </manifest>

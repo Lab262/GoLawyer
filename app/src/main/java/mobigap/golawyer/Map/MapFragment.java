@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -13,8 +14,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.SearchView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
@@ -24,6 +29,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
+import mobigap.golawyer.BottomBarActivity;
+import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Extensions.AlertManager;
 import mobigap.golawyer.Protocols.OnFragmentInteractionListener;
 import mobigap.golawyer.R;
@@ -84,9 +91,28 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, DialogI
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         nameLocalPermission = Manifest.permission.ACCESS_FINE_LOCATION;
         checkAccessLocalPermission();
+        setPropertiesView(view);
         return view;
     }
 
+
+    private void setPropertiesView(View view){
+        SearchView searchView = (SearchView) view.findViewById(R.id.searchView);
+
+        int searchSrcTextId = getResources().getIdentifier("android:id/search_src_text", null, null);
+        EditText searchEditText = (EditText) searchView.findViewById(searchSrcTextId);
+        searchEditText.setTextColor(getResources().getColor(R.color.white));
+        searchEditText.setHintTextColor(getResources().getColor(R.color.white));
+
+        int closeButtonId = getResources().getIdentifier("android:id/search_close_btn", null, null);
+        ImageView closeButtonImage = (ImageView) searchView.findViewById(closeButtonId);
+        closeButtonImage.setColorFilter(getResources().getColor(R.color.white));
+
+        int searchButtonId = getResources().getIdentifier("android:id/search_button", null, null);
+        ImageView searchButtonImage = (ImageView) searchView.findViewById(searchButtonId);
+        searchButtonImage.setColorFilter(getResources().getColor(R.color.white));
+
+    }
 
     @Override
     public void onAttach(Context context) {

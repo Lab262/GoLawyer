@@ -5,12 +5,17 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.aurelhubert.ahbottomnavigation.*;
 
 import mobigap.golawyer.Enums.BottomBarOption;
+import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.LawyerServiceRequest.LawyerServiceRequestListFragment;
 import mobigap.golawyer.Map.MapFragment;
+import mobigap.golawyer.Map.MapListActivity;
 import mobigap.golawyer.Profile.ProfileFragment;
 import mobigap.golawyer.Protocols.OnFragmentInteractionListener;
 
@@ -20,6 +25,7 @@ public class BottomBarActivity extends AppCompatActivity implements AHBottomNavi
     private AHBottomNavigation bottomBar;
     private FragmentManager fragmentManager;
     private BottomBarOption bottomBarOption;
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,19 +99,56 @@ public class BottomBarActivity extends AppCompatActivity implements AHBottomNavi
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, MapFragment.newInstance("", ""))
                         .commit();
+                if (menu != null){
+                    menu.findItem(R.id.action_edit_profile).setVisible(false);
+                    menu.findItem(R.id.action_map_list).setVisible(true);
+                }
                 break;
             case SERVICE:
                 getSupportActionBar().setTitle(R.string.name_bottom_bar_service);
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, LawyerServiceRequestListFragment.newInstance())
                         .commit();
+                if (menu != null){
+                    menu.findItem(R.id.action_edit_profile).setVisible(false);
+                    menu.findItem(R.id.action_map_list).setVisible(false);
+                }
+
                 break;
             case PROFILE:
                 getSupportActionBar().setTitle(R.string.name_bottom_bar_profile);
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, ProfileFragment.newInstance("", ""))
                         .commit();
+                if (menu != null){
+                    menu.findItem(R.id.action_edit_profile).setVisible(true);
+                    menu.findItem(R.id.action_map_list).setVisible(false);
+                }
                 break;
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.profile_menu, menu);
+        menu.findItem(R.id.action_edit_profile).setVisible(false);
+        menu.findItem(R.id.action_map_list).setVisible(true);
+        this.menu = menu;
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_map_list:
+                ActivityManager.changeActivity(BottomBarActivity.this, MapListActivity.class);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }

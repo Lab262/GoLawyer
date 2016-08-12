@@ -21,7 +21,6 @@ import mobigap.golawyer.BottomBarActivity;
 import mobigap.golawyer.Enums.TypeProfile;
 import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Extensions.CameraConfiguration;
-import mobigap.golawyer.Profile.ProfileActivity;
 import mobigap.golawyer.R;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {

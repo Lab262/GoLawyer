@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <item
+        android:id="@+id/action_edit_profile"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:title="@string/placeholder_edit_profile" />
+
+    <item
+        android:id="@+id/action_map_list"
+        android:icon="@drawable/ic_map_list"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:title="@string/title_activity_map" />
+
+</menu>

@@ -25,13 +25,15 @@
 
         <ImageButton
             android:id="@+id/cameraButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_margin="20dp"
-            android:src="@drawable/icon_camera"
             android:visibility="visible"
-            android:contentDescription="@string/camerabutton" />
+            android:contentDescription="@string/camerabutton"
+            android:cropToPadding="false"
+            android:background="@drawable/icon_camera"
+            android:layout_alignParentEnd="false" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -37,6 +38,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private TextView curriculumText;
     private View view;
     private ScrollView scrollView;
+    private ImageView arrowDetail;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -114,8 +116,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private void setPropertiesViews(){
         ImageView arrowCellphone = (ImageView) headerCellphone.findViewById(R.id.headerArrowProfile);
         ImageView arrowEmail = (ImageView) headerEmail.findViewById(R.id.headerArrowProfile);
+        arrowDetail = (ImageView) headerDetailUser.findViewById(R.id.headerArrowProfile);
         arrowCellphone.setVisibility(View.INVISIBLE);
         arrowEmail.setVisibility(View.INVISIBLE);
+        arrowDetail.setImageResource(R.drawable.ic_arrow_down_select_item);
         nameHeaderCellphone.setText("(99)99999-7897");
         nameHeaderEmail.setText("email@email.com");
         nameHeaderDetailUser.setText(R.string.placeholder_details_user);
@@ -138,7 +142,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void toggleExpandableLayout(ExpandableRelativeLayout expandableRelativeLayout, View headerView){
+    private void toggleExpandableLayout(final ExpandableRelativeLayout expandableRelativeLayout, View headerView){
         expandableRelativeLayout.toggle();
         if (expandableRelativeLayout.isExpanded()==false){
             final Handler handler = new Handler();
@@ -146,16 +150,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void run() {
                     scrollView.scrollTo(0,scrollView.getMeasuredHeight());
+                    arrowDetail.setImageResource(R.drawable.ic_arrow_down_select_item);
                 }
             }, 200);
+        }else {
+            arrowDetail.setImageResource(R.drawable.ic_arrow_select_item);
         }
-//        ImageView arrow = (ImageView) headerView.findViewById(R.id.headerArrowProfile);
-//        if (expandableRelativeLayout.isExpanded()){
-//            arrow.setImageResource(R.drawable.forward_mini_arrow);
-//        }else {
-//            arrow.setImageResource(R.drawable.down_mini_arrow);
-//        }
-
     }
 
     /**
