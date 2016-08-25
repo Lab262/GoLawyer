@@ -54,7 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Sou cliente"
+                    android:text="Contratante"
                     android:textColor="@color/blueApp"
                     android:id="@+id/clientTextView" />
 
@@ -83,7 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Sou advogado"
+                    android:text="Correspondente"
                     android:textColor="@color/blueApp"
                     android:id="@+id/lawyerTextView" />
 

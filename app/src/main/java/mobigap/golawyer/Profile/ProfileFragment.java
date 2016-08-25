@@ -13,6 +13,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import mobigap.golawyer.BottomBarActivity;
+import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Protocols.OnFragmentInteractionListener;
 
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
@@ -39,6 +42,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private View view;
     private ScrollView scrollView;
     private ImageView arrowDetail;
+    private ImageButton ratingButton;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -111,6 +115,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         expandableDetailsUser = (ExpandableRelativeLayout) this.view.findViewById(R.id.curriculum_information);
         curriculumText = (TextView) expandableDetailsUser.findViewById(R.id.curriculumText);
         scrollView = (ScrollView) this.view.findViewById(R.id.scrollView);
+
+        View profileHeader = this.view.findViewById(R.id.profileHeader);
+        ratingButton = (ImageButton)profileHeader.findViewById(R.id.ratingButton);
     }
 
     private void setPropertiesViews(){
@@ -125,6 +132,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         nameHeaderDetailUser.setText(R.string.placeholder_details_user);
         headerDetailUser.setOnClickListener(this);
         curriculumText.setText("Meu curriculo vem aqui.");
+        ratingButton.setOnClickListener(this);
     }
 
     private void adjustLayout() {
@@ -138,6 +146,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.headerDetailUser:
                 toggleExpandableLayout(expandableDetailsUser, headerDetailUser);
+                break;
+            case R.id.ratingButton:
+                ActivityManager.changeActivity(getActivity(), DetailEvaluationActivity.class);
                 break;
         }
     }
