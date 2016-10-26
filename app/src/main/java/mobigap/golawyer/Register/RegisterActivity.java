@@ -35,6 +35,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private ImageView backgroundImageViewProfile;
     private Button linkTermsUse, linkPrivacyPolicy;
 
+    private final int SIZE_PROFILE_PHOTO = 350;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +45,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         getInstanceViews();
         setPropertiesViews();
+        adjustLayoutHeader();
     }
 
     private void getInstanceViews() {
@@ -78,6 +82,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         linkPrivacyPolicy.setOnClickListener(this);
     }
 
+    private void adjustLayoutHeader(){
+        View informationView = registerProfilePhoto.findViewById(R.id.informationView);
+        informationView.setVisibility(View.INVISIBLE);
+
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) circleImageViewProfile.getLayoutParams();
+        params.height = SIZE_PROFILE_PHOTO;
+        params.width = SIZE_PROFILE_PHOTO;
+        params.addRule(RelativeLayout.CENTER_VERTICAL);
+        params.addRule(RelativeLayout.ALIGN_TOP, 0);
+        circleImageViewProfile.setLayoutParams(params);
+    }
 
     @Override
     public void onClick(View v) {
