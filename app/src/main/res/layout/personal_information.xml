@@ -89,7 +89,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="OAB/UF"
+                    android:hint="OAB/UF*"
                     android:imeOptions="actionNext"
                     android:id="@+id/oabEditText"
                     android:singleLine="true" />
@@ -134,11 +134,68 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="Endereço*"
+                    android:hint="CEP/Zip Code*"
+                    android:imeOptions="actionNext"
+                    android:id="@+id/cepEditText"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="Endereço"
                     android:imeOptions="actionNext"
                     android:id="@+id/adressEditText"
                     android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="Estado"
+                    android:imeOptions="actionNext"
+                    android:id="@+id/stateEditText"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="Cidade"
+                    android:imeOptions="actionNext"
+                    android:id="@+id/cityEditText"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="Bairro"
+                    android:imeOptions="actionNext"
+                    android:id="@+id/neighborhoodEditText"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
 
             <TextView
                 android:layout_width="350dp"

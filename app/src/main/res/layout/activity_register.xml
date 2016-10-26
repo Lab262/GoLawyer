@@ -32,30 +32,6 @@
         <include layout="@layout/header_register"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/headerOfficeInformation"
-            android:layout_gravity="top|center" />
-
-        <include layout="@layout/office_information"
-            android:layout_gravity="top|center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/includeOfficeInformation" />
-
-        <include layout="@layout/header_register"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/headerBankInformation"
-            android:layout_gravity="top|center" />
-
-        <include layout="@layout/bank_information"
-            android:layout_gravity="top|center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/includeBankInformation" />
-
-        <include layout="@layout/header_register"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/headerTermsUse"
             android:layout_gravity="top|center" />
 
