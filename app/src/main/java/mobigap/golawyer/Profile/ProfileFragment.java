@@ -11,11 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import mobigap.golawyer.BottomBarActivity;
 import mobigap.golawyer.Extensions.ActivityManager;
+import mobigap.golawyer.Model.ProfileInformationModel;
+import mobigap.golawyer.Profile.Information.ProfileInformationListAdapter;
 import mobigap.golawyer.Protocols.OnFragmentInteractionListener;
 
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
@@ -35,14 +38,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
 
-    private View headerCellphone, headerEmail, headerDetailUser;
-    private TextView nameHeaderCellphone, nameHeaderEmail, nameHeaderDetailUser;
-    private ExpandableRelativeLayout expandableDetailsUser;
-    private TextView curriculumText;
     private View view;
     private ScrollView scrollView;
-    private ImageView arrowDetail;
     private ImageButton ratingButton;
+    private ListView profileInformationListView;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -105,34 +104,21 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getInstanceViews(){
-        View profileInformationHeader = this.view.findViewById(R.id.profileInformationHeader);
-        headerCellphone = profileInformationHeader.findViewById(R.id.headerCellphone);
-        headerEmail = profileInformationHeader.findViewById(R.id.headerEmail);
-        headerDetailUser = profileInformationHeader.findViewById(R.id.headerDetailUser);
-        nameHeaderCellphone = (TextView) headerCellphone.findViewById(R.id.nameHeaderProfile);
-        nameHeaderEmail = (TextView) headerEmail.findViewById(R.id.nameHeaderProfile);
-        nameHeaderDetailUser = (TextView) headerDetailUser.findViewById(R.id.nameHeaderProfile);
-        expandableDetailsUser = (ExpandableRelativeLayout) this.view.findViewById(R.id.curriculum_information);
-        curriculumText = (TextView) expandableDetailsUser.findViewById(R.id.curriculumText);
         scrollView = (ScrollView) this.view.findViewById(R.id.scrollView);
 
         View profileHeader = this.view.findViewById(R.id.profileHeader);
         ratingButton = (ImageButton)profileHeader.findViewById(R.id.ratingButton);
+
+        View profileInformation = this.view.findViewById(R.id.profileInformation);
+        profileInformationListView = (ListView) profileInformation.findViewById(R.id.profileInformationListView);
+
+
     }
 
     private void setPropertiesViews(){
-        ImageView arrowCellphone = (ImageView) headerCellphone.findViewById(R.id.headerArrowProfile);
-        ImageView arrowEmail = (ImageView) headerEmail.findViewById(R.id.headerArrowProfile);
-        arrowDetail = (ImageView) headerDetailUser.findViewById(R.id.headerArrowProfile);
-        arrowCellphone.setVisibility(View.INVISIBLE);
-        arrowEmail.setVisibility(View.INVISIBLE);
-        arrowDetail.setImageResource(R.drawable.ic_arrow_down_select_item);
-        nameHeaderCellphone.setText("(99)99999-7897");
-        nameHeaderEmail.setText("email@email.com");
-        nameHeaderDetailUser.setText(R.string.placeholder_details_user);
-        headerDetailUser.setOnClickListener(this);
-        curriculumText.setText("Meu curriculo vem aqui.");
         ratingButton.setOnClickListener(this);
+        loadRequestedProfileInformationList(getDummyData());
+
     }
 
     private void adjustLayout() {
@@ -141,31 +127,30 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         cameraButton.setVisibility(View.INVISIBLE);
     }
 
+    private void loadRequestedProfileInformationList(ProfileInformationModel[] profileInformationsRequested) {
+        ProfileInformationListAdapter adapter = new ProfileInformationListAdapter(getActivity().getApplicationContext(), profileInformationsRequested);
+        profileInformationListView.setAdapter(adapter);
+    }
+
+    private ProfileInformationModel[] getDummyData() {
+
+        ProfileInformationModel informationModel1 = new ProfileInformationModel("Nome:", "Huallyd");
+        ProfileInformationModel informationModel2 = new ProfileInformationModel("Email:", "huallyd@gmail.com");
+
+
+        ProfileInformationModel[] dummyData = new ProfileInformationModel[2];
+        dummyData[0] = informationModel1;
+        dummyData[1] = informationModel2;
+
+        return dummyData;
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.headerDetailUser:
-                toggleExpandableLayout(expandableDetailsUser, headerDetailUser);
-                break;
             case R.id.ratingButton:
                 ActivityManager.changeActivity(getActivity(), DetailEvaluationActivity.class);
                 break;
-        }
-    }
-
-    private void toggleExpandableLayout(final ExpandableRelativeLayout expandableRelativeLayout, View headerView){
-        expandableRelativeLayout.toggle();
-        if (expandableRelativeLayout.isExpanded()==false){
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    scrollView.scrollTo(0,scrollView.getMeasuredHeight());
-                    arrowDetail.setImageResource(R.drawable.ic_arrow_down_select_item);
-                }
-            }, 200);
-        }else {
-            arrowDetail.setImageResource(R.drawable.ic_arrow_select_item);
         }
     }
 
