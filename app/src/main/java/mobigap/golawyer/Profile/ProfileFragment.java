@@ -109,9 +109,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         View profileHeader = this.view.findViewById(R.id.profileHeader);
         ratingButton = (ImageButton)profileHeader.findViewById(R.id.ratingButton);
 
-        View profileInformation = this.view.findViewById(R.id.profileInformation);
-        profileInformationListView = (ListView) profileInformation.findViewById(R.id.profileInformationListView);
-
+        profileInformationListView = (ListView) this.view.findViewById(R.id.profileInformationListView);
 
     }
 
