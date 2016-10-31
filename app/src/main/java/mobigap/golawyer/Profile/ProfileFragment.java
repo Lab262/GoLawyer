@@ -38,8 +38,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
 
-    private View view;
-    private ScrollView scrollView;
+    private View view,header;
     private ImageButton ratingButton;
     private ListView profileInformationListView;
 
@@ -79,6 +78,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         this.view = inflater.inflate(R.layout.fragment_profile, container, false);
+        adjustLayoutListView(inflater);
         getInstanceViews();
         setPropertiesViews();
         adjustLayout();
@@ -103,24 +103,25 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         mListener = null;
     }
 
-    private void getInstanceViews(){
-        scrollView = (ScrollView) this.view.findViewById(R.id.scrollView);
-
-        View profileHeader = this.view.findViewById(R.id.profileHeader);
-        ratingButton = (ImageButton)profileHeader.findViewById(R.id.ratingButton);
-
+    private void adjustLayoutListView(LayoutInflater inflater) {
         profileInformationListView = (ListView) this.view.findViewById(R.id.profileInformationListView);
+        loadRequestedProfileInformationList(getDummyData());
+        header = inflater.inflate(
+                R.layout.fragment_header_profile, null, false);
+        profileInformationListView.addHeaderView(header);
+    }
 
+    private void getInstanceViews(){
+        View profileHeader = header.findViewById(R.id.profileHeader);
+        ratingButton = (ImageButton)profileHeader.findViewById(R.id.ratingButton);
     }
 
     private void setPropertiesViews(){
         ratingButton.setOnClickListener(this);
-        loadRequestedProfileInformationList(getDummyData());
-
     }
 
     private void adjustLayout() {
-        View registerProfilePhoto = this.view.findViewById(R.id.registerProfilePhoto);
+        View registerProfilePhoto = header.findViewById(R.id.registerProfilePhoto);
         ImageButton cameraButton = (ImageButton) registerProfilePhoto.findViewById(R.id.cameraButton);
         cameraButton.setVisibility(View.INVISIBLE);
     }

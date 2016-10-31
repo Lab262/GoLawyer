@@ -6,37 +6,11 @@
     tools:context="mobigap.golawyer.Profile.DetailEvaluationActivity"
     android:background="@color/white">
 
-    <LinearLayout
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/layoutDetail">
-
-        <include layout="@layout/header_detail_evaluation"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:id="@+id/header_profile_detail_evaluation"
-            android:layout_gravity="top|center" />
-
-        <include layout="@layout/profile_header_information"
-            android:layout_width="match_parent"
-            android:id="@+id/header_profile_information_detail_evaluation"
-            android:layout_gravity="bottom|center"
-            android:layout_height="wrap_content" />
-
-        <include layout="@layout/header_evaluation_detail"
-            android:layout_width="match_parent"
-            android:id="@+id/header_evaluation_detail"
-            android:layout_gravity="bottom|center"
-            android:layout_height="wrap_content" />
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/commentListView"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15dp" />
-
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:id="@+id/commentListView"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp" />
 
 </LinearLayout>

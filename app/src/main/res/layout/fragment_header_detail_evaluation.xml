@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/header_detail_evaluation"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/header_profile_detail_evaluation"
+        android:layout_gravity="top|center" />
+
+    <include layout="@layout/profile_header_information"
+        android:layout_width="match_parent"
+        android:id="@+id/header_profile_information_detail_evaluation"
+        android:layout_gravity="bottom|center"
+        android:layout_height="wrap_content" />
+
+    <include layout="@layout/header_evaluation_detail"
+        android:layout_width="match_parent"
+        android:id="@+id/header_evaluation_detail"
+        android:layout_gravity="bottom|center"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

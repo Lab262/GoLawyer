@@ -1,5 +1,6 @@
 package mobigap.golawyer.Profile;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,17 +26,17 @@ public class DetailEvaluationActivity extends AppCompatActivity implements Adapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_evaluation);
         getInstanceViews();
+        this.loadRequestedCommentsList(this.getDummyData());
+        adjustLayout();
     }
 
     private void getInstanceViews(){
-        View layoutDetail = findViewById(R.id.layoutDetail);
-        this.listView = (ListView) layoutDetail.findViewById(R.id.commentListView);
+        this.listView = (ListView) findViewById(R.id.commentListView);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        this.loadRequestedCommentsList(this.getDummyData());
     }
 
     private void loadRequestedCommentsList(CommentModel[] commentsRequested) {
@@ -62,6 +63,16 @@ public class DetailEvaluationActivity extends AppCompatActivity implements Adapt
 
         return dummyData;
 
+    }
+
+    private void adjustLayout(){
+        LayoutInflater inflater = (LayoutInflater) getApplicationContext()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View header = inflater.inflate(
+                R.layout.fragment_header_detail_evaluation, null, false);
+
+        listView.addHeaderView(header);
     }
 
     @Override
