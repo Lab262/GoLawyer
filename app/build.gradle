@@ -45,7 +45,7 @@ dependencies {
     //compile 'com.roughike:bottom-bar:1.4.0.1'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.github.paolorotolo:expandableheightlistview:1.0.0'
-
+    compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.github.aakira:expandable-layout:1.5.1@aar'
     compile 'de.hdodenhof:circleimageview:2.1.0'
