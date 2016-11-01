@@ -39,6 +39,8 @@
     <string name="placeholder_credit_card_cvv">CVV: </string>
     <string name="placeholder_credit_card_cellphone_number">Número do celular: </string>
     <string name="placeholder_edit_profile">Editar</string>
+    <string name="placeholder_error_connection">Erro de Conexão</string>
+    <string name="placeholder_message_dialog">Carregando...</string>
 
     <string name="accept">Aceitar </string>
     <string name="refuse">Recusar </string>

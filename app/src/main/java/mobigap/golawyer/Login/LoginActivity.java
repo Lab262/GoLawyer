@@ -1,6 +1,7 @@
 package mobigap.golawyer.Login;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 import mobigap.golawyer.BottomBarActivity;
 import mobigap.golawyer.Extensions.ActivityManager;
+import mobigap.golawyer.Extensions.FeedbackManager;
 import mobigap.golawyer.Model.UserModel;
 import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.Register.ChooseProfileActivity;
@@ -25,6 +27,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
     ImageButton registerButton, loginButton;
     EditText emailEditText, passwordEditText;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     }
 
     private void login(){
+        progressDialog = FeedbackManager.createProgressDialog(this,getString(R.string.placeholder_message_dialog));
         RequestParams requestParams = new RequestParams();
         requestParams.put("login",emailEditText.getText().toString());
         requestParams.put("senha",passwordEditText.getText().toString());
@@ -77,11 +81,12 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 if (Requester.haveSuccess(response)){
+                    progressDialog.dismiss();
                     UserModel userModel = new UserModel(response);
                     ApplicationState.sharedState().currentUser = userModel;
                     ActivityManager.changeActivityAndRemoveParentActivity(LoginActivity.this, BottomBarActivity.class);
                 }else {
-                    //TODO: Toast de erro
+                    createToast(response);
                 }
             }
 
@@ -100,6 +105,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
+    }
+
+    private void createToast(JSONObject response){
+        FeedbackManager.createToast(this,response);
     }
 }
 
