@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,6 +21,7 @@ import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.Register.ChooseProfileActivity;
 import mobigap.golawyer.R;
 import mobigap.golawyer.Requests.Requester;
+import mobigap.golawyer.Requests.UserRequest;
 
 public class LoginActivity extends Activity implements View.OnClickListener {
 
@@ -73,10 +73,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
     private void login(){
         progressDialog = FeedbackManager.createProgressDialog(this,getString(R.string.placeholder_message_dialog));
-        RequestParams requestParams = new RequestParams();
-        requestParams.put("login",emailEditText.getText().toString());
-        requestParams.put("senha",passwordEditText.getText().toString());
-        Requester.postRequest("GetLogin",requestParams,new JsonHttpResponseHandler(){
+        String email = emailEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+        UserRequest.login(email,password, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -93,22 +92,29 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                createErrorToast();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                createErrorToast();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                createErrorToast();
             }
         });
     }
 
     private void createToast(JSONObject response){
         FeedbackManager.createToast(this,response);
+    }
+
+    private void createErrorToast(){
+        FeedbackManager.feedbackErrorResponse(this,progressDialog);
     }
 }
 

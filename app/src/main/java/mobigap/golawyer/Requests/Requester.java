@@ -1,11 +1,14 @@
 package mobigap.golawyer.Requests;
 
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.ResponseHandlerInterface;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Map;
 
 /**
  * Created by luisresende on 31/10/16.
@@ -21,9 +24,9 @@ public class Requester {
 
     public static AsyncHttpClient client = new AsyncHttpClient();
 
-    public static void postRequest(String endPoint, RequestParams requestParams, ResponseHandlerInterface responseHandlerInterface){
+    public static void postRequest(String endPoint, RequestParams requestParams, JsonHttpResponseHandler jsonHttpResponseHandler){
         String url = baseUrl + endPoint + token;
-        client.post(url,requestParams,responseHandlerInterface);
+        client.post(url,requestParams,jsonHttpResponseHandler);
     }
 
     public static Boolean haveSuccess(JSONObject jsonObject){
@@ -38,5 +41,15 @@ public class Requester {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static RequestParams getRequestParams(Map<String,String> params){
+        RequestParams requestParams = new RequestParams();
+
+        for (Map.Entry<String, String> entry : params.entrySet()){
+            requestParams.put(entry.getKey(),entry.getValue());
+        }
+
+        return requestParams;
     }
 }
