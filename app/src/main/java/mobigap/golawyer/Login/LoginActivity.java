@@ -6,10 +6,20 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
 import mobigap.golawyer.BottomBarActivity;
 import mobigap.golawyer.Extensions.ActivityManager;
+import mobigap.golawyer.Model.UserModel;
+import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.Register.ChooseProfileActivity;
 import mobigap.golawyer.R;
+import mobigap.golawyer.Requests.Requester;
 
 public class LoginActivity extends Activity implements View.OnClickListener {
 
@@ -45,8 +55,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 ActivityManager.changeActivity(LoginActivity.this, ChooseProfileActivity.class);
                 break;
             case R.id.loginButton:
-                //requestLogin();
-                ActivityManager.changeActivityAndRemoveParentActivity(LoginActivity.this, BottomBarActivity.class);
+                login();
                 break;
             case R.id.emailEditText:
                 emailEditText.setText("");
@@ -57,6 +66,40 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 passwordEditText.setOnClickListener(null);
                 break;
         }
+    }
+
+    private void login(){
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("login",emailEditText.getText().toString());
+        requestParams.put("senha",passwordEditText.getText().toString());
+        Requester.postRequest("GetLogin",requestParams,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if (Requester.haveSuccess(response)){
+                    UserModel userModel = new UserModel(response);
+                    ApplicationState.sharedState().currentUser = userModel;
+                    ActivityManager.changeActivityAndRemoveParentActivity(LoginActivity.this, BottomBarActivity.class);
+                }else {
+                    //TODO: Toast de erro
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
     }
 }
 

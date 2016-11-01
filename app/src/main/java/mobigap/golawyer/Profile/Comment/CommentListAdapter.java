@@ -65,9 +65,9 @@ public class CommentListAdapter extends BaseAdapter {
 
         //TODO: Set the real image
         //TODO: Set the real rating stars
-        row.rowName.setText(currentModel.name);
-        row.rowComment.setText(currentModel.comment);
-        row.ratingStarsImageView.setImageResource(getImageStarsByID(currentModel.evaluation));
+        row.rowName.setText(currentModel.getName());
+        row.rowComment.setText(currentModel.getComment());
+        row.ratingStarsImageView.setImageResource(getImageStarsByID(currentModel.getEvaluation()));
 
         return convertView;
     }
