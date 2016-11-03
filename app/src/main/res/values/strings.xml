@@ -41,6 +41,10 @@
     <string name="placeholder_edit_profile">Editar</string>
     <string name="placeholder_error_connection">Erro de Conexão</string>
     <string name="placeholder_message_dialog">Carregando...</string>
+    <string name="placeholder_alert_forgot_positive_button">Enviar</string>
+    <string name="placeholder_alert_forgot_negative_button">Cancelar</string>
+    <string name="placeholder_alert_forgot_hint">Email</string>
+    <string name="title_alert_forgot_password">Digite seu email para recuperar sua senha: </string>
 
     <string name="accept">Aceitar </string>
     <string name="refuse">Recusar </string>

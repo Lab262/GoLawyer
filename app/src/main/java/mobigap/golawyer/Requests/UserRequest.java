@@ -12,14 +12,22 @@ import java.util.Map;
 public class UserRequest {
 
     private static String urlLogin = "GetLogin";
-    private static String keyLoginEmail = "login";
-    private static String keyLoginPassword = "senha";
+    private static String urlForgotPassword = "SetRecuperarSenha";
+
+    private static String keyEmail = "login";
+    private static String keyPassword = "senha";
 
     public static void login(String email, String password, JsonHttpResponseHandler jsonHttpResponseHandler){
         Map<String,String> params = new HashMap<>();
-        params.put(keyLoginEmail,email);
-        params.put(keyLoginPassword,password);
+        params.put(keyEmail,email);
+        params.put(keyPassword,password);
         Requester.postRequest(urlLogin,Requester.getRequestParams(params), jsonHttpResponseHandler);
+    }
+
+    public static void forgotPassword(String email, JsonHttpResponseHandler jsonHttpResponseHandler){
+        Map<String,String> params = new HashMap<>();
+        params.put(keyEmail,email);
+        Requester.postRequest(urlForgotPassword,Requester.getRequestParams(params), jsonHttpResponseHandler);
     }
 
 }
