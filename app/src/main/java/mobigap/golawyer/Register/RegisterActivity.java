@@ -12,8 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,12 +23,11 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 import de.hdodenhof.circleimageview.CircleImageView;
-import mobigap.golawyer.BottomBarActivity;
 import mobigap.golawyer.Enums.TypeProfile;
 import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Extensions.CameraConfiguration;
 import mobigap.golawyer.Extensions.FeedbackManager;
-import mobigap.golawyer.MainActivity;
+import mobigap.golawyer.Login.LoginActivity;
 import mobigap.golawyer.R;
 import mobigap.golawyer.Requests.Requester;
 import mobigap.golawyer.Requests.UserRequest;
@@ -218,7 +215,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 progressDialog.dismiss();
                 createToast(response);
                 if (Requester.haveSuccess(response)){
-                    ActivityManager.changeActivityAndRemoveParentActivity(RegisterActivity.this, MainActivity.class);
+                    ActivityManager.changeActivityAndRemoveParentActivity(RegisterActivity.this, LoginActivity.class);
                 }
             }
 
