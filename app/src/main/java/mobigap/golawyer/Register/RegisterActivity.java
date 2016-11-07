@@ -1,5 +1,6 @@
 package mobigap.golawyer.Register;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,13 +18,22 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
 import de.hdodenhof.circleimageview.CircleImageView;
 import mobigap.golawyer.BottomBarActivity;
 import mobigap.golawyer.Enums.TypeProfile;
 import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Extensions.CameraConfiguration;
+import mobigap.golawyer.Extensions.FeedbackManager;
+import mobigap.golawyer.MainActivity;
 import mobigap.golawyer.R;
+import mobigap.golawyer.Requests.Requester;
+import mobigap.golawyer.Requests.UserRequest;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -34,6 +45,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private CircleImageView circleImageViewProfile;
     private ImageView backgroundImageViewProfile;
     private Button linkTermsUse, linkPrivacyPolicy;
+    private TypeProfile typeProfile;
+    private ProgressDialog progressDialog;
+
+    private View personalInformation, termsUse;
+    private EditText nameEditText,emailEditText,registerPasswordEditText,confirmPasswordEditText,oabEditText,cpfEditText,
+            phoneEditText,cepEditText,adressEditText,stateEditText,cityEditText,neighborhoodEditText,curriculumEditText;
 
     private final int SIZE_PROFILE_PHOTO = 350;
 
@@ -43,6 +60,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            typeProfile = TypeProfile.getTypeProfileByOrdinal(extras.getInt("typeProfile"));
+        }
         getInstanceViews();
         setPropertiesViews();
         adjustLayoutHeader();
@@ -64,8 +85,24 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         finalizeRegisterButton = (ImageButton) findViewById(R.id.finalizeRegisterButton);
 
-        linkTermsUse = (Button) findViewById(R.id.linkTermsUse);
-        linkPrivacyPolicy = (Button) findViewById(R.id.linkPrivacyPolicy);
+        termsUse = findViewById(R.id.termsUse);
+        linkTermsUse = (Button) termsUse.findViewById(R.id.linkTermsUse);
+        linkPrivacyPolicy = (Button) termsUse.findViewById(R.id.linkPrivacyPolicy);
+
+        personalInformation = findViewById(R.id.personalInformation);
+        nameEditText = (EditText) personalInformation.findViewById(R.id.nameEditText);
+        emailEditText = (EditText) personalInformation.findViewById(R.id.emailEditText);
+        registerPasswordEditText = (EditText) personalInformation.findViewById(R.id.registerPasswordEditText);
+        confirmPasswordEditText = (EditText) personalInformation.findViewById(R.id.confirmPasswordEditText);
+        oabEditText = (EditText) personalInformation.findViewById(R.id.oabEditText);
+        cpfEditText = (EditText) personalInformation.findViewById(R.id.cpfEditText);
+        phoneEditText = (EditText) personalInformation.findViewById(R.id.phoneEditText);
+        cepEditText = (EditText) personalInformation.findViewById(R.id.cepEditText);
+        adressEditText = (EditText) personalInformation.findViewById(R.id.adressEditText);
+        stateEditText = (EditText) personalInformation.findViewById(R.id.stateEditText);
+        cityEditText = (EditText) personalInformation.findViewById(R.id.cityEditText);
+        neighborhoodEditText = (EditText) personalInformation.findViewById(R.id.neighborhoodEditText);
+        curriculumEditText = (EditText) personalInformation.findViewById(R.id.curriculumEditText);
     }
 
     private void setPropertiesViews() {
@@ -107,11 +144,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 CameraConfiguration.getPicture(this);
                 break;
             case R.id.finalizeRegisterButton:
-                ActivityManager.changeActivityAndRemoveParentActivity(RegisterActivity.this, BottomBarActivity.class);
+                registerUser();
                 break;
             case R.id.linkTermsUse:
+                createErrorToast();
                 break;
             case R.id.linkPrivacyPolicy:
+                createErrorToast();
                 break;
         }
     }
@@ -148,5 +187,66 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 }
                 break;
         }
+    }
+
+    private void registerUser(){
+        progressDialog = FeedbackManager.createProgressDialog(this,getString(R.string.placeholder_message_dialog));
+
+        String typeAccount = TypeProfile.getStringTypeProfile(typeProfile.ordinal());
+
+        //TODO: Cadastrar foto
+        String photo = "";
+
+        String name = nameEditText.getText().toString();
+        String oab = oabEditText.getText().toString();
+        String doc = cpfEditText.getText().toString();
+        String phoneNumber = phoneEditText.getText().toString();
+        String email = emailEditText.getText().toString();
+        String curriculum = curriculumEditText.getText().toString();
+        String zipCode = cepEditText.getText().toString();
+        String address = adressEditText.getText().toString();
+        String neighborhood = neighborhoodEditText.getText().toString();
+        String city = cityEditText.getText().toString();
+        String state = stateEditText.getText().toString();
+        String password = registerPasswordEditText.getText().toString();
+
+        UserRequest.registerUser(typeAccount,photo,name,oab,doc,phoneNumber,email,curriculum,zipCode,address,
+                neighborhood,city,state,password, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                progressDialog.dismiss();
+                createToast(response);
+                if (Requester.haveSuccess(response)){
+                    ActivityManager.changeActivityAndRemoveParentActivity(RegisterActivity.this, MainActivity.class);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                createErrorToast();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                createErrorToast();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                createErrorToast();
+            }
+        });
+    }
+
+    private void createToast(JSONObject response){
+        FeedbackManager.createToast(this,response);
+    }
+
+    private void createErrorToast(){
+        FeedbackManager.feedbackErrorResponse(this,progressDialog);
     }
 }

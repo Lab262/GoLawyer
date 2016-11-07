@@ -27,7 +27,8 @@
         <include layout="@layout/personal_information"
             android:layout_gravity="top|center"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:id="@+id/personalInformation" />
 
         <include layout="@layout/header_register"
             android:layout_width="match_parent"
@@ -38,7 +39,8 @@
         <include layout="@layout/terms_use"
             android:layout_gravity="top|center"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:id="@+id/termsUse" />
 
         <ImageButton
             android:id="@+id/finalizeRegisterButton"
