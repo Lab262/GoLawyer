@@ -3,6 +3,7 @@ package mobigap.golawyer.Register;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import mobigap.golawyer.Enums.TypeProfile;
 import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Extensions.CameraConfiguration;
 import mobigap.golawyer.Extensions.FeedbackManager;
+import mobigap.golawyer.Extensions.ImageConvert;
 import mobigap.golawyer.Login.LoginActivity;
 import mobigap.golawyer.R;
 import mobigap.golawyer.Requests.Requester;
@@ -192,7 +194,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String typeAccount = TypeProfile.getStringTypeProfile(typeProfile.ordinal());
 
         //TODO: Cadastrar foto
-        String photo = "";
+        String photo = ImageConvert.getEncoded64ImageStringFromImageView(circleImageViewProfile);
 
         String name = nameEditText.getText().toString();
         String oab = oabEditText.getText().toString();

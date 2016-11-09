@@ -26,7 +26,7 @@ public class UserModel {
     private int totalOrders;
     private int totalConcludedOrders;
     private ArrayList<CommentModel> comments;
-    private ArrayList<EvaluationModel> evaluations;
+    private EvaluationModel evaluation;
 
     private static String keyID = "id_user";
     private static String keyName = "nome";
@@ -60,7 +60,7 @@ public class UserModel {
             this.totalOrders = Integer.parseInt(jsonObject.getString(keyTotalOrders));
             this.totalConcludedOrders = Integer.parseInt(jsonObject.getString(keyTotalConcludedOrders));
             this.comments = parseComments(jsonObject.getJSONArray(keyComments));
-            this.evaluations = parseEvaluations(jsonObject.getJSONArray(keyEvaluations));
+            this.evaluation = parseEvaluations(jsonObject.getJSONArray(keyEvaluations));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -82,7 +82,7 @@ public class UserModel {
         return comments;
     }
 
-    private ArrayList<EvaluationModel> parseEvaluations(JSONArray arrayEvaluations){
+    private EvaluationModel parseEvaluations(JSONArray arrayEvaluations){
 
         ArrayList<EvaluationModel> evaluations = new ArrayList<>();
 
@@ -95,7 +95,126 @@ public class UserModel {
             }
         }
 
-        return evaluations;
+        return evaluations.get(0);
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTypeAccount() {
+        return typeAccount;
+    }
+
+    public void setTypeAccount(String typeAccount) {
+        this.typeAccount = typeAccount;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getOab() {
+        return oab;
+    }
+
+    public void setOab(String oab) {
+        this.oab = oab;
+    }
+
+    public String getCurriculum() {
+        return curriculum;
+    }
+
+    public void setCurriculum(String curriculum) {
+        this.curriculum = curriculum;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getNeighborhood() {
+        return neighborhood;
+    }
+
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public int getTotalOrders() {
+        return totalOrders;
+    }
+
+    public void setTotalOrders(int totalOrders) {
+        this.totalOrders = totalOrders;
+    }
+
+    public int getTotalConcludedOrders() {
+        return totalConcludedOrders;
+    }
+
+    public void setTotalConcludedOrders(int totalConcludedOrders) {
+        this.totalConcludedOrders = totalConcludedOrders;
+    }
+
+    public ArrayList<CommentModel> getComments() {
+        return comments;
+    }
+
+    public void setComments(ArrayList<CommentModel> comments) {
+        this.comments = comments;
+    }
+
+    public EvaluationModel getEvaluation() {
+        return evaluation;
+    }
+
+    public void setEvaluation(EvaluationModel evaluation) {
+        this.evaluation = evaluation;
+    }
 }

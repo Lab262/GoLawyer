@@ -1,5 +1,6 @@
 package mobigap.golawyer.Profile;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,15 +16,29 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import cz.msebera.android.httpclient.Header;
+import de.hdodenhof.circleimageview.CircleImageView;
 import mobigap.golawyer.BottomBarActivity;
 import mobigap.golawyer.Extensions.ActivityManager;
+import mobigap.golawyer.Extensions.FeedbackManager;
+import mobigap.golawyer.Model.EvaluationModel;
 import mobigap.golawyer.Model.ProfileInformationModel;
+import mobigap.golawyer.Model.UserDataModel;
+import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.Profile.Information.ProfileInformationListAdapter;
 import mobigap.golawyer.Protocols.OnFragmentInteractionListener;
 
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import mobigap.golawyer.R;
+import mobigap.golawyer.Requests.Requester;
+import mobigap.golawyer.Requests.UserRequest;
 
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
@@ -41,6 +56,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private View view,header;
     private ImageButton ratingButton;
     private ListView profileInformationListView;
+    private CircleImageView circleImageViewProfile;
+    private ImageView backgroundImageViewProfile;
+    private TextView nameTextView, hasOABTextView, numberAttendanceTextView, numberCompletedTextView;
+    private ProgressDialog progressDialog;
+    private LayoutInflater defaultInflater;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -78,10 +98,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         this.view = inflater.inflate(R.layout.fragment_profile, container, false);
-        adjustLayoutListView(inflater);
+        defaultInflater = inflater;
         getInstanceViews();
         setPropertiesViews();
         adjustLayout();
+        getDataProfile();
         return this.view;
     }
 
@@ -105,43 +126,60 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void adjustLayoutListView(LayoutInflater inflater) {
         profileInformationListView = (ListView) this.view.findViewById(R.id.profileInformationListView);
-        loadRequestedProfileInformationList(getDummyData());
-        header = inflater.inflate(
-                R.layout.fragment_header_profile, null, false);
+        loadRequestedProfileInformationList(getProfileData());
         profileInformationListView.addHeaderView(header);
     }
 
     private void getInstanceViews(){
+        header = defaultInflater.inflate(
+                R.layout.fragment_header_profile, null, false);
         View profileHeader = header.findViewById(R.id.profileHeader);
         ratingButton = (ImageButton)profileHeader.findViewById(R.id.ratingButton);
+        View registerProfilePhoto = header.findViewById(R.id.registerProfilePhoto);
+        circleImageViewProfile = (CircleImageView) registerProfilePhoto.findViewById(R.id.profileImage);
+        backgroundImageViewProfile = (ImageView) registerProfilePhoto.findViewById(R.id.backgroundPhotoImage);
+        nameTextView = (TextView) registerProfilePhoto.findViewById(R.id.nameTextView);
+        hasOABTextView = (TextView) registerProfilePhoto.findViewById(R.id.hasOABTextView);
+        numberAttendanceTextView = (TextView) profileHeader.findViewById(R.id.numberAttendanceTextView);
+        numberCompletedTextView = (TextView) profileHeader.findViewById(R.id.numberCompletedTextView);
     }
 
     private void setPropertiesViews(){
         ratingButton.setOnClickListener(this);
+        //TODO: Colocar a imagem real
+        nameTextView.setText(ApplicationState.sharedState().currentUser.getName());
+        hasOABTextView.setText(ApplicationState.sharedState().currentUser.getOab());
+        numberAttendanceTextView.setText(String.valueOf(ApplicationState.sharedState().currentUser.getTotalOrders()));
+        numberCompletedTextView.setText(String.valueOf(ApplicationState.sharedState().currentUser.getTotalConcludedOrders()));
+        EvaluationModel evaluationModel = ApplicationState.sharedState().currentUser.getEvaluation();
+        ratingButton.setImageResource(evaluationModel.getIdTotal());
+
     }
 
     private void adjustLayout() {
         View registerProfilePhoto = header.findViewById(R.id.registerProfilePhoto);
         ImageButton cameraButton = (ImageButton) registerProfilePhoto.findViewById(R.id.cameraButton);
         cameraButton.setVisibility(View.INVISIBLE);
+
     }
 
-    private void loadRequestedProfileInformationList(ProfileInformationModel[] profileInformationsRequested) {
+    private void loadRequestedProfileInformationList(ArrayList<ProfileInformationModel> profileInformationsRequested) {
         ProfileInformationListAdapter adapter = new ProfileInformationListAdapter(getActivity().getApplicationContext(), profileInformationsRequested);
         profileInformationListView.setAdapter(adapter);
     }
 
-    private ProfileInformationModel[] getDummyData() {
+    private ArrayList<ProfileInformationModel> getProfileData() {
 
-        ProfileInformationModel informationModel1 = new ProfileInformationModel("Nome:", "Huallyd");
-        ProfileInformationModel informationModel2 = new ProfileInformationModel("Email:", "huallyd@gmail.com");
+        ArrayList<ProfileInformationModel> profileInformationModels = new ArrayList<>();
 
+        for (UserDataModel userDataModel: ApplicationState.sharedState().userDataModels){
+            if (userDataModel.getVisible()){
+                ProfileInformationModel informationModel = new ProfileInformationModel(userDataModel.getDataTitle(), userDataModel.getDataValue());
+                profileInformationModels.add(informationModel);
+            }
+        }
 
-        ProfileInformationModel[] dummyData = new ProfileInformationModel[2];
-        dummyData[0] = informationModel1;
-        dummyData[1] = informationModel2;
-
-        return dummyData;
+        return profileInformationModels;
     }
 
     @Override
@@ -153,18 +191,54 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-//    }
+    private void getDataProfile(){
+        progressDialog = FeedbackManager.createProgressDialog(getActivity(),getString(R.string.placeholder_message_dialog));
+
+        UserRequest.getProfileData(ApplicationState.sharedState().currentUser.getId(), new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                progressDialog.dismiss();
+                if (Requester.haveSuccess(response)){
+                    ApplicationState.sharedState().userDataModels = new ArrayList<>();
+                    JSONArray arrayUserData = Requester.getJsonArray(response,UserDataModel.keyItensDataModel);
+                    for (int i=0; i<arrayUserData.length(); i++){
+                        JSONObject jsonObject = Requester.getJsonObject(arrayUserData,i);
+                        UserDataModel userDataModel = new UserDataModel(jsonObject);
+                        ApplicationState.sharedState().userDataModels.add(userDataModel);
+                    }
+                    //Update view
+                    adjustLayoutListView(defaultInflater);
+                }else {
+                    createToast(response);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                createErrorToast();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                createErrorToast();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                createErrorToast();
+            }
+        });
+    }
+
+    private void createToast(JSONObject response){
+        FeedbackManager.createToast(getActivity(),response);
+    }
+
+    private void createErrorToast(){
+        FeedbackManager.feedbackErrorResponse(getActivity(),progressDialog);
+    }
 }

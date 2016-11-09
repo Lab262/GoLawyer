@@ -1,5 +1,8 @@
 package mobigap.golawyer.Persistence;
 
+import java.util.ArrayList;
+
+import mobigap.golawyer.Model.UserDataModel;
 import mobigap.golawyer.Model.UserModel;
 
 /**
@@ -9,6 +12,7 @@ import mobigap.golawyer.Model.UserModel;
 public class ApplicationState {
 
     public UserModel currentUser;
+    public ArrayList<UserDataModel> userDataModels;
 
     private static ApplicationState ourInstance = new ApplicationState();
 
@@ -17,7 +21,6 @@ public class ApplicationState {
     }
 
     private ApplicationState(){
-
     }
 
 }

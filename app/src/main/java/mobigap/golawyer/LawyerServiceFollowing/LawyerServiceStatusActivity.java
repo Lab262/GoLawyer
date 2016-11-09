@@ -23,7 +23,7 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
     ImageView backgroundPhotoImage;
     ImageButton cameraButton;
     CircleImageView profileImageView;
-    TextView hasOABTextView, specialtyTextView,nameTextView;
+    TextView hasOABTextView,nameTextView;
 
     ImageView demandImage, paymentImage, chatImage, deliveryImage, rateImage;
     TextView demandDescription, paymentDescription, chatDescription, deliveryDescription, rateDescription;
@@ -69,7 +69,6 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
         cameraButton = (ImageButton) profilePhotoView.findViewById(R.id.cameraButton);
         profileImageView = (CircleImageView) profilePhotoView.findViewById(R.id.profileImage);
         hasOABTextView = (TextView) profilePhotoView.findViewById(R.id.hasOABTextView);
-        specialtyTextView = (TextView) profilePhotoView.findViewById(R.id.specialtyTextView);
         nameTextView = (TextView) profilePhotoView.findViewById(R.id.nameTextView);
         backgroundPhotoImage = (ImageView) profilePhotoView.findViewById(R.id.backgroundPhotoImage);
 

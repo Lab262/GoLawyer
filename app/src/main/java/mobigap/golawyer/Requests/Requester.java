@@ -4,6 +4,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,5 +51,25 @@ public class Requester {
         }
 
         return requestParams;
+    }
+
+    public static JSONArray getJsonArray(JSONObject response, String keyArray){
+        JSONArray jsonArray = null;
+        try {
+            jsonArray = response.getJSONArray(keyArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonArray;
+    }
+
+    public static JSONObject getJsonObject(JSONArray arrayResponse, int position){
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = (JSONObject) arrayResponse.get(position);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
     }
 }

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import mobigap.golawyer.Model.ProfileInformationModel;
 import mobigap.golawyer.Profile.Information.ProfileInformationListRow;
 import mobigap.golawyer.R;
@@ -17,22 +19,22 @@ import mobigap.golawyer.R;
 
 public class ProfileInformationListAdapter extends BaseAdapter {
 
-    private static ProfileInformationModel[] data;
+    private static ArrayList<ProfileInformationModel> data;
     private Context context;
 
-    public ProfileInformationListAdapter(Context context, ProfileInformationModel[] data) {
+    public ProfileInformationListAdapter(Context context, ArrayList<ProfileInformationModel> data) {
         this.context = context;
         this.data = data;
     }
 
     @Override
     public int getCount() {
-        return data.length;
+        return data.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return data[position];
+        return data.get(position);
     }
 
     @Override
@@ -44,7 +46,7 @@ public class ProfileInformationListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ProfileInformationListRow row;
-        ProfileInformationModel currentModel = data[position];
+        ProfileInformationModel currentModel = data.get(position);
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

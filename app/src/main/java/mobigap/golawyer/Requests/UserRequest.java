@@ -14,6 +14,7 @@ public class UserRequest {
     private static String urlLogin = "GetLogin";
     private static String urlForgotPassword = "SetRecuperarSenha";
     private static String urlRegisterUser = "SetCadastro";
+    private static String urlGetProfileData = "GetDadosPerfil";
 
     private static String keyLogin = "login";
     private static String keyPassword = "senha";
@@ -30,6 +31,7 @@ public class UserRequest {
     private static String keyNeighborhood = "bairro";
     private static String keyCity = "cidade";
     private static String keyState = "estado";
+    private static String keyIdUser = "id_user";
 
     public static void login(String email, String password, JsonHttpResponseHandler jsonHttpResponseHandler){
         Map<String,String> params = new HashMap<>();
@@ -64,6 +66,12 @@ public class UserRequest {
         params.put(keyState,state);
         params.put(keyPassword,password);
         Requester.postRequest(urlRegisterUser,Requester.getRequestParams(params), jsonHttpResponseHandler);
+    }
+
+    public static void getProfileData(String idUser, JsonHttpResponseHandler jsonHttpResponseHandler){
+        Map<String,String> params = new HashMap<>();
+        params.put(keyIdUser,idUser);
+        Requester.postRequest(urlGetProfileData,Requester.getRequestParams(params), jsonHttpResponseHandler);
     }
 
 }
