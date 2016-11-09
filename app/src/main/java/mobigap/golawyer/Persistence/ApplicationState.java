@@ -1,8 +1,12 @@
 package mobigap.golawyer.Persistence;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import java.util.ArrayList;
 
 import mobigap.golawyer.Model.UserDataModel;
+import mobigap.golawyer.Model.UserInformationModel;
 import mobigap.golawyer.Model.UserModel;
 
 /**
@@ -11,10 +15,11 @@ import mobigap.golawyer.Model.UserModel;
 
 public class ApplicationState {
 
-    public UserModel currentUser;
-    public ArrayList<UserDataModel> userDataModels;
+    private UserModel currentUser = null;
+    public UserInformationModel currentUserInformationModel = null;
 
     private static ApplicationState ourInstance = new ApplicationState();
+    private static String nameSharedPreferences = "currentUserStorage";
 
     public static ApplicationState sharedState() {
         return ourInstance;
@@ -23,4 +28,32 @@ public class ApplicationState {
     private ApplicationState(){
     }
 
+    public UserModel getCurrentUser(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(nameSharedPreferences, 0); // 0 - for private mode
+        String id = preferences.getString(UserModel.keyID,null);
+        if (currentUser==null){
+            if (id!=null){
+                currentUser = new UserModel(preferences);
+                return currentUser;
+            }else {
+                return null;
+            }
+        }else {
+            return currentUser;
+        }
+    }
+
+    public void setCurrentUser(UserModel currentUser, Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(nameSharedPreferences, 0); // 0 - for private mode
+        SharedPreferences.Editor editor = preferences.edit();
+        this.currentUser = currentUser;
+        this.currentUser.savePropertyUser(editor);
+    }
+
+    public void clearCurrentUser(Context context){
+        SharedPreferences preferences = context.getSharedPreferences(nameSharedPreferences, 0); // 0 - for private mode
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.commit();
+    }
 }

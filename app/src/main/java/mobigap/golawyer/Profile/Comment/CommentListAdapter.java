@@ -65,7 +65,7 @@ public class CommentListAdapter extends BaseAdapter {
             row = (CommentListRow) convertView.getTag();
         }
 
-        //TODO: Set the real image
+        //TODO: Colocar a imagem real no rowProfileImageView
         row.rowName.setText(currentModel.getName());
         row.rowComment.setText(currentModel.getComment());
         row.ratingStarsImageView.setImageResource(getImageStarsByID(currentModel.getEvaluation()));

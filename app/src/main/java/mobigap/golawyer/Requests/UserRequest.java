@@ -15,6 +15,7 @@ public class UserRequest {
     private static String urlForgotPassword = "SetRecuperarSenha";
     private static String urlRegisterUser = "SetCadastro";
     private static String urlGetProfileData = "GetDadosPerfil";
+    private static String urlGetProfile = "GetAdvogado";
 
     private static String keyLogin = "login";
     private static String keyPassword = "senha";

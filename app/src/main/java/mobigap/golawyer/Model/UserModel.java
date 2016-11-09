@@ -1,5 +1,7 @@
 package mobigap.golawyer.Model;
 
+import android.content.SharedPreferences;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,26 +25,32 @@ public class UserModel {
     private String cep;
     private String neighborhood;
     private String city;
-    private int totalOrders;
-    private int totalConcludedOrders;
-    private ArrayList<CommentModel> comments;
-    private EvaluationModel evaluation;
 
-    private static String keyID = "id_user";
-    private static String keyName = "nome";
+    public static String keyID = "id_user";
+    public static String keyName = "nome";
     private static String keyTypeAccount = "tipo_conta";
     private static String keyEmail = "email";
     private static String keyCpf = "cpf";
-    private static String keyOab = "oab";
-    private static String keyCurriculum = "curriculo";
+    public static String keyOab = "oab";
+    public static String keyCurriculum = "curriculo";
     private static String keyPhoto = "imagem";
     private static String keyCep = "cep";
     private static String keyNeighborhood = "bairro";
     private static String keyCity = "cidade";
-    private static String keyTotalOrders = "qtd_atendimentos";
-    private static String keyTotalConcludedOrders = "qtd_atendimentos_concluidos";
-    private static String keyComments = "comentarios";
-    private static String keyEvaluations = "avaliacao";
+
+    public UserModel(SharedPreferences preferences){
+        this.id = preferences.getString(keyID,null);
+        this.name = preferences.getString(keyName,null);
+        this.typeAccount = preferences.getString(keyTypeAccount,null);
+        this.email = preferences.getString(keyEmail,null);
+        this.cpf = preferences.getString(keyCpf,null);
+        this.oab = preferences.getString(keyOab,null);
+        this.curriculum = preferences.getString(keyCurriculum,null);
+        this.photo = preferences.getString(keyPhoto,null);
+        this.cep = preferences.getString(keyCep,null);
+        this.neighborhood = preferences.getString(keyNeighborhood,null);
+        this.city = preferences.getString(keyCity,null);
+    }
 
     public UserModel(JSONObject jsonObject){
         try {
@@ -57,45 +65,24 @@ public class UserModel {
             this.cep = jsonObject.getString(keyCep);
             this.neighborhood = jsonObject.getString(keyNeighborhood);
             this.city = jsonObject.getString(keyCity);
-            this.totalOrders = Integer.parseInt(jsonObject.getString(keyTotalOrders));
-            this.totalConcludedOrders = Integer.parseInt(jsonObject.getString(keyTotalConcludedOrders));
-            this.comments = parseComments(jsonObject.getJSONArray(keyComments));
-            this.evaluation = parseEvaluations(jsonObject.getJSONArray(keyEvaluations));
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private ArrayList<CommentModel> parseComments(JSONArray arrayComments){
-
-        ArrayList<CommentModel> comments = new ArrayList<>();
-
-        for (int i=0; i<arrayComments.length(); i++){
-            try {
-                CommentModel comment = new CommentModel(arrayComments.getJSONObject(i));
-                comments.add(comment);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return comments;
-    }
-
-    private EvaluationModel parseEvaluations(JSONArray arrayEvaluations){
-
-        ArrayList<EvaluationModel> evaluations = new ArrayList<>();
-
-        for (int i=0; i<arrayEvaluations.length(); i++){
-            try {
-                EvaluationModel evaluation = new EvaluationModel(arrayEvaluations.getJSONObject(i));
-                evaluations.add(evaluation);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return evaluations.get(0);
+    public void savePropertyUser(SharedPreferences.Editor editor){
+        editor.putString(keyID,this.id);
+        editor.putString(keyName,this.name);
+        editor.putString(keyTypeAccount,this.typeAccount);
+        editor.putString(keyEmail,this.email);
+        editor.putString(keyCpf,this.cpf);
+        editor.putString(keyOab,this.oab);
+        editor.putString(keyCurriculum,this.curriculum);
+        editor.putString(keyPhoto,this.photo);
+        editor.putString(keyCep,this.cep);
+        editor.putString(keyNeighborhood,this.neighborhood);
+        editor.putString(keyCity,this.city);
+        editor.commit();
     }
 
     public String getId() {
@@ -186,35 +173,4 @@ public class UserModel {
         this.city = city;
     }
 
-    public int getTotalOrders() {
-        return totalOrders;
-    }
-
-    public void setTotalOrders(int totalOrders) {
-        this.totalOrders = totalOrders;
-    }
-
-    public int getTotalConcludedOrders() {
-        return totalConcludedOrders;
-    }
-
-    public void setTotalConcludedOrders(int totalConcludedOrders) {
-        this.totalConcludedOrders = totalConcludedOrders;
-    }
-
-    public ArrayList<CommentModel> getComments() {
-        return comments;
-    }
-
-    public void setComments(ArrayList<CommentModel> comments) {
-        this.comments = comments;
-    }
-
-    public EvaluationModel getEvaluation() {
-        return evaluation;
-    }
-
-    public void setEvaluation(EvaluationModel evaluation) {
-        this.evaluation = evaluation;
-    }
 }

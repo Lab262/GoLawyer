@@ -104,7 +104,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Dia
                 progressDialog.dismiss();
                 if (Requester.haveSuccess(response)){
                     UserModel userModel = new UserModel(response);
-                    ApplicationState.sharedState().currentUser = userModel;
+                    ApplicationState.sharedState().setCurrentUser(userModel,getApplicationContext());
                     ActivityManager.changeActivityAndRemoveParentActivity(LoginActivity.this, BottomBarActivity.class);
                 }else {
                     createToast(response);

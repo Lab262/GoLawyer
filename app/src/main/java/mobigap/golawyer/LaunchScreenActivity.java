@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Login.LoginActivity;
+import mobigap.golawyer.Persistence.ApplicationState;
 
 public class LaunchScreenActivity extends Activity {
 
@@ -21,8 +22,11 @@ public class LaunchScreenActivity extends Activity {
             @Override
             public void run() {
 
-                ActivityManager.changeActivity(LaunchScreenActivity.this, LoginActivity.class);
-
+                if (ApplicationState.sharedState().getCurrentUser(getApplicationContext())==null){
+                    ActivityManager.changeActivityAndRemoveParentActivity(LaunchScreenActivity.this, LoginActivity.class);
+                }else {
+                    ActivityManager.changeActivityAndRemoveParentActivity(LaunchScreenActivity.this, BottomBarActivity.class);
+                }
                 finish();
 
             }

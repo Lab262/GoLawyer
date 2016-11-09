@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import mobigap.golawyer.Model.CommentModel;
 import mobigap.golawyer.Model.EvaluationModel;
 import mobigap.golawyer.Model.ServiceRequestModel;
+import mobigap.golawyer.Model.UserModel;
 import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.Profile.Comment.CommentListAdapter;
 import mobigap.golawyer.R;
@@ -43,10 +44,22 @@ public class DetailEvaluationActivity extends AppCompatActivity implements Adapt
     private ProgressBar progressBar5, progressBar4, progressBar3, progressBar2, progressBar1;
     private ImageView totalStarsImageView;
 
+    private String name, curriculum, oab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_evaluation);
+        Bundle bundleExtras = getIntent().getExtras();
+        if (bundleExtras!=null){
+            name = (String) bundleExtras.get(UserModel.keyName);
+            curriculum = (String) bundleExtras.get(UserModel.keyCurriculum);
+            oab = (String) bundleExtras.get(UserModel.keyOab);
+        }else {
+            name = "";
+            curriculum = "";
+            oab = "";
+        }
         getInstanceViews();
         loadRequestedCommentsList(getCommentUserData());
         adjustLayout();
@@ -67,7 +80,7 @@ public class DetailEvaluationActivity extends AppCompatActivity implements Adapt
     }
 
     private ArrayList<CommentModel> getCommentUserData() {
-        return ApplicationState.sharedState().currentUser.getComments();
+        return ApplicationState.sharedState().currentUserInformationModel.getComments();
     }
 
     private void adjustLayout(){
@@ -104,14 +117,17 @@ public class DetailEvaluationActivity extends AppCompatActivity implements Adapt
         progressBar2 = (ProgressBar) header_evaluation_detail.findViewById(R.id.progressBar2);
         progressBar1 = (ProgressBar) header_evaluation_detail.findViewById(R.id.progressBar1);
 
-        //Set propertys
-        nameLawyer.setText(ApplicationState.sharedState().currentUser.getName());
-        miniCurriculumTextView.setText(ApplicationState.sharedState().currentUser.getCurriculum());
-        oabTextView.setText("OAB: " + ApplicationState.sharedState().currentUser.getOab());
+        setPropertysData();
+    }
 
-        numberAttendanceTextView.setText(String.valueOf(ApplicationState.sharedState().currentUser.getTotalOrders()));
-        numberCompletedTextView.setText(String.valueOf(ApplicationState.sharedState().currentUser.getTotalConcludedOrders()));
-        EvaluationModel evaluationModel = ApplicationState.sharedState().currentUser.getEvaluation();
+    private void setPropertysData(){
+        nameLawyer.setText(name);
+        miniCurriculumTextView.setText(curriculum);
+        oabTextView.setText("OAB: " + oab);
+
+        numberAttendanceTextView.setText(String.valueOf(ApplicationState.sharedState().currentUserInformationModel.getTotalOrders()));
+        numberCompletedTextView.setText(String.valueOf(ApplicationState.sharedState().currentUserInformationModel.getTotalConcludedOrders()));
+        EvaluationModel evaluationModel = ApplicationState.sharedState().currentUserInformationModel.getEvaluation();
         ratingButton.setImageResource(evaluationModel.getIdTotal());
 
 
