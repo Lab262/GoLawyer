@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import mobigap.golawyer.Model.CommentModel;
 import mobigap.golawyer.R;
@@ -17,22 +19,22 @@ import mobigap.golawyer.R;
  */
 public class CommentListAdapter extends BaseAdapter {
 
-    private static CommentModel[] data;
+    private static ArrayList<CommentModel> data;
     private Context context;
 
-    public CommentListAdapter(Context context, CommentModel[] data) {
+    public CommentListAdapter(Context context, ArrayList<CommentModel> data) {
         this.context = context;
         this.data = data;
     }
 
     @Override
     public int getCount() {
-        return data.length;
+        return data.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return data[position];
+        return data.get(position);
     }
 
     @Override
@@ -44,7 +46,7 @@ public class CommentListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         CommentListRow row;
-        CommentModel currentModel = data[position];
+        CommentModel currentModel = data.get(position);
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -64,7 +66,6 @@ public class CommentListAdapter extends BaseAdapter {
         }
 
         //TODO: Set the real image
-        //TODO: Set the real rating stars
         row.rowName.setText(currentModel.getName());
         row.rowComment.setText(currentModel.getComment());
         row.ratingStarsImageView.setImageResource(getImageStarsByID(currentModel.getEvaluation()));

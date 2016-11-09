@@ -8,14 +8,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import mobigap.golawyer.Model.CommentModel;
+import mobigap.golawyer.Model.EvaluationModel;
 import mobigap.golawyer.Model.ServiceRequestModel;
+import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.Profile.Comment.CommentListAdapter;
 import mobigap.golawyer.R;
 
@@ -23,12 +30,25 @@ public class DetailEvaluationActivity extends AppCompatActivity implements Adapt
 
     private ListView listView;
 
+    private View header_profile_detail_evaluation;
+    private ImageView lawyerImageView;
+    private TextView nameLawyer,miniCurriculumTextView,oabTextView;
+
+    private View header_profile_information_detail_evaluation;
+    private ImageButton ratingButton;
+    private TextView numberAttendanceTextView,numberCompletedTextView;
+
+    private View header_evaluation_detail;
+    private TextView totalAttendanceTextView;
+    private ProgressBar progressBar5, progressBar4, progressBar3, progressBar2, progressBar1;
+    private ImageView totalStarsImageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_evaluation);
         getInstanceViews();
-        this.loadRequestedCommentsList(this.getDummyData());
+        loadRequestedCommentsList(getCommentUserData());
         adjustLayout();
     }
 
@@ -41,17 +61,13 @@ public class DetailEvaluationActivity extends AppCompatActivity implements Adapt
         super.onStart();
     }
 
-    private void loadRequestedCommentsList(CommentModel[] commentsRequested) {
+    private void loadRequestedCommentsList(ArrayList<CommentModel> commentsRequested) {
         CommentListAdapter adapter = new CommentListAdapter(getApplicationContext(), commentsRequested);
         listView.setAdapter(adapter);
     }
 
-    private CommentModel[] getDummyData() {
-
-        //TODO: Preencher com dados reais
-
-        return new CommentModel[0];
-
+    private ArrayList<CommentModel> getCommentUserData() {
+        return ApplicationState.sharedState().currentUser.getComments();
     }
 
     private void adjustLayout(){
@@ -62,6 +78,57 @@ public class DetailEvaluationActivity extends AppCompatActivity implements Adapt
                 R.layout.fragment_header_detail_evaluation, null, false);
 
         listView.addHeaderView(header);
+        setViewsData(header);
+    }
+
+    private void setViewsData(View header){
+        //TODO: Colocar a imagem real no lawyerImageView
+
+        //Get instance of header for set
+        header_profile_detail_evaluation = header.findViewById(R.id.header_profile_detail_evaluation);
+        nameLawyer = (TextView) header_profile_detail_evaluation.findViewById(R.id.nameLawyer);
+        miniCurriculumTextView = (TextView) header_profile_detail_evaluation.findViewById(R.id.miniCurriculumTextView);
+        oabTextView = (TextView) header_profile_detail_evaluation.findViewById(R.id.oabTextView);
+
+        header_profile_information_detail_evaluation = header.findViewById(R.id.header_profile_information_detail_evaluation);
+        numberAttendanceTextView = (TextView) header_profile_information_detail_evaluation.findViewById(R.id.numberAttendanceTextView);
+        numberCompletedTextView = (TextView) header_profile_information_detail_evaluation.findViewById(R.id.numberCompletedTextView);
+        ratingButton = (ImageButton) header_profile_information_detail_evaluation.findViewById(R.id.ratingButton);
+
+        header_evaluation_detail = header.findViewById(R.id.header_evaluation_detail);
+        totalAttendanceTextView = (TextView) header_evaluation_detail.findViewById(R.id.totalAttendanceTextView);
+        totalStarsImageView = (ImageView) header_evaluation_detail.findViewById(R.id.totalStarsImageView);
+        progressBar5 = (ProgressBar) header_evaluation_detail.findViewById(R.id.progressBar5);
+        progressBar4 = (ProgressBar) header_evaluation_detail.findViewById(R.id.progressBar4);
+        progressBar3 = (ProgressBar) header_evaluation_detail.findViewById(R.id.progressBar3);
+        progressBar2 = (ProgressBar) header_evaluation_detail.findViewById(R.id.progressBar2);
+        progressBar1 = (ProgressBar) header_evaluation_detail.findViewById(R.id.progressBar1);
+
+        //Set propertys
+        nameLawyer.setText(ApplicationState.sharedState().currentUser.getName());
+        miniCurriculumTextView.setText(ApplicationState.sharedState().currentUser.getCurriculum());
+        oabTextView.setText("OAB: " + ApplicationState.sharedState().currentUser.getOab());
+
+        numberAttendanceTextView.setText(String.valueOf(ApplicationState.sharedState().currentUser.getTotalOrders()));
+        numberCompletedTextView.setText(String.valueOf(ApplicationState.sharedState().currentUser.getTotalConcludedOrders()));
+        EvaluationModel evaluationModel = ApplicationState.sharedState().currentUser.getEvaluation();
+        ratingButton.setImageResource(evaluationModel.getIdTotal());
+
+
+        int maxValue = evaluationModel.getTotalFive()+evaluationModel.getTotalFour()+
+                evaluationModel.getTotalThree()+evaluationModel.getTotalTwo()+evaluationModel.getTotalOne();
+        totalAttendanceTextView.setText(String.valueOf(maxValue)+ " avaliações feitas");
+        totalStarsImageView.setImageResource(evaluationModel.getIdTotal());
+        progressBar5.setMax(maxValue);
+        progressBar4.setMax(maxValue);
+        progressBar3.setMax(maxValue);
+        progressBar2.setMax(maxValue);
+        progressBar1.setMax(maxValue);
+        progressBar5.setProgress(evaluationModel.getTotalFive());
+        progressBar4.setProgress(evaluationModel.getTotalFour());
+        progressBar3.setProgress(evaluationModel.getTotalThree());
+        progressBar2.setProgress(evaluationModel.getTotalTwo());
+        progressBar1.setProgress(evaluationModel.getTotalOne());
     }
 
     @Override

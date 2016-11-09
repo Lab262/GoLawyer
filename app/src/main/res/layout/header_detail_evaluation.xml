@@ -46,18 +46,19 @@
                 android:layout_width="148dp"
                 android:layout_height="match_parent"
                 android:text="Especialista em Direito do Consumidor"
-                android:id="@+id/espicialityTextView"
+                android:id="@+id/miniCurriculumTextView"
                 android:textSize="14sp"
                 android:textColor="@color/colorPrimary"
                 android:paddingTop="0dp"
                 android:layout_marginLeft="0dp"
-                android:layout_marginTop="0dp" />
+                android:layout_marginTop="0dp"
+                android:maxLines="2" />
 
             <TextView
                 android:layout_width="159dp"
                 android:layout_height="wrap_content"
                 android:text="OAB/Brasilia/00000"
-                android:id="@+id/informtaionTextView"
+                android:id="@+id/oabTextView"
                 android:textSize="14sp"
                 android:textColor="@color/colorPrimary"
                 android:paddingTop="0dp"

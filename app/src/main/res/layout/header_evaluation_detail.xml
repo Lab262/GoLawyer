@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:layout_marginBottom="10dp">
 
     <LinearLayout
         android:orientation="vertical"
@@ -12,7 +13,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageView3"
+            android:id="@+id/totalStarsImageView"
             android:src="@drawable/yellow_stars_4"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp" />
@@ -37,7 +38,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="68 avaliações feitas"
-            android:id="@+id/textView6"
+            android:id="@+id/totalAttendanceTextView"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
             android:textColor="@color/blueLightApp"
