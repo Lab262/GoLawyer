@@ -14,7 +14,7 @@ public class ServiceRequestModel {
     private String idLawyer;
     private String status;
     private String demand;
-    private Float value;
+    private String value;
     private int step;
     private Boolean isWarning;
     private String profileImageUrl;
@@ -37,7 +37,7 @@ public class ServiceRequestModel {
             this.idLawyer = jsonObject.getString(keyIdLawyer);
             this.status = jsonObject.getString(keyStatus);
             this.demand = jsonObject.getString(keyDemand);
-            this.value = Float.parseFloat(jsonObject.getString(keyValue));
+            this.value = jsonObject.getString(keyValue);
             this.step = Integer.parseInt(jsonObject.getString(keyStep));
             this.isWarning = parseStringBoolean(jsonObject.getString(keyIsWarning));
             this.profileImageUrl = jsonObject.getString(keyPhoto);
