@@ -75,24 +75,12 @@ public class LawyerServiceRequestListAdapter extends BaseAdapter {
         } else {
             row.serviceRequestAlertImage.setVisibility(View.VISIBLE);
         }
-        setImage(currentModel.getProfileImageUrl(),row);
+        if (currentModel.getImageBytes()!=null){
+            row.serviceRequesetRowProfileImageView.setImageBitmap(ImageConvert.getDecode64ImageStringFromByte(currentModel.getImageBytes()));
+        }
         row.serviceRequestRowDescription.setText(currentModel.getStatus());
         row.serviceRequestRowTitle.setText(currentModel.getNameLawyer());
 
         return convertView;
-    }
-
-    private void setImage(String urlImage, final LawyerServiceRequestListRow row){
-        UserRequest.getImage(urlImage, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                row.serviceRequesetRowProfileImageView.setImageBitmap(ImageConvert.getDecode64ImageStringFromByte(responseBody));
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-            }
-        });
     }
 }

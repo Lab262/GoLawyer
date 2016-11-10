@@ -13,6 +13,7 @@ public class CommentModel {
     private String comment;
     private int evaluation;
     private String id;
+    private byte [] imageBytes;
 
     private static String keyID = "id_comentario";
     private static String keyName = "nome";
@@ -71,5 +72,13 @@ public class CommentModel {
 
     public static String getKeyPhoto() {
         return keyPhoto;
+    }
+
+    public byte[] getImageBytes() {
+        return imageBytes;
+    }
+
+    public void setImageBytes(byte[] imageBytes) {
+        this.imageBytes = imageBytes;
     }
 }

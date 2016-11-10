@@ -71,7 +71,9 @@ public class CommentListAdapter extends BaseAdapter {
             row = (CommentListRow) convertView.getTag();
         }
 
-        setImage(currentModel.getProfileImageUrl(),row);
+        if (currentModel.getImageBytes()!=null){
+            row.rowProfileImageView.setImageBitmap(ImageConvert.getDecode64ImageStringFromByte(currentModel.getImageBytes()));
+        }
         row.rowName.setText(currentModel.getName());
         row.rowComment.setText(currentModel.getComment());
         row.ratingStarsImageView.setImageResource(getImageStarsByID(currentModel.getEvaluation()));
@@ -97,19 +99,4 @@ public class CommentListAdapter extends BaseAdapter {
                 return R.drawable.blue_stars_0;
         }
     }
-
-    private void setImage(String urlImage, final CommentListRow row){
-        UserRequest.getImage(urlImage, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                row.rowProfileImageView.setImageBitmap(ImageConvert.getDecode64ImageStringFromByte(responseBody));
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-            }
-        });
-    }
-
 }

@@ -19,6 +19,7 @@ public class ServiceRequestModel {
     private Boolean isWarning;
     private String profileImageUrl;
     private String nameLawyer;
+    private byte [] imageBytes;
 
     private static String keyIdOrder = "id_pedido";
     private static String keyIdLawyer = "id_advogado";
@@ -69,5 +70,13 @@ public class ServiceRequestModel {
 
     public String getProfileImageUrl() {
         return profileImageUrl;
+    }
+
+    public byte[] getImageBytes() {
+        return imageBytes;
+    }
+
+    public void setImageBytes(byte[] imageBytes) {
+        this.imageBytes = imageBytes;
     }
 }

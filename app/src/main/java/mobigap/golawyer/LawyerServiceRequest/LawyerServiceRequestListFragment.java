@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -34,6 +35,7 @@ public class LawyerServiceRequestListFragment extends Fragment {
     private View view;
     private ProgressDialog progressDialog;
     private ArrayList<ServiceRequestModel> serviceRequestModels;
+    private LawyerServiceRequestListAdapter adapter;
 
     public AdapterView.OnItemClickListener clickListener = new AdapterView.OnItemClickListener() {
         @Override
@@ -71,8 +73,25 @@ public class LawyerServiceRequestListFragment extends Fragment {
     }
 
     private void loadRequestedServicesList(ArrayList<ServiceRequestModel> servicesRequested) {
-        LawyerServiceRequestListAdapter adapter = new LawyerServiceRequestListAdapter(getActivity().getApplicationContext(), servicesRequested);
+        adapter = new LawyerServiceRequestListAdapter(getActivity().getApplicationContext(), servicesRequested);
         listView.setAdapter(adapter);
+    }
+
+    private void setImage(final ServiceRequestModel serviceRequestModel){
+
+        UserRequest.getImage(serviceRequestModel.getProfileImageUrl(), new AsyncHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                serviceRequestModel.setImageBytes(responseBody);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
     }
 
     private void getDataProfile(){
@@ -91,6 +110,7 @@ public class LawyerServiceRequestListFragment extends Fragment {
                     for (int i=0; i<arrayServiceRequestModel.length(); i++){
                         JSONObject jsonObject = Requester.getJsonObject(arrayServiceRequestModel,i);
                         ServiceRequestModel serviceRequestModel = new ServiceRequestModel(jsonObject);
+                        setImage(serviceRequestModel);
                         serviceRequestModels.add(serviceRequestModel);
                     }
 

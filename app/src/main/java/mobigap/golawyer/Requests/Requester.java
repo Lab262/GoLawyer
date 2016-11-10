@@ -6,6 +6,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.SyncHttpClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +34,7 @@ public class Requester {
     }
 
     public static void getRequest(String url, AsyncHttpResponseHandler asyncHttpResponseHandler){
-        client.get(url, null, asyncHttpResponseHandler);
+        client.get(url,null, asyncHttpResponseHandler);
     }
 
     public static Boolean haveSuccess(JSONObject jsonObject){

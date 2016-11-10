@@ -15,10 +15,13 @@ import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import cz.msebera.android.httpclient.Header;
 import mobigap.golawyer.Extensions.ImageConvert;
 import mobigap.golawyer.Model.CommentModel;
 import mobigap.golawyer.Model.EvaluationModel;
@@ -27,6 +30,7 @@ import mobigap.golawyer.Model.UserModel;
 import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.Profile.Comment.CommentListAdapter;
 import mobigap.golawyer.R;
+import mobigap.golawyer.Requests.UserRequest;
 
 public class DetailEvaluationActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -47,6 +51,7 @@ public class DetailEvaluationActivity extends AppCompatActivity implements Adapt
 
     private String name, curriculum, oab;
     private byte[] profileImageBytes;
+    private CommentListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,7 @@ public class DetailEvaluationActivity extends AppCompatActivity implements Adapt
         getInstanceViews();
         loadRequestedCommentsList(ApplicationState.sharedState().currentUserInformationModel.getComments());
         adjustLayout();
+        loadImagesComments();
     }
 
     private void getInstanceViews(){
@@ -78,8 +84,31 @@ public class DetailEvaluationActivity extends AppCompatActivity implements Adapt
         super.onStart();
     }
 
+    private void loadImagesComments(){
+        for (CommentModel commentModel: ApplicationState.sharedState().currentUserInformationModel.getComments()){
+            setImage(commentModel);
+        }
+    }
+
+    private void setImage(final CommentModel commentModel){
+
+        UserRequest.getImage(commentModel.getProfileImageUrl(), new AsyncHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                commentModel.setImageBytes(responseBody);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+    }
+
     private void loadRequestedCommentsList(ArrayList<CommentModel> commentsRequested) {
-        CommentListAdapter adapter = new CommentListAdapter(getApplicationContext(), commentsRequested);
+        adapter = new CommentListAdapter(getApplicationContext(), commentsRequested);
         listView.setAdapter(adapter);
     }
 
