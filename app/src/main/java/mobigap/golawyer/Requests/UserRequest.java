@@ -1,5 +1,6 @@
 package mobigap.golawyer.Requests;
 
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import java.util.HashMap;
@@ -79,6 +80,10 @@ public class UserRequest {
         Map<String,String> params = new HashMap<>();
         params.put(keyIdUser,idUser);
         Requester.postRequest(urlGetOrders,Requester.getRequestParams(params), jsonHttpResponseHandler);
+    }
+
+    public static void getImage(String urlImage, AsyncHttpResponseHandler asyncHttpResponseHandler){
+        Requester.getRequest(urlImage,asyncHttpResponseHandler);
     }
 
 }

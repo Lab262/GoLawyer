@@ -2,6 +2,8 @@ package mobigap.golawyer.Profile;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import mobigap.golawyer.BottomBarActivity;
 import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Extensions.FeedbackManager;
+import mobigap.golawyer.Extensions.ImageConvert;
 import mobigap.golawyer.Login.LoginActivity;
 import mobigap.golawyer.Model.CommentModel;
 import mobigap.golawyer.Model.EvaluationModel;
@@ -35,6 +38,7 @@ import mobigap.golawyer.Profile.Information.ProfileInformationListAdapter;
 import mobigap.golawyer.Protocols.OnFragmentInteractionListener;
 
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -69,6 +73,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private LayoutInflater defaultInflater;
     private ArrayList<UserDataModel> userDataModels;
     private UserModel currentUser;
+    private byte[] profileImageBytes;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -118,6 +123,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         getInstanceViews();
         adjustLayout();
         getDataProfile();
+        getImage();
 
         return this.view;
     }
@@ -174,7 +180,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void setPropertiesViews(){
         ratingButton.setOnClickListener(this);
-        //TODO: Colocar a imagem real
         nameTextView.setText(currentUser.getName());
         hasOABTextView.setText(currentUser.getOab());
         numberAttendanceTextView.setText(String.valueOf(ApplicationState.sharedState().currentUserInformationModel.getTotalOrders()));
@@ -208,6 +213,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         return profileInformationModels;
     }
 
+    private void getImage(){
+        UserRequest.getImage(currentUser.getPhoto(), new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                profileImageBytes = responseBody;
+                Bitmap imageBitmap = ImageConvert.getDecode64ImageStringFromByte(responseBody);
+                circleImageViewProfile.setImageBitmap(imageBitmap);
+                backgroundImageViewProfile.setImageBitmap(imageBitmap);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -216,6 +238,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 bundle.putString(UserModel.keyName,currentUser.getName());
                 bundle.putString(UserModel.keyCurriculum,currentUser.getCurriculum());
                 bundle.putString(UserModel.keyOab,currentUser.getOab());
+                bundle.putByteArray(UserModel.keyPhoto, profileImageBytes);
                 ActivityManager.changeActivity(getActivity(), DetailEvaluationActivity.class, bundle);
                 break;
             //Logout button

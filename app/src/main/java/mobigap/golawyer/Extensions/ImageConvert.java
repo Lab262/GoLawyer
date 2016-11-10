@@ -27,8 +27,13 @@ public class ImageConvert {
         return imgString;
     }
 
-    public static Bitmap getDecode64ImageStringFromBitMap(String encodedImage) {
-        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+//    public static Bitmap getDecode64ImageStringFromBitMap(String encodedImage) {
+//        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+//        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+//        return decodedByte;
+//    }
+
+    public static Bitmap getDecode64ImageStringFromByte(byte[] decodedString) {
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         return decodedByte;
     }

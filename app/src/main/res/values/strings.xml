@@ -50,8 +50,9 @@
     <string name="against_proposal">Contra proposta </string>
 
     <string name="name_bottom_bar_map">Mapa</string>
-    <string name="name_bottom_bar_service">Serviço</string>
+    <string name="name_bottom_bar_service">Solicitações de trabalho</string>
     <string name="name_bottom_bar_profile">Perfil</string>
+    <string name="name_activity_detail_evaluation">Avaliações</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="permission_gps">O aplicativo precisa da sua permissão para acessar o GPS.</string>
     <string name="permission_gps_accepted">Permitir</string>

@@ -1,6 +1,9 @@
 package mobigap.golawyer.Requests;
 
+import android.graphics.Bitmap;
+
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -27,6 +30,10 @@ public class Requester {
     public static void postRequest(String endPoint, RequestParams requestParams, JsonHttpResponseHandler jsonHttpResponseHandler){
         String url = baseUrl + endPoint + token;
         client.post(url,requestParams,jsonHttpResponseHandler);
+    }
+
+    public static void getRequest(String url, AsyncHttpResponseHandler asyncHttpResponseHandler){
+        client.get(url, null, asyncHttpResponseHandler);
     }
 
     public static Boolean haveSuccess(JSONObject jsonObject){

@@ -33,7 +33,7 @@ public class UserModel {
     private static String keyCpf = "cpf";
     public static String keyOab = "oab";
     public static String keyCurriculum = "curriculo";
-    private static String keyPhoto = "imagem";
+    public static String keyPhoto = "imagem";
     private static String keyCep = "cep";
     private static String keyNeighborhood = "bairro";
     private static String keyCity = "cidade";

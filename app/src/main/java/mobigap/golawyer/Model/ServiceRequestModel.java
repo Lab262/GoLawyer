@@ -66,4 +66,8 @@ public class ServiceRequestModel {
     public String getNameLawyer() {
         return nameLawyer;
     }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
 }

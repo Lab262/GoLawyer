@@ -8,11 +8,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
 import java.util.ArrayList;
 
+import cz.msebera.android.httpclient.Header;
 import de.hdodenhof.circleimageview.CircleImageView;
+import mobigap.golawyer.Extensions.ImageConvert;
 import mobigap.golawyer.Model.ServiceRequestModel;
 import mobigap.golawyer.R;
+import mobigap.golawyer.Requests.UserRequest;
 
 /**
  * Created by thiagoMB on 7/29/16.
@@ -70,11 +75,24 @@ public class LawyerServiceRequestListAdapter extends BaseAdapter {
         } else {
             row.serviceRequestAlertImage.setVisibility(View.VISIBLE);
         }
-        //TODO: Set the real image
-//        row.serviceRequesetRowProfileImageView.setImageBitmap();
+        setImage(currentModel.getProfileImageUrl(),row);
         row.serviceRequestRowDescription.setText(currentModel.getStatus());
         row.serviceRequestRowTitle.setText(currentModel.getNameLawyer());
 
         return convertView;
+    }
+
+    private void setImage(String urlImage, final LawyerServiceRequestListRow row){
+        UserRequest.getImage(urlImage, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                row.serviceRequesetRowProfileImageView.setImageBitmap(ImageConvert.getDecode64ImageStringFromByte(responseBody));
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
     }
 }

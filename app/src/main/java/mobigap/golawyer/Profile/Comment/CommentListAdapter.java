@@ -1,6 +1,7 @@
 package mobigap.golawyer.Profile.Comment;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,11 +9,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
 import java.util.ArrayList;
 
+import cz.msebera.android.httpclient.Header;
 import de.hdodenhof.circleimageview.CircleImageView;
+import mobigap.golawyer.Extensions.ImageConvert;
 import mobigap.golawyer.Model.CommentModel;
 import mobigap.golawyer.R;
+import mobigap.golawyer.Requests.UserRequest;
 
 /**
  * Created by luisresende on 24/08/16.
@@ -65,7 +71,7 @@ public class CommentListAdapter extends BaseAdapter {
             row = (CommentListRow) convertView.getTag();
         }
 
-        //TODO: Colocar a imagem real no rowProfileImageView
+        setImage(currentModel.getProfileImageUrl(),row);
         row.rowName.setText(currentModel.getName());
         row.rowComment.setText(currentModel.getComment());
         row.ratingStarsImageView.setImageResource(getImageStarsByID(currentModel.getEvaluation()));
@@ -90,6 +96,20 @@ public class CommentListAdapter extends BaseAdapter {
             default:
                 return R.drawable.blue_stars_0;
         }
+    }
+
+    private void setImage(String urlImage, final CommentListRow row){
+        UserRequest.getImage(urlImage, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                row.rowProfileImageView.setImageBitmap(ImageConvert.getDecode64ImageStringFromByte(responseBody));
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
     }
 
 }

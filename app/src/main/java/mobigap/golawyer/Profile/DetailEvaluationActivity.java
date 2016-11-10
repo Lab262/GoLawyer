@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import mobigap.golawyer.Extensions.ImageConvert;
 import mobigap.golawyer.Model.CommentModel;
 import mobigap.golawyer.Model.EvaluationModel;
 import mobigap.golawyer.Model.ServiceRequestModel;
@@ -45,16 +46,19 @@ public class DetailEvaluationActivity extends AppCompatActivity implements Adapt
     private ImageView totalStarsImageView;
 
     private String name, curriculum, oab;
+    private byte[] profileImageBytes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_evaluation);
+        getSupportActionBar().setTitle(R.string.name_activity_detail_evaluation);
         Bundle bundleExtras = getIntent().getExtras();
         if (bundleExtras!=null){
             name = (String) bundleExtras.get(UserModel.keyName);
             curriculum = (String) bundleExtras.get(UserModel.keyCurriculum);
             oab = (String) bundleExtras.get(UserModel.keyOab);
+            profileImageBytes = (byte[]) bundleExtras.get(UserModel.keyPhoto);
         }else {
             name = "";
             curriculum = "";
@@ -91,13 +95,13 @@ public class DetailEvaluationActivity extends AppCompatActivity implements Adapt
     }
 
     private void setViewsData(View header){
-        //TODO: Colocar a imagem real no lawyerImageView
 
         //Get instance of header for set
         header_profile_detail_evaluation = header.findViewById(R.id.header_profile_detail_evaluation);
         nameLawyer = (TextView) header_profile_detail_evaluation.findViewById(R.id.nameLawyer);
         miniCurriculumTextView = (TextView) header_profile_detail_evaluation.findViewById(R.id.miniCurriculumTextView);
         oabTextView = (TextView) header_profile_detail_evaluation.findViewById(R.id.oabTextView);
+        lawyerImageView = (ImageView) header_profile_detail_evaluation.findViewById(R.id.lawyerImageView);
 
         header_profile_information_detail_evaluation = header.findViewById(R.id.header_profile_information_detail_evaluation);
         numberAttendanceTextView = (TextView) header_profile_information_detail_evaluation.findViewById(R.id.numberAttendanceTextView);
@@ -120,6 +124,7 @@ public class DetailEvaluationActivity extends AppCompatActivity implements Adapt
         nameLawyer.setText(name);
         miniCurriculumTextView.setText(curriculum);
         oabTextView.setText("OAB: " + oab);
+        lawyerImageView.setImageBitmap(ImageConvert.getDecode64ImageStringFromByte(profileImageBytes));
 
         numberAttendanceTextView.setText(String.valueOf(ApplicationState.sharedState().currentUserInformationModel.getTotalOrders()));
         numberCompletedTextView.setText(String.valueOf(ApplicationState.sharedState().currentUserInformationModel.getTotalConcludedOrders()));
