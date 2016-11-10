@@ -5,19 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -25,7 +20,6 @@ import cz.msebera.android.httpclient.Header;
 import mobigap.golawyer.Extensions.ImageConvert;
 import mobigap.golawyer.Model.CommentModel;
 import mobigap.golawyer.Model.EvaluationModel;
-import mobigap.golawyer.Model.ServiceRequestModel;
 import mobigap.golawyer.Model.UserModel;
 import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.Profile.Comment.CommentListAdapter;

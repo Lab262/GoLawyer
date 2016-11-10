@@ -8,16 +8,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.loopj.android.http.AsyncHttpResponseHandler;
-
 import java.util.ArrayList;
 
-import cz.msebera.android.httpclient.Header;
 import de.hdodenhof.circleimageview.CircleImageView;
 import mobigap.golawyer.Extensions.ImageConvert;
 import mobigap.golawyer.Model.ServiceRequestModel;
 import mobigap.golawyer.R;
-import mobigap.golawyer.Requests.UserRequest;
 
 /**
  * Created by thiagoMB on 7/29/16.

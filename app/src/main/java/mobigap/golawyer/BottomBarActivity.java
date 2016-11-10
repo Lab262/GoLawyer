@@ -97,7 +97,7 @@ public class BottomBarActivity extends AppCompatActivity implements AHBottomNavi
             case MAP:
                 getSupportActionBar().setTitle(R.string.name_bottom_bar_map);
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, MapFragment.newInstance("", ""))
+                        .replace(R.id.container, MapFragment.newInstance())
                         .commit();
                 if (menu != null){
                     menu.findItem(R.id.action_edit_profile).setVisible(false);
@@ -118,7 +118,7 @@ public class BottomBarActivity extends AppCompatActivity implements AHBottomNavi
             case PROFILE:
                 getSupportActionBar().setTitle(R.string.name_bottom_bar_profile);
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, ProfileFragment.newInstance("", ""))
+                        .replace(R.id.container, ProfileFragment.newInstance())
                         .commit();
                 if (menu != null){
                     menu.findItem(R.id.action_edit_profile).setVisible(true);
@@ -144,6 +144,10 @@ public class BottomBarActivity extends AppCompatActivity implements AHBottomNavi
         switch (item.getItemId()) {
             case R.id.action_map_list:
                 ActivityManager.changeActivity(BottomBarActivity.this, MapListActivity.class);
+                break;
+            case R.id.action_edit_profile:
+                //TODO: Chamar o editar perfil.
+                //ActivityManager.changeActivity(BottomBarActivity.this, MapListActivity.class);
                 break;
         }
 

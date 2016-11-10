@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import mobigap.golawyer.Model.ProfileInformationModel;
-import mobigap.golawyer.Profile.Information.ProfileInformationListRow;
 import mobigap.golawyer.R;
 
 /**

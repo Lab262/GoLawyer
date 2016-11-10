@@ -1,7 +1,6 @@
 package mobigap.golawyer.Profile.Comment;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,16 +8,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.loopj.android.http.AsyncHttpResponseHandler;
-
 import java.util.ArrayList;
 
-import cz.msebera.android.httpclient.Header;
 import de.hdodenhof.circleimageview.CircleImageView;
 import mobigap.golawyer.Extensions.ImageConvert;
 import mobigap.golawyer.Model.CommentModel;
 import mobigap.golawyer.R;
-import mobigap.golawyer.Requests.UserRequest;
 
 /**
  * Created by luisresende on 24/08/16.

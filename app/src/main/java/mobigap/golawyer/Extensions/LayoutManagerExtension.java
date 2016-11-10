@@ -14,8 +14,7 @@ public class LayoutManagerExtension {
 
         ViewStub stub = (ViewStub) sourceActivity.findViewById(stubId);
         stub.setLayoutResource(layoutID);
-        View inflated = stub.inflate();
-
+        stub.inflate();
     }
 
 }

@@ -22,8 +22,6 @@ import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Extensions.FeedbackManager;
 import mobigap.golawyer.LawyerServiceFollowing.LawyerServiceStatusActivity;
 import mobigap.golawyer.Model.ServiceRequestModel;
-import mobigap.golawyer.Model.UserDataModel;
-import mobigap.golawyer.Model.UserInformationModel;
 import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.R;
 import mobigap.golawyer.Requests.Requester;

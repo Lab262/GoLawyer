@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 
-import mobigap.golawyer.R;
-
 /**
  * Created by luisresende on 14/07/16.
  */

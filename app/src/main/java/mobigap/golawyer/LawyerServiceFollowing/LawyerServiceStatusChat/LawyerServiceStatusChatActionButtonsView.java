@@ -8,9 +8,7 @@ import android.widget.LinearLayout;
 
 import mobigap.golawyer.R;
 
-/**
- * TODO: document your custom view class.
- */
+
 public class LawyerServiceStatusChatActionButtonsView extends LinearLayout {
 
     ImageButton confirmServiceStatusChatButton, cancelServiceStatusChatButton;

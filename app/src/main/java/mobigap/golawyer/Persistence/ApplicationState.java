@@ -3,9 +3,6 @@ package mobigap.golawyer.Persistence;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.util.ArrayList;
-
-import mobigap.golawyer.Model.UserDataModel;
 import mobigap.golawyer.Model.UserInformationModel;
 import mobigap.golawyer.Model.UserModel;
 

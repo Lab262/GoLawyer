@@ -3,31 +3,23 @@ package mobigap.golawyer.Profile;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import cz.msebera.android.httpclient.Header;
 import de.hdodenhof.circleimageview.CircleImageView;
-import mobigap.golawyer.BottomBarActivity;
 import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Extensions.FeedbackManager;
 import mobigap.golawyer.Extensions.ImageConvert;
 import mobigap.golawyer.Login.LoginActivity;
-import mobigap.golawyer.Model.CommentModel;
 import mobigap.golawyer.Model.EvaluationModel;
 import mobigap.golawyer.Model.ProfileInformationModel;
 import mobigap.golawyer.Model.UserDataModel;
@@ -37,7 +29,6 @@ import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.Profile.Information.ProfileInformationListAdapter;
 import mobigap.golawyer.Protocols.OnFragmentInteractionListener;
 
-import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -52,14 +43,6 @@ import mobigap.golawyer.Requests.UserRequest;
 
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -80,31 +63,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ProfileFragment newInstance(String param1, String param2) {
+    public static ProfileFragment newInstance() {
         ProfileFragment fragment = new ProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
