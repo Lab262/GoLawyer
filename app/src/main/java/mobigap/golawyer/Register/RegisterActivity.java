@@ -148,12 +148,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 registerUser();
                 break;
             case R.id.linkTermsUse:
-                createErrorToast();
+                openLink(getString(R.string.link_terms_use));
                 break;
             case R.id.linkPrivacyPolicy:
-                createErrorToast();
+                openLink(getString(R.string.link_privacy_policy));
                 break;
         }
+    }
+
+    private void openLink(String url){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(browserIntent);
     }
 
     private void toggleExpandableLayout(ExpandableRelativeLayout expandableRelativeLayout, View headerView){

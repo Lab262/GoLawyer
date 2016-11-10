@@ -48,6 +48,9 @@
     <string name="accept">Aceitar </string>
     <string name="refuse">Recusar </string>
     <string name="against_proposal">Contra proposta </string>
+    
+    <string name="link_terms_use">http://www.golawyer.online/Termos</string>
+    <string name="link_privacy_policy">http://www.golawyer.online/Politica</string>
 
     <string name="name_bottom_bar_map">Mapa</string>
     <string name="name_bottom_bar_service">Solicitações de trabalho</string>
