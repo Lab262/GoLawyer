@@ -61,7 +61,7 @@ public class DetailEvaluationActivity extends AppCompatActivity implements Adapt
             oab = "";
         }
         getInstanceViews();
-        loadRequestedCommentsList(getCommentUserData());
+        loadRequestedCommentsList(ApplicationState.sharedState().currentUserInformationModel.getComments());
         adjustLayout();
     }
 
@@ -77,10 +77,6 @@ public class DetailEvaluationActivity extends AppCompatActivity implements Adapt
     private void loadRequestedCommentsList(ArrayList<CommentModel> commentsRequested) {
         CommentListAdapter adapter = new CommentListAdapter(getApplicationContext(), commentsRequested);
         listView.setAdapter(adapter);
-    }
-
-    private ArrayList<CommentModel> getCommentUserData() {
-        return ApplicationState.sharedState().currentUserInformationModel.getComments();
     }
 
     private void adjustLayout(){

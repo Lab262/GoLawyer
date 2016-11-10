@@ -1,16 +1,14 @@
 package mobigap.golawyer.LawyerServiceRequest;
 
-import android.app.Service;
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import mobigap.golawyer.Model.ServiceRequestModel;
@@ -21,22 +19,22 @@ import mobigap.golawyer.R;
  */
 public class LawyerServiceRequestListAdapter extends BaseAdapter {
 
-    private static ServiceRequestModel[] data;
+    private static ArrayList<ServiceRequestModel> data;
     private Context context;
 
-    public LawyerServiceRequestListAdapter(Context context, ServiceRequestModel[] data) {
+    public LawyerServiceRequestListAdapter(Context context, ArrayList<ServiceRequestModel> data) {
         this.context = context;
         this.data = data;
     }
 
     @Override
     public int getCount() {
-        return data.length;
+        return data.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return data[position];
+        return data.get(position);
     }
 
     @Override
@@ -48,7 +46,7 @@ public class LawyerServiceRequestListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         LawyerServiceRequestListRow row;
-        ServiceRequestModel currentModel = data[position];
+        ServiceRequestModel currentModel = data.get(position);
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -67,15 +65,15 @@ public class LawyerServiceRequestListAdapter extends BaseAdapter {
             row = (LawyerServiceRequestListRow) convertView.getTag();
         }
 
-        if (!currentModel.isWarning) {
+        if (!currentModel.getWarning()) {
             row.serviceRequestAlertImage.setVisibility(View.INVISIBLE);
         } else {
             row.serviceRequestAlertImage.setVisibility(View.VISIBLE);
         }
         //TODO: Set the real image
 //        row.serviceRequesetRowProfileImageView.setImageBitmap();
-        row.serviceRequestRowDescription.setText(currentModel.description);
-        row.serviceRequestRowTitle.setText(currentModel.title);
+        row.serviceRequestRowDescription.setText(currentModel.getStatus());
+        row.serviceRequestRowTitle.setText(currentModel.getNameLawyer());
 
         return convertView;
     }

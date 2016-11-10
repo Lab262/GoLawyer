@@ -1,22 +1,69 @@
 package mobigap.golawyer.Model;
 
-import android.media.Image;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import mobigap.golawyer.Requests.Requester;
 
 /**
  * Created by thiagoMB on 7/29/16.
  */
 public class ServiceRequestModel {
 
-    public String profileImageUrl;
-    public String title;
-    public String description;
-    public Boolean isWarning;
+    private String idOrder;
+    private String idLawyer;
+    private String status;
+    private String demand;
+    private Float value;
+    private int step;
+    private Boolean isWarning;
+    private String profileImageUrl;
+    private String nameLawyer;
 
-    public ServiceRequestModel(String profileImageUrl, String title, String description, Boolean isWarning) {
-        this.profileImageUrl = profileImageUrl;
-        this.title = title;
-        this.description = description;
-        this.isWarning = isWarning;
+    private static String keyIdOrder = "id_pedido";
+    private static String keyIdLawyer = "id_advogado";
+    private static String keyStatus = "status";
+    private static String keyDemand = "demanda";
+    private static String keyValue = "valor";
+    private static String keyStep = "passo";
+    private static String keyIsWarning = "flag_notificacao";
+    private static String keyPhoto = "foto";
+    private static String keyName = "nome";
+    public static String keyItens = "itens";
+
+    public ServiceRequestModel(JSONObject jsonObject) {
+        try {
+            this.idOrder = jsonObject.getString(keyIdOrder);
+            this.idLawyer = jsonObject.getString(keyIdLawyer);
+            this.status = jsonObject.getString(keyStatus);
+            this.demand = jsonObject.getString(keyDemand);
+            this.value = Float.parseFloat(jsonObject.getString(keyValue));
+            this.step = Integer.parseInt(jsonObject.getString(keyStep));
+            this.isWarning = parseStringBoolean(jsonObject.getString(keyIsWarning));
+            this.profileImageUrl = jsonObject.getString(keyPhoto);
+            this.nameLawyer = jsonObject.getString(keyName);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
+    private Boolean parseStringBoolean(String response){
+        if (response.equals(Requester.responseSuccess)){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public Boolean getWarning() {
+        return isWarning;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getNameLawyer() {
+        return nameLawyer;
+    }
 }

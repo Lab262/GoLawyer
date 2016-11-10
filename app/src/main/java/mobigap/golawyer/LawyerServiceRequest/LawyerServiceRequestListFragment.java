@@ -1,5 +1,6 @@
 package mobigap.golawyer.LawyerServiceRequest;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,15 +9,31 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.Header;
 import mobigap.golawyer.Extensions.ActivityManager;
+import mobigap.golawyer.Extensions.FeedbackManager;
 import mobigap.golawyer.LawyerServiceFollowing.LawyerServiceStatusActivity;
 import mobigap.golawyer.Model.ServiceRequestModel;
+import mobigap.golawyer.Model.UserDataModel;
+import mobigap.golawyer.Model.UserInformationModel;
+import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.R;
+import mobigap.golawyer.Requests.Requester;
+import mobigap.golawyer.Requests.UserRequest;
 
 public class LawyerServiceRequestListFragment extends Fragment {
 
-    ListView listView;
-    View view;
+    private ListView listView;
+    private View view;
+    private ProgressDialog progressDialog;
+    private ArrayList<ServiceRequestModel> serviceRequestModels;
 
     public AdapterView.OnItemClickListener clickListener = new AdapterView.OnItemClickListener() {
         @Override
@@ -44,41 +61,72 @@ public class LawyerServiceRequestListFragment extends Fragment {
         this.listView = (ListView) this.view.findViewById(R.id.serviceRequestListView);
 
         this.listView.setOnItemClickListener(this.clickListener);
+        getDataProfile();
         return this.view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
-        this.loadRequestedServicesList(this.getDummyData());
     }
 
-    private void loadRequestedServicesList(ServiceRequestModel[] servicesRequested) {
+    private void loadRequestedServicesList(ArrayList<ServiceRequestModel> servicesRequested) {
         LawyerServiceRequestListAdapter adapter = new LawyerServiceRequestListAdapter(getActivity().getApplicationContext(), servicesRequested);
         listView.setAdapter(adapter);
     }
 
-    private ServiceRequestModel[] getDummyData() {
+    private void getDataProfile(){
+        progressDialog = FeedbackManager.createProgressDialog(getActivity(),getString(R.string.placeholder_message_dialog));
 
-        ServiceRequestModel service1 = new ServiceRequestModel("http://image","Troy Beck", "Informação do pedido",true);
-        ServiceRequestModel service2 = new ServiceRequestModel("http://image","Mathilda Robbins", "Informação do pedido",false);
-        ServiceRequestModel service3 = new ServiceRequestModel("http://image","Samuel Cook", "Informação do pedido",false);
-        ServiceRequestModel service4 = new ServiceRequestModel("http://image","Bettie Mills", "Informação do pedido",false);
-        ServiceRequestModel service5 = new ServiceRequestModel("http://image","Alexander Hill ", "Informação do pedido",false);
-        ServiceRequestModel service6 = new ServiceRequestModel("http://image","Caroly Stanley ", "Informação do pedido",false);
-        ServiceRequestModel service7 = new ServiceRequestModel("http://image","Benjamin  Medna ", "Informação do pedido",false);
+        UserRequest.getOrders(ApplicationState.sharedState().getCurrentUser(getActivity().getApplicationContext()).getId(),
+                new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                progressDialog.dismiss();
+                serviceRequestModels = new ArrayList<>();
+                if (Requester.haveSuccess(response)){
+                    //Get ServiceRequestModel
+                    JSONArray arrayServiceRequestModel = Requester.getJsonArray(response, ServiceRequestModel.keyItens);
+                    for (int i=0; i<arrayServiceRequestModel.length(); i++){
+                        JSONObject jsonObject = Requester.getJsonObject(arrayServiceRequestModel,i);
+                        ServiceRequestModel serviceRequestModel = new ServiceRequestModel(jsonObject);
+                        serviceRequestModels.add(serviceRequestModel);
+                    }
 
-        ServiceRequestModel[] dummyData = new ServiceRequestModel[7];
-        dummyData[0] = service1;
-        dummyData[1] = service2;
-        dummyData[2] = service3;
-        dummyData[3] = service4;
-        dummyData[4] = service5;
-        dummyData[5] = service6;
-        dummyData[6] = service7;
+                    //Update view
+                    loadRequestedServicesList(serviceRequestModels);
 
-        return dummyData;
+                }else {
+                    createToast(response);
+                }
+            }
 
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                createErrorToast();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                createErrorToast();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                createErrorToast();
+            }
+        });
+    }
+
+    private void createToast(JSONObject response){
+        FeedbackManager.createToast(getActivity(),response);
+    }
+
+    private void createErrorToast(){
+        FeedbackManager.feedbackErrorResponse(getActivity(),progressDialog);
     }
 }

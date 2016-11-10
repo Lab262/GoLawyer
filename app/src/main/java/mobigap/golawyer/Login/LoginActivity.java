@@ -143,7 +143,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Dia
         emailForgotPasswordEditText.setHint(getString(R.string.placeholder_alert_forgot_hint));
         emailForgotPasswordEditText.setLayoutParams(layoutParams);
 
-        //Create custom title
+        //Create custom nameLawyer
         TextView textView = new TextView(this);
         textView.setText(getString(R.string.title_alert_forgot_password));
         textView.setLayoutParams(layoutParams);
