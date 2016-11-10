@@ -74,6 +74,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private ArrayList<UserDataModel> userDataModels;
     private UserModel currentUser;
     private byte[] profileImageBytes;
+    private final int CONST_IMAGE_BLUR = 25;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -220,7 +221,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 profileImageBytes = responseBody;
                 Bitmap imageBitmap = ImageConvert.getDecode64ImageStringFromByte(responseBody);
                 circleImageViewProfile.setImageBitmap(imageBitmap);
-                backgroundImageViewProfile.setImageBitmap(imageBitmap);
+                Bitmap blurred = ImageConvert.blurRenderScript(getActivity(),imageBitmap, CONST_IMAGE_BLUR);
+                backgroundImageViewProfile.setImageBitmap(blurred);
             }
 
             @Override

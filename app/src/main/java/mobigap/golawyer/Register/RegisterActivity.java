@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -52,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             phoneEditText,cepEditText,adressEditText,stateEditText,cityEditText,neighborhoodEditText,curriculumEditText;
 
     private final int SIZE_PROFILE_PHOTO = 350;
+    private final int CONST_IMAGE_BLUR = 25;
 
 
     @Override
@@ -175,12 +177,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         Uri selectedImage = data.getData();
                         circleImageViewProfile.setImageURI(selectedImage);
                         backgroundImageViewProfile.setImageURI(selectedImage);
+                        Bitmap bitmap = ((BitmapDrawable)backgroundImageViewProfile.getDrawable()).getBitmap();
+                        Bitmap blurred = ImageConvert.blurRenderScript(this,bitmap, CONST_IMAGE_BLUR);
+                        backgroundImageViewProfile.setImageBitmap(blurred);
                     }else {
                         //Image from Camera
                         Bundle extras = data.getExtras();
                         Bitmap imageBitmap = (Bitmap) extras.get("data");
                         circleImageViewProfile.setImageBitmap(imageBitmap);
-                        backgroundImageViewProfile.setImageBitmap(imageBitmap);
+                        Bitmap blurred = ImageConvert.blurRenderScript(this,imageBitmap, CONST_IMAGE_BLUR);
+                        backgroundImageViewProfile.setImageBitmap(blurred);
                     }
 
                 }
@@ -193,9 +199,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         String typeAccount = TypeProfile.getStringTypeProfile(typeProfile.ordinal());
 
-        //TODO: Cadastrar foto
         String photo = ImageConvert.getEncoded64ImageStringFromImageView(circleImageViewProfile);
-
         String name = nameEditText.getText().toString();
         String oab = oabEditText.getText().toString();
         String doc = cpfEditText.getText().toString();
