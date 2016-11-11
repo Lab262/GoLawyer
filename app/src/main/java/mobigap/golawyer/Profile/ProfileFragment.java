@@ -84,7 +84,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         if (bundleExtras==null){
             currentUser = ApplicationState.sharedState().getCurrentUser(getActivity().getApplicationContext());
         }else {
-
+            //TODO: Carregar o perfil a partir de um click de outra lista
         }
 
         getInstanceViews();
@@ -113,7 +113,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         mListener = null;
     }
 
-    private void adjustLayoutListView(LayoutInflater inflater) {
+    private void adjustLayoutListView() {
         profileInformationListView = (ListView) this.view.findViewById(R.id.profileInformationListView);
         loadRequestedProfileInformationList(getProfileData());
         profileInformationListView.addHeaderView(header);
@@ -236,12 +236,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                         userDataModels.add(userDataModel);
                     }
 
+                    //Set userDataModels
+                    ApplicationState.sharedState().setCurrentUserDataModels(userDataModels);
+
                     //Get UserInformationModel
                     ApplicationState.sharedState().currentUserInformationModel = new UserInformationModel(response);
 
                     //Update view
                     setPropertiesViews();
-                    adjustLayoutListView(defaultInflater);
+                    adjustLayoutListView();
 
                 }else {
                     createToast(response);

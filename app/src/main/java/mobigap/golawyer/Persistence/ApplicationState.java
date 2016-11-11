@@ -3,6 +3,9 @@ package mobigap.golawyer.Persistence;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
+
+import mobigap.golawyer.Model.UserDataModel;
 import mobigap.golawyer.Model.UserInformationModel;
 import mobigap.golawyer.Model.UserModel;
 
@@ -14,6 +17,7 @@ public class ApplicationState {
 
     private UserModel currentUser = null;
     public UserInformationModel currentUserInformationModel = null;
+    private ArrayList<UserDataModel> currentUserDataModels = null;
 
     private static ApplicationState ourInstance = new ApplicationState();
     private static String nameSharedPreferences = "currentUserStorage";
@@ -52,5 +56,13 @@ public class ApplicationState {
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
         editor.commit();
+    }
+
+    public ArrayList<UserDataModel> getCurrentUserDataModels() {
+        return currentUserDataModels;
+    }
+
+    public void setCurrentUserDataModels(ArrayList<UserDataModel> currentUserDataModels) {
+        this.currentUserDataModels = currentUserDataModels;
     }
 }

@@ -71,7 +71,8 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".Profile.DetailEvaluationActivity" />
-        <activity android:name=".Map.MapListActivity"></activity>
+        <activity android:name=".Map.MapListActivity" />
+        <activity android:name=".Profile.EditProfileActivity"></activity>
     </application>
 
 </manifest>

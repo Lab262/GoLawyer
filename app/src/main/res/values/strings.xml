@@ -38,6 +38,7 @@
     <string name="placeholder_credit_card_cvv">CVV: </string>
     <string name="placeholder_credit_card_cellphone_number">Número do celular: </string>
     <string name="placeholder_edit_profile">Editar</string>
+    <string name="placeholder_save_edit_profile">Salvar</string>
     <string name="placeholder_error_connection">Erro de Conexão</string>
     <string name="placeholder_message_dialog">Carregando...</string>
     <string name="placeholder_alert_forgot_positive_button">Enviar</string>
@@ -48,7 +49,7 @@
     <string name="accept">Aceitar </string>
     <string name="refuse">Recusar </string>
     <string name="against_proposal">Contra proposta </string>
-    
+
     <string name="link_terms_use">http://www.golawyer.online/Termos</string>
     <string name="link_privacy_policy">http://www.golawyer.online/Politica</string>
 
@@ -57,6 +58,7 @@
     <string name="name_bottom_bar_profile">Perfil</string>
     <string name="name_activity_detail_evaluation">Avaliações</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="title_activity_edit_profile">Editar perfil</string>
     <string name="permission_gps">O aplicativo precisa da sua permissão para acessar o GPS.</string>
     <string name="permission_gps_accepted">Permitir</string>
     <string name="permission_gps_denied">Não Permitir</string>

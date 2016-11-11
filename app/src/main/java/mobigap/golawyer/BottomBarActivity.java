@@ -16,6 +16,7 @@ import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.LawyerServiceRequest.LawyerServiceRequestListFragment;
 import mobigap.golawyer.Map.MapFragment;
 import mobigap.golawyer.Map.MapListActivity;
+import mobigap.golawyer.Profile.EditProfileActivity;
 import mobigap.golawyer.Profile.ProfileFragment;
 import mobigap.golawyer.Protocols.OnFragmentInteractionListener;
 
@@ -146,8 +147,7 @@ public class BottomBarActivity extends AppCompatActivity implements AHBottomNavi
                 ActivityManager.changeActivity(BottomBarActivity.this, MapListActivity.class);
                 break;
             case R.id.action_edit_profile:
-                //TODO: Chamar o editar perfil.
-                //ActivityManager.changeActivity(BottomBarActivity.this, MapListActivity.class);
+                ActivityManager.changeActivity(BottomBarActivity.this, EditProfileActivity.class);
                 break;
         }
 
