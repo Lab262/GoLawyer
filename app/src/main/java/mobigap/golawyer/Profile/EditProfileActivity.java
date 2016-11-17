@@ -42,7 +42,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private TextView nameTextView, hasOABTextView;
 
     private final int CONST_IMAGE_BLUR = 25;
-    private final int SIZE_PHOTO = 200;
+    private final int SIZE_PHOTO = 350;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,6 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         getImage();
         adjustLayoutListView();
         setPropertiesViews();
-        adjustLayoutHeader();
     }
 
     @Override
@@ -90,13 +89,9 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         cameraButton.setOnClickListener(this);
         nameTextView.setText(ApplicationState.sharedState().getCurrentUser(this).getName());
         hasOABTextView.setText(ApplicationState.sharedState().getCurrentUser(this).getOab());
-    }
-
-    private void adjustLayoutHeader(){
-        //TODO: Crash aqui... tem que dar um jeito de adicionar esse header com uma altura definida de 200.
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) header.getLayoutParams();
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) backgroundImageViewProfile.getLayoutParams();
         params.height = SIZE_PHOTO;
-        header.setLayoutParams(params);
+        backgroundImageViewProfile.setLayoutParams(params);
     }
 
     @Override
