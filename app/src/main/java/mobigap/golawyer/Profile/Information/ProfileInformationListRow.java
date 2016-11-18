@@ -1,5 +1,6 @@
 package mobigap.golawyer.Profile.Information;
 
+import android.widget.EditText;
 import android.widget.TextView;
 
 /**
@@ -8,5 +9,6 @@ import android.widget.TextView;
 
 public class ProfileInformationListRow {
 
-    TextView nameFieldTextView,fieldTextView;
+    TextView nameFieldTextView;
+    EditText fieldTextView;
 }

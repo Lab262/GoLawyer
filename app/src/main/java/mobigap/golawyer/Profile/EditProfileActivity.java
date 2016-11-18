@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,10 +24,10 @@ import cz.msebera.android.httpclient.Header;
 import de.hdodenhof.circleimageview.CircleImageView;
 import mobigap.golawyer.Extensions.CameraConfiguration;
 import mobigap.golawyer.Extensions.ImageConvert;
-import mobigap.golawyer.Model.ProfileInformationModel;
+import mobigap.golawyer.Model.ProfileInformationEditModel;
 import mobigap.golawyer.Model.UserDataModel;
 import mobigap.golawyer.Persistence.ApplicationState;
-import mobigap.golawyer.Profile.Information.ProfileInformationListAdapter;
+import mobigap.golawyer.Profile.Information.ProfileInformationEditListAdapter;
 import mobigap.golawyer.R;
 import mobigap.golawyer.Requests.UserRequest;
 
@@ -110,20 +109,19 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         profileEditInformationListView.addHeaderView(header);
     }
 
-    private void loadRequestedProfileEditInformationList(ArrayList<ProfileInformationModel> profileEditInformationsRequested) {
-        //TODO: Esse adapter é provisorio, ele é para apresentar informacoes... tem que fazer uma celular praticamente igual,
-        //TODO: mudando somente o tipo do texto, nesse adapter é textview e tem que trocar para editTextView, para ser editavel
-        ProfileInformationListAdapter adapter = new ProfileInformationListAdapter(this, profileEditInformationsRequested);
+    private void loadRequestedProfileEditInformationList(ArrayList<ProfileInformationEditModel> profileEditInformationsRequested) {
+        ProfileInformationEditListAdapter adapter = new ProfileInformationEditListAdapter(this, profileEditInformationsRequested);
         profileEditInformationListView.setAdapter(adapter);
     }
 
-    private ArrayList<ProfileInformationModel> getProfileData() {
+    private ArrayList<ProfileInformationEditModel> getProfileData() {
 
-        ArrayList<ProfileInformationModel> profileInformationModels = new ArrayList<>();
+        ArrayList<ProfileInformationEditModel> profileInformationModels = new ArrayList<>();
 
         for (UserDataModel userDataModel: ApplicationState.sharedState().getCurrentUserDataModels()){
-            ProfileInformationModel informationModel = new ProfileInformationModel(userDataModel.getDataTitle(), userDataModel.getDataValue());
-            profileInformationModels.add(informationModel);
+            ProfileInformationEditModel informationEditModel = new ProfileInformationEditModel(
+                    userDataModel.getDataTitle(), userDataModel.getDataValue(),userDataModel.getType(), userDataModel.getDataName());
+            profileInformationModels.add(informationEditModel);
         }
 
         return profileInformationModels;

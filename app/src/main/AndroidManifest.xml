@@ -72,7 +72,8 @@
 
         <activity android:name=".Profile.DetailEvaluationActivity" />
         <activity android:name=".Map.MapListActivity" />
-        <activity android:name=".Profile.EditProfileActivity"></activity>
+        <activity android:name=".Profile.EditProfileActivity"
+                  android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>

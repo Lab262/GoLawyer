@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class ProfileInformationListAdapter extends BaseAdapter {
 
             row = new ProfileInformationListRow();
             row.nameFieldTextView = (TextView) convertView.findViewById(R.id.nameFieldTextView);
-            row.fieldTextView = (TextView) convertView.findViewById(R.id.fieldTextView);
+            row.fieldTextView = (EditText) convertView.findViewById(R.id.fieldTextView);
 
             convertView.setTag(row);
 
@@ -64,6 +65,7 @@ public class ProfileInformationListAdapter extends BaseAdapter {
 
         row.nameFieldTextView.setText(currentModel.nameField);
         row.fieldTextView.setText(currentModel.field);
+        row.fieldTextView.setEnabled(false);
 
         return convertView;
     }

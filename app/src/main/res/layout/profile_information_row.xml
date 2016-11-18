@@ -19,13 +19,15 @@
         android:textStyle="bold"
         android:text="Title:" />
 
-    <TextView
+    <EditText
         android:text="TextView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/fieldTextView"
         android:layout_weight="1"
         android:textColor="@color/blueApp"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textSize="16dp"
+        android:windowSoftInputMode="stateHidden|adjustPan" />
 
 </LinearLayout>
