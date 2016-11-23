@@ -24,6 +24,7 @@ import mobigap.golawyer.Model.UserModel;
 import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.Profile.Comment.CommentListAdapter;
 import mobigap.golawyer.R;
+import mobigap.golawyer.Requests.Requester;
 import mobigap.golawyer.Requests.UserRequest;
 
 public class DetailEvaluationActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {

@@ -7,7 +7,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+import mobigap.golawyer.Extensions.ImageConvert;
+import mobigap.golawyer.Model.LawyerModel;
 import mobigap.golawyer.Model.LawyerRowModel;
 import mobigap.golawyer.R;
 
@@ -16,22 +20,22 @@ import mobigap.golawyer.R;
  */
 public class MapListAdapter extends BaseAdapter {
 
-    private static LawyerRowModel[] data;
+    private static ArrayList<LawyerModel> data;
     private Context context;
 
-    public MapListAdapter(Context context, LawyerRowModel[] data) {
+    public MapListAdapter(Context context, ArrayList<LawyerModel> data) {
         this.context = context;
         this.data = data;
     }
 
     @Override
     public int getCount() {
-        return data.length;
+        return data.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return data[position];
+        return data.get(position);
     }
 
     @Override
@@ -43,7 +47,7 @@ public class MapListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         MapListRow row;
-        LawyerRowModel currentModel = data[position];
+        LawyerModel currentModel = data.get(position);
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -61,10 +65,11 @@ public class MapListAdapter extends BaseAdapter {
             row = (MapListRow) convertView.getTag();
         }
 
-        //TODO: Set the real image
-//        row.serviceRequesetRowProfileImageView.setImageBitmap();
-        row.rowDescription.setText(currentModel.description);
-        row.rowTitle.setText(currentModel.title);
+        if (currentModel.getImageBytes()!=null){
+            row.rowProfileImageView.setImageBitmap(ImageConvert.getDecode64ImageStringFromByte(currentModel.getImageBytes()));
+        }
+        row.rowDescription.setText(currentModel.getStatus());
+        row.rowTitle.setText(currentModel.getName());
 
         return convertView;
     }

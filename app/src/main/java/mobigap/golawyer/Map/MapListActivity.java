@@ -1,5 +1,6 @@
 package mobigap.golawyer.Map;
 
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -7,12 +8,30 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.Header;
+import mobigap.golawyer.Extensions.FeedbackManager;
+import mobigap.golawyer.Model.LawyerModel;
 import mobigap.golawyer.Model.LawyerRowModel;
+import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.R;
+import mobigap.golawyer.Requests.LawyerRequest;
+import mobigap.golawyer.Requests.Requester;
+import mobigap.golawyer.Requests.UserRequest;
 
 public class MapListActivity extends AppCompatActivity {
 
     ListView listView;
+    private ProgressDialog progressDialog;
+    private ArrayList<LawyerModel> lawyersRequestModels;
+    private MapListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +39,7 @@ public class MapListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_map_list);
         getInstanceViews();
         setPropertiesView();
+        getLawyers();
     }
 
     private void getInstanceViews(){
@@ -47,36 +67,83 @@ public class MapListActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-
-        this.loadRequestedLawyersList(this.getDummyData());
     }
 
-    private void loadRequestedLawyersList(LawyerRowModel[] lawyersRequested) {
-        MapListAdapter adapter = new MapListAdapter(getApplicationContext(), lawyersRequested);
+    private void loadRequestedLawyersList(ArrayList<LawyerModel> lawyersRequested) {
+        adapter = new MapListAdapter(getApplicationContext(), lawyersRequested);
         listView.setAdapter(adapter);
     }
 
-    private LawyerRowModel[] getDummyData() {
+    private void getLawyers(){
+        progressDialog = FeedbackManager.createProgressDialog(this,getString(R.string.placeholder_message_dialog));
 
-        LawyerRowModel lawyer1 = new LawyerRowModel("http://image","Troy Beck", "Informação do pedido");
-        LawyerRowModel lawyer2 = new LawyerRowModel("http://image","Mathilda Robbins", "Informação do pedido");
-        LawyerRowModel lawyer3 = new LawyerRowModel("http://image","Samuel Cook", "Informação do pedido");
-        LawyerRowModel lawyer4 = new LawyerRowModel("http://image","Bettie Mills", "Informação do pedido");
-        LawyerRowModel lawyer5 = new LawyerRowModel("http://image","Alexander Hill ", "Informação do pedido");
-        LawyerRowModel lawyer6 = new LawyerRowModel("http://image","Caroly Stanley ", "Informação do pedido");
-        LawyerRowModel lawyer7 = new LawyerRowModel("http://image","Benjamin  Medna ", "Informação do pedido");
+        LawyerRequest.getLawyers("-14","55", new JsonHttpResponseHandler(){
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        progressDialog.dismiss();
+                        lawyersRequestModels = new ArrayList<>();
+                        if (Requester.haveSuccess(response)){
+                            //Get ServiceRequestModel
+                            JSONArray arrayLawyersRequestModel = Requester.getJsonArray(response, LawyerModel.keyItensDataModel);
+                            for (int i=0; i<arrayLawyersRequestModel.length(); i++){
+                                JSONObject jsonObject = Requester.getJsonObject(arrayLawyersRequestModel,i);
+                                LawyerModel lawyerRequestModel = new LawyerModel(jsonObject);
+                                setImage(lawyerRequestModel);
+                                lawyersRequestModels.add(lawyerRequestModel);
+                            }
 
-        LawyerRowModel[] dummyData = new LawyerRowModel[7];
-        dummyData[0] = lawyer1;
-        dummyData[1] = lawyer2;
-        dummyData[2] = lawyer3;
-        dummyData[3] = lawyer4;
-        dummyData[4] = lawyer5;
-        dummyData[5] = lawyer6;
-        dummyData[6] = lawyer7;
+                            //Update view
+                            loadRequestedLawyersList(lawyersRequestModels);
 
-        return dummyData;
+                        }else {
+                            createToast(response);
+                        }
+                    }
 
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        super.onFailure(statusCode, headers, responseString, throwable);
+                        createErrorToast();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        createErrorToast();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        createErrorToast();
+                    }
+                });
+    }
+
+    private void createToast(JSONObject response){
+        FeedbackManager.createToast(this,response);
+    }
+
+    private void createErrorToast(){
+        FeedbackManager.feedbackErrorResponse(this,progressDialog);
+    }
+
+    private void setImage(final LawyerModel lawyerRequestModel){
+
+        UserRequest.getImage(lawyerRequestModel.getPhoto(), new AsyncHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                lawyerRequestModel.setImageBytes(responseBody);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
     }
 
 }

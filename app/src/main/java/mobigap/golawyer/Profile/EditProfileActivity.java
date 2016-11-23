@@ -29,6 +29,7 @@ import mobigap.golawyer.Model.UserDataModel;
 import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.Profile.Information.ProfileInformationEditListAdapter;
 import mobigap.golawyer.R;
+import mobigap.golawyer.Requests.Requester;
 import mobigap.golawyer.Requests.UserRequest;
 
 public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener {
