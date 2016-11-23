@@ -3,6 +3,8 @@ package mobigap.golawyer.Map;
 import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -17,20 +19,22 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
+import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Extensions.FeedbackManager;
 import mobigap.golawyer.Model.LawyerModel;
 import mobigap.golawyer.Model.LawyerRowModel;
 import mobigap.golawyer.Persistence.ApplicationState;
+import mobigap.golawyer.Profile.ProfileFragment;
+import mobigap.golawyer.Profile.ProfileLawyerActivity;
 import mobigap.golawyer.R;
 import mobigap.golawyer.Requests.LawyerRequest;
 import mobigap.golawyer.Requests.Requester;
 import mobigap.golawyer.Requests.UserRequest;
 
-public class MapListActivity extends AppCompatActivity {
+public class MapListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     ListView listView;
     private ProgressDialog progressDialog;
-    private ArrayList<LawyerModel> lawyersRequestModels;
     private MapListAdapter adapter;
 
     @Override
@@ -72,6 +76,7 @@ public class MapListActivity extends AppCompatActivity {
     private void loadRequestedLawyersList(ArrayList<LawyerModel> lawyersRequested) {
         adapter = new MapListAdapter(getApplicationContext(), lawyersRequested);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
     }
 
     private void getLawyers(){
@@ -82,7 +87,7 @@ public class MapListActivity extends AppCompatActivity {
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
                         progressDialog.dismiss();
-                        lawyersRequestModels = new ArrayList<>();
+                        ApplicationState.sharedState().setLawyersRequestModels(null);
                         if (Requester.haveSuccess(response)){
                             //Get ServiceRequestModel
                             JSONArray arrayLawyersRequestModel = Requester.getJsonArray(response, LawyerModel.keyItensDataModel);
@@ -90,11 +95,11 @@ public class MapListActivity extends AppCompatActivity {
                                 JSONObject jsonObject = Requester.getJsonObject(arrayLawyersRequestModel,i);
                                 LawyerModel lawyerRequestModel = new LawyerModel(jsonObject);
                                 setImage(lawyerRequestModel);
-                                lawyersRequestModels.add(lawyerRequestModel);
+                                ApplicationState.sharedState().getLawyersRequestModels().add(lawyerRequestModel);
                             }
 
                             //Update view
-                            loadRequestedLawyersList(lawyersRequestModels);
+                            loadRequestedLawyersList(ApplicationState.sharedState().getLawyersRequestModels());
 
                         }else {
                             createToast(response);
@@ -146,4 +151,10 @@ public class MapListActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(Requester.keyMessage,i);
+        ActivityManager.changeActivity(MapListActivity.this, ProfileLawyerActivity.class,bundle);
+    }
 }

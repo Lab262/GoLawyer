@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -16,11 +17,13 @@ import android.widget.TextView;
 
 import cz.msebera.android.httpclient.Header;
 import de.hdodenhof.circleimageview.CircleImageView;
+import mobigap.golawyer.Enums.TypeProfile;
 import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Extensions.FeedbackManager;
 import mobigap.golawyer.Extensions.ImageConvert;
 import mobigap.golawyer.Login.LoginActivity;
 import mobigap.golawyer.Model.EvaluationModel;
+import mobigap.golawyer.Model.LawyerModel;
 import mobigap.golawyer.Model.ProfileInformationModel;
 import mobigap.golawyer.Model.UserDataModel;
 import mobigap.golawyer.Model.UserInformationModel;
@@ -58,6 +61,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private UserModel currentUser;
     private byte[] profileImageBytes;
     private final int CONST_IMAGE_BLUR = 25;
+    private Button makeProposalButton;
+    private LawyerModel lawyerModel;
+    private int positionLawyer;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -65,6 +71,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     public static ProfileFragment newInstance() {
         ProfileFragment fragment = new ProfileFragment();
+        return fragment;
+    }
+
+    public static ProfileFragment newInstance(LawyerModel lawyerModel, int positionLawyer) {
+        ProfileFragment fragment = new ProfileFragment();
+        fragment.lawyerModel = lawyerModel;
+        fragment.positionLawyer = positionLawyer;
         return fragment;
     }
 
@@ -79,18 +92,26 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         this.view = inflater.inflate(R.layout.fragment_profile, container, false);
         defaultInflater = inflater;
-        Bundle bundleExtras = getActivity().getIntent().getExtras();
+
+        makeProposalButton = (Button) this.view.findViewById(R.id.makeProposalButton);
         //Case if your profile
-        if (bundleExtras==null){
-            currentUser = ApplicationState.sharedState().getCurrentUser(getActivity().getApplicationContext());
-        }else {
-            //TODO: Carregar o perfil a partir de um click de outra lista
-        }
 
         getInstanceViews();
         adjustLayout();
-        getDataProfile();
-        getImage();
+
+        if (lawyerModel==null){
+            currentUser = ApplicationState.sharedState().getCurrentUser(getActivity().getApplicationContext());
+            makeProposalButton.setVisibility(View.INVISIBLE);
+            getDataProfile();
+            getImage(currentUser.getPhoto());
+        }else {
+            getImage(lawyerModel.getPhoto());
+            setPropertiesViewsLawyer();
+            adjustLayoutListViewLawyer();
+            makeProposalButton.setOnClickListener(this);
+        }
+
+
 
         return this.view;
     }
@@ -115,9 +136,25 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void adjustLayoutListView() {
         profileInformationListView = (ListView) this.view.findViewById(R.id.profileInformationListView);
-        loadRequestedProfileInformationList(getProfileData());
+        loadRequestedProfileInformationList(getProfileData(userDataModels));
         profileInformationListView.addHeaderView(header);
         profileInformationListView.addFooterView(createLogoutButton());
+    }
+
+    private void adjustLayoutListViewLawyer() {
+        profileInformationListView = (ListView) this.view.findViewById(R.id.profileInformationListView);
+        loadRequestedProfileInformationList(getProfileData(getDataModels()));
+        profileInformationListView.addHeaderView(header);
+    }
+
+    private ArrayList<UserDataModel> getDataModels(){
+        ArrayList<UserDataModel> userDataModels = new ArrayList<>();
+        UserDataModel userDataModel = new UserDataModel();
+        userDataModel.setVisible(true);
+        userDataModel.setDataTitle("Curriculo");
+        userDataModel.setDataValue("");
+        userDataModels.add(userDataModel);
+        return userDataModels;
     }
 
     private ImageButton createLogoutButton(){
@@ -155,6 +192,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         ratingButton.setImageResource(evaluationModel.getIdTotal());
     }
 
+    private void setPropertiesViewsLawyer(){
+        ratingButton.setOnClickListener(this);
+        nameTextView.setText(lawyerModel.getName());
+        hasOABTextView.setText(lawyerModel.getMiniCurriculum());
+        numberAttendanceTextView.setText(String.valueOf(lawyerModel.getTotalOrders()));
+        numberCompletedTextView.setText(String.valueOf(lawyerModel.getTotalConcludedOrders()));
+        EvaluationModel evaluationModel = lawyerModel.getEvaluation();
+        ratingButton.setImageResource(evaluationModel.getIdTotal());
+    }
+
     private void adjustLayout() {
         View registerProfilePhoto = header.findViewById(R.id.registerProfilePhoto);
         ImageButton cameraButton = (ImageButton) registerProfilePhoto.findViewById(R.id.cameraButton);
@@ -166,11 +213,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         profileInformationListView.setAdapter(adapter);
     }
 
-    private ArrayList<ProfileInformationModel> getProfileData() {
+    private ArrayList<ProfileInformationModel> getProfileData(ArrayList<UserDataModel> dataModels) {
 
         ArrayList<ProfileInformationModel> profileInformationModels = new ArrayList<>();
 
-        for (UserDataModel userDataModel: userDataModels){
+        for (UserDataModel userDataModel: dataModels){
             if (userDataModel.getVisible()){
                 ProfileInformationModel informationModel = new ProfileInformationModel(userDataModel.getDataTitle(), userDataModel.getDataValue());
                 profileInformationModels.add(informationModel);
@@ -180,8 +227,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         return profileInformationModels;
     }
 
-    private void getImage(){
-        UserRequest.getImage(currentUser.getPhoto(), new AsyncHttpResponseHandler() {
+    private void getImage(String photo){
+        UserRequest.getImage(photo, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 profileImageBytes = responseBody;
@@ -203,16 +250,31 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.ratingButton:
                 Bundle bundle = new Bundle();
-                bundle.putString(UserModel.keyName,currentUser.getName());
-                bundle.putString(UserModel.keyCurriculum,currentUser.getCurriculum());
-                bundle.putString(UserModel.keyOab,currentUser.getOab());
-                bundle.putByteArray(UserModel.keyPhoto, profileImageBytes);
+
+                //Verify my profile
+                if (lawyerModel==null){
+                    bundle.putString(UserModel.keyName,currentUser.getName());
+                    bundle.putString(UserModel.keyCurriculum,currentUser.getCurriculum());
+                    bundle.putString(UserModel.keyOab,currentUser.getOab());
+                    bundle.putByteArray(UserModel.keyPhoto, profileImageBytes);
+                    bundle.putInt("typeProfile",TypeProfile.CLIENT.ordinal());
+                }else {
+                    bundle.putString(UserModel.keyName,lawyerModel.getName());
+                    bundle.putString(UserModel.keyCurriculum,lawyerModel.getMiniCurriculum());
+                    bundle.putString(UserModel.keyOab,lawyerModel.getOab());
+                    bundle.putByteArray(UserModel.keyPhoto, profileImageBytes);
+                    bundle.putInt("typeProfile",TypeProfile.LAWYER.ordinal());
+                    bundle.putInt(UserModel.keyID,positionLawyer);
+                }
+
                 ActivityManager.changeActivity(getActivity(), DetailEvaluationActivity.class, bundle);
                 break;
             //Logout button
             case 0:
                 ApplicationState.sharedState().clearCurrentUser(getActivity().getApplicationContext());
                 ActivityManager.changeActivityAndRemoveParentActivity(getActivity(), LoginActivity.class);
+                break;
+            case R.id.makeProposalButton:
                 break;
         }
     }

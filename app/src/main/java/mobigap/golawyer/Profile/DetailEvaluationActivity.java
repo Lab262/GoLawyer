@@ -17,9 +17,11 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
+import mobigap.golawyer.Enums.TypeProfile;
 import mobigap.golawyer.Extensions.ImageConvert;
 import mobigap.golawyer.Model.CommentModel;
 import mobigap.golawyer.Model.EvaluationModel;
+import mobigap.golawyer.Model.LawyerModel;
 import mobigap.golawyer.Model.UserModel;
 import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.Profile.Comment.CommentListAdapter;
@@ -47,6 +49,10 @@ public class DetailEvaluationActivity extends AppCompatActivity implements Adapt
     private String name, curriculum, oab;
     private byte[] profileImageBytes;
     private CommentListAdapter adapter;
+    private TypeProfile typeProfile;
+    private ArrayList<CommentModel> commentModelArrayList;
+    private int numberAttendance, numberCompleted;
+    private EvaluationModel evaluationModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +65,28 @@ public class DetailEvaluationActivity extends AppCompatActivity implements Adapt
             curriculum = (String) bundleExtras.get(UserModel.keyCurriculum);
             oab = (String) bundleExtras.get(UserModel.keyOab);
             profileImageBytes = (byte[]) bundleExtras.get(UserModel.keyPhoto);
+            typeProfile = TypeProfile.getTypeProfileByOrdinal(bundleExtras.getInt("typeProfile"));
         }else {
             name = "";
             curriculum = "";
             oab = "";
         }
         getInstanceViews();
-        loadRequestedCommentsList(ApplicationState.sharedState().currentUserInformationModel.getComments());
+        if (typeProfile==TypeProfile.CLIENT){
+            commentModelArrayList = ApplicationState.sharedState().currentUserInformationModel.getComments();
+            numberAttendance = ApplicationState.sharedState().currentUserInformationModel.getTotalOrders();
+            numberCompleted = ApplicationState.sharedState().currentUserInformationModel.getTotalConcludedOrders();
+            evaluationModel = ApplicationState.sharedState().currentUserInformationModel.getEvaluation();
+
+        }else {
+            int positionLawyer = bundleExtras.getInt(UserModel.keyID);
+            LawyerModel lawyerModel = ApplicationState.sharedState().getLawyersRequestModels().get(positionLawyer);
+            commentModelArrayList = lawyerModel.getComments();
+            numberAttendance = lawyerModel.getTotalOrders();
+            numberCompleted = lawyerModel.getTotalConcludedOrders();
+            evaluationModel = lawyerModel.getEvaluation();
+        }
+        loadRequestedCommentsList(commentModelArrayList);
         adjustLayout();
         loadImagesComments();
     }
@@ -80,7 +101,7 @@ public class DetailEvaluationActivity extends AppCompatActivity implements Adapt
     }
 
     private void loadImagesComments(){
-        for (CommentModel commentModel: ApplicationState.sharedState().currentUserInformationModel.getComments()){
+        for (CommentModel commentModel: commentModelArrayList){
             setImage(commentModel);
         }
     }
@@ -150,9 +171,8 @@ public class DetailEvaluationActivity extends AppCompatActivity implements Adapt
         oabTextView.setText("OAB: " + oab);
         lawyerImageView.setImageBitmap(ImageConvert.getDecode64ImageStringFromByte(profileImageBytes));
 
-        numberAttendanceTextView.setText(String.valueOf(ApplicationState.sharedState().currentUserInformationModel.getTotalOrders()));
-        numberCompletedTextView.setText(String.valueOf(ApplicationState.sharedState().currentUserInformationModel.getTotalConcludedOrders()));
-        EvaluationModel evaluationModel = ApplicationState.sharedState().currentUserInformationModel.getEvaluation();
+        numberAttendanceTextView.setText(String.valueOf(numberAttendance));
+        numberCompletedTextView.setText(String.valueOf(numberCompleted));
         ratingButton.setImageResource(evaluationModel.getIdTotal());
 
 

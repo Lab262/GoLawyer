@@ -120,4 +120,12 @@ public class LawyerModel {
     public String getPhoto() {
         return photo;
     }
+
+    public String getMiniCurriculum() {
+        return miniCurriculum;
+    }
+
+    public String getOab() {
+        return oab;
+    }
 }

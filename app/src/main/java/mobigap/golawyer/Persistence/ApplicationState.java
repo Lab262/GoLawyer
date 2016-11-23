@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import java.util.ArrayList;
 
+import mobigap.golawyer.Model.LawyerModel;
 import mobigap.golawyer.Model.UserDataModel;
 import mobigap.golawyer.Model.UserInformationModel;
 import mobigap.golawyer.Model.UserModel;
@@ -18,6 +19,7 @@ public class ApplicationState {
     private UserModel currentUser = null;
     public UserInformationModel currentUserInformationModel = null;
     private ArrayList<UserDataModel> currentUserDataModels = null;
+    private ArrayList<LawyerModel> lawyersRequestModels = null;
 
     private static ApplicationState ourInstance = new ApplicationState();
     private static String nameSharedPreferences = "currentUserStorage";
@@ -64,5 +66,16 @@ public class ApplicationState {
 
     public void setCurrentUserDataModels(ArrayList<UserDataModel> currentUserDataModels) {
         this.currentUserDataModels = currentUserDataModels;
+    }
+
+    public ArrayList<LawyerModel> getLawyersRequestModels() {
+        if (lawyersRequestModels==null){
+            lawyersRequestModels = new ArrayList<>();
+        }
+        return lawyersRequestModels;
+    }
+
+    public void setLawyersRequestModels(ArrayList<LawyerModel> lawyersRequestModels) {
+        this.lawyersRequestModels = lawyersRequestModels;
     }
 }

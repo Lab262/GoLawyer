@@ -25,6 +25,10 @@ public class UserDataModel {
     private static String viewVisible = "true";
     private static String viewInvisible = "false";
 
+    public UserDataModel (){
+
+    }
+
     public UserDataModel(JSONObject jsonObject){
         try {
             this.dataTitle = jsonObject.getString(keyDataTitle);
