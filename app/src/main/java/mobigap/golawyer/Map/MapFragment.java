@@ -1,11 +1,14 @@
 package mobigap.golawyer.Map;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -16,29 +19,61 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import cz.msebera.android.httpclient.Header;
+import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Extensions.AlertManager;
+import mobigap.golawyer.Extensions.FeedbackManager;
+import mobigap.golawyer.Model.LawyerModel;
+import mobigap.golawyer.Persistence.ApplicationState;
+import mobigap.golawyer.Profile.ProfileLawyerActivity;
 import mobigap.golawyer.Protocols.OnFragmentInteractionListener;
 import mobigap.golawyer.R;
+import mobigap.golawyer.Requests.LawyerRequest;
+import mobigap.golawyer.Requests.Requester;
 
-public class MapFragment extends Fragment implements OnMapReadyCallback, DialogInterface.OnClickListener, LocationSource.OnLocationChangedListener {
+public class MapFragment extends Fragment implements OnMapReadyCallback,
+        DialogInterface.OnClickListener, LocationSource.OnLocationChangedListener,
+        GoogleMap.OnInfoWindowClickListener, GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private OnFragmentInteractionListener mListener;
 
     private SupportMapFragment mapFragment;
     private GoogleMap mMap;
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
     private String nameLocalPermission;
+    private LatLng userLatLng;
+    private Marker currentLocationMarker;
 
     private static final int PERMISSION_LOCATION = 1;
     private static final int GPS_RESULT = 1;
+    private ProgressDialog progressDialog;
+    private HashMap<LatLng, Integer> markerHashMap = new HashMap<>();
 
     public MapFragment() {
         // Required empty public constructor
@@ -66,7 +101,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, DialogI
     }
 
 
-    private void setPropertiesView(View view){
+    private void setPropertiesView(View view) {
         SearchView searchView = (SearchView) view.findViewById(R.id.searchView);
 
         int searchSrcTextId = getResources().getIdentifier("android:id/search_src_text", null, null);
@@ -101,6 +136,26 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, DialogI
         mListener = null;
     }
 
+    private MarkerOptions createMarkerMap(Double latitude, Double longitude, String name) {
+        LatLng point = new LatLng(latitude, longitude);
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(point);
+        markerOptions.title(name);
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_pin_map));
+        return markerOptions;
+    }
+
+    private void addPinsMap() {
+        ArrayList<LawyerModel> lawyerModelArrayList = ApplicationState.sharedState().getLawyersRequestModels();
+
+        for (int i = 0; i < lawyerModelArrayList.size(); i++) {
+            LawyerModel lawyerModel = lawyerModelArrayList.get(i);
+            MarkerOptions markerOptions = createMarkerMap(lawyerModel.getLatitude(), lawyerModel.getLongitude(), lawyerModel.getName());
+            markerHashMap.put(markerOptions.getPosition(), i);
+            mMap.addMarker(markerOptions);
+        }
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -108,13 +163,22 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, DialogI
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this.getActivity(),
                         Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        }else {
+            mMap.setMyLocationEnabled(true);
+            mMap.setOnInfoWindowClickListener(this);
+            buildGoogleApiClient();
+            mGoogleApiClient.connect();
         }
 
-        // TODO: Adicionar marcadores  customizados e de acordo com os advogados....
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        mMap.setMyLocationEnabled(true);
+
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
     }
 
     private void checkAccessLocalPermission() {
@@ -122,8 +186,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, DialogI
             mapFragment.getMapAsync(this);
         } else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), nameLocalPermission)) {
-                AlertManager.showAlert(getActivity(),getString(R.string.permission_gps), getString(R.string.permission_gps_accepted),
-                getString(R.string.permission_gps_denied),this);
+                AlertManager.showAlert(getActivity(), getString(R.string.permission_gps), getString(R.string.permission_gps_accepted),
+                        getString(R.string.permission_gps_denied), this);
             } else {
                 ActivityCompat.requestPermissions(getActivity(),
                         new String[]{nameLocalPermission},
@@ -146,7 +210,127 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, DialogI
     @Override
     public void onLocationChanged(Location location) {
 
-        mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Você"));
+        if (currentLocationMarker!=null){
+            currentLocationMarker.remove();
+        }
+
+        userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(userLatLng);
+        markerOptions.title("Você");
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+        currentLocationMarker = mMap.addMarker(markerOptions);
+
+//        //zoom to current position:
+//        CameraPosition cameraPosition = new CameraPosition.Builder()
+//                .target(userLatLng).zoom(14).build();
+//
+//        mMap.animateCamera(CameraUpdateFactory
+//                .newCameraPosition(cameraPosition));
+    }
+
+    private void getLawyers() {
+        progressDialog = FeedbackManager.createProgressDialog(getActivity(), getString(R.string.placeholder_message_dialog));
+
+        LawyerRequest.getLawyers(String.valueOf(userLatLng.latitude), String.valueOf(userLatLng.longitude), new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                progressDialog.dismiss();
+                ApplicationState.sharedState().setLawyersRequestModels(null);
+                if (Requester.haveSuccess(response)) {
+                    //Get ServiceRequestModel
+                    JSONArray arrayLawyersRequestModel = Requester.getJsonArray(response, LawyerModel.keyItensDataModel);
+                    for (int i = 0; i < arrayLawyersRequestModel.length(); i++) {
+                        JSONObject jsonObject = Requester.getJsonObject(arrayLawyersRequestModel, i);
+                        LawyerModel lawyerRequestModel = new LawyerModel(jsonObject);
+                        ApplicationState.sharedState().getLawyersRequestModels().add(lawyerRequestModel);
+                    }
+
+                    //Update view
+                    addPinsMap();
+
+                } else {
+                    createToast(response);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                createErrorToast();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                createErrorToast();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                createErrorToast();
+            }
+        });
+    }
+
+    private void createToast(JSONObject response) {
+        FeedbackManager.createToast(getActivity(), response);
+    }
+
+    private void createErrorToast() {
+        FeedbackManager.feedbackErrorResponse(getActivity(), progressDialog);
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Integer position = markerHashMap.get(marker.getPosition());
+        Bundle bundle = new Bundle();
+        bundle.putInt(Requester.keyMessage, position);
+        ActivityManager.changeActivity(getActivity(), ProfileLawyerActivity.class, bundle);
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+        if (ActivityCompat.checkSelfPermission(this.getActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this.getActivity(),
+                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        }else {
+            Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                    mGoogleApiClient);
+            if (mLastLocation != null) {
+                //place marker at current position
+                //mGoogleMap.clear();
+                userLatLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(userLatLng);
+                markerOptions.title("Você");
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                currentLocationMarker = mMap.addMarker(markerOptions);
+            }
+
+            mLocationRequest = new LocationRequest();
+            mLocationRequest.setInterval(5000); //5 seconds
+            mLocationRequest.setFastestInterval(3000); //3 seconds
+            mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+            //mLocationRequest.setSmallestDisplacement(0.1F); //1/10 meter
+
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+            getLawyers();
+        }
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
 }

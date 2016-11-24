@@ -128,4 +128,12 @@ public class LawyerModel {
     public String getOab() {
         return oab;
     }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
 }

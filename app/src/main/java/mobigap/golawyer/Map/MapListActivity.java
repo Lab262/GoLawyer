@@ -43,7 +43,7 @@ public class MapListActivity extends AppCompatActivity implements AdapterView.On
         setContentView(R.layout.activity_map_list);
         getInstanceViews();
         setPropertiesView();
-        getLawyers();
+        loadRequestedLawyersList();
     }
 
     private void getInstanceViews(){
@@ -73,65 +73,17 @@ public class MapListActivity extends AppCompatActivity implements AdapterView.On
         super.onStart();
     }
 
-    private void loadRequestedLawyersList(ArrayList<LawyerModel> lawyersRequested) {
-        adapter = new MapListAdapter(getApplicationContext(), lawyersRequested);
+    private void loadRequestedLawyersList() {
+        adapter = new MapListAdapter(getApplicationContext(), ApplicationState.sharedState().getLawyersRequestModels());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
+        getImageLawyers();
     }
 
-    private void getLawyers(){
-        progressDialog = FeedbackManager.createProgressDialog(this,getString(R.string.placeholder_message_dialog));
-
-        LawyerRequest.getLawyers("-14","55", new JsonHttpResponseHandler(){
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        super.onSuccess(statusCode, headers, response);
-                        progressDialog.dismiss();
-                        ApplicationState.sharedState().setLawyersRequestModels(null);
-                        if (Requester.haveSuccess(response)){
-                            //Get ServiceRequestModel
-                            JSONArray arrayLawyersRequestModel = Requester.getJsonArray(response, LawyerModel.keyItensDataModel);
-                            for (int i=0; i<arrayLawyersRequestModel.length(); i++){
-                                JSONObject jsonObject = Requester.getJsonObject(arrayLawyersRequestModel,i);
-                                LawyerModel lawyerRequestModel = new LawyerModel(jsonObject);
-                                setImage(lawyerRequestModel);
-                                ApplicationState.sharedState().getLawyersRequestModels().add(lawyerRequestModel);
-                            }
-
-                            //Update view
-                            loadRequestedLawyersList(ApplicationState.sharedState().getLawyersRequestModels());
-
-                        }else {
-                            createToast(response);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                        super.onFailure(statusCode, headers, responseString, throwable);
-                        createErrorToast();
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                        super.onFailure(statusCode, headers, throwable, errorResponse);
-                        createErrorToast();
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                        super.onFailure(statusCode, headers, throwable, errorResponse);
-                        createErrorToast();
-                    }
-                });
-    }
-
-    private void createToast(JSONObject response){
-        FeedbackManager.createToast(this,response);
-    }
-
-    private void createErrorToast(){
-        FeedbackManager.feedbackErrorResponse(this,progressDialog);
+    private void getImageLawyers(){
+        for (LawyerModel lawyerModel: ApplicationState.sharedState().getLawyersRequestModels()){
+            setImage(lawyerModel);
+        }
     }
 
     private void setImage(final LawyerModel lawyerRequestModel){
