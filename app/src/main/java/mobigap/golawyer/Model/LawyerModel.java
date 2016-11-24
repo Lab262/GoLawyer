@@ -136,4 +136,8 @@ public class LawyerModel {
     public Double getLongitude() {
         return longitude;
     }
+
+    public String getIdLawyer() {
+        return idLawyer;
+    }
 }

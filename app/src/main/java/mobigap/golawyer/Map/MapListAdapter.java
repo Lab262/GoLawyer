@@ -58,7 +58,6 @@ public class MapListAdapter extends BaseAdapter {
             row.rowProfileImageView = (CircleImageView) convertView.findViewById(R.id.rowProfileImageView);
             row.rowTitle = (TextView) convertView.findViewById(R.id.rowTitle);
             row.rowDescription = (TextView) convertView.findViewById(R.id.rowDescription);
-
             convertView.setTag(row);
 
         }else{
@@ -70,8 +69,14 @@ public class MapListAdapter extends BaseAdapter {
         }
         row.rowDescription.setText(currentModel.getStatus());
         row.rowTitle.setText(currentModel.getName());
+        row.idLawyer = currentModel.getIdLawyer();
 
         return convertView;
+    }
+
+    public void updateData(ArrayList<LawyerModel> data) {
+        this.data = data;
+        notifyDataSetChanged();
     }
 
 }

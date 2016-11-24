@@ -21,9 +21,19 @@ public class ProfileLawyerActivity extends AppCompatActivity implements OnFragme
 
         Bundle bundleExtras = getIntent().getExtras();
         if (bundleExtras!=null){
-            int position = bundleExtras.getInt(Requester.keyMessage);
+            String idLawyer = bundleExtras.getString(Requester.keyMessage);
             ArrayList<LawyerModel> lawyerModelArrayList = ApplicationState.sharedState().getLawyersRequestModels();
-            LawyerModel lawyerModel = lawyerModelArrayList.get(position);
+
+            LawyerModel lawyerModel=null;
+            int position = -1;
+            for (LawyerModel lawyerModelArray: lawyerModelArrayList){
+                if (lawyerModelArray.getIdLawyer().equals(idLawyer)){
+                    lawyerModel = lawyerModelArray;
+                    position = lawyerModelArrayList.indexOf(lawyerModelArray);
+                    break;
+                }
+            }
+
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, ProfileFragment.newInstance(lawyerModel, position))
                     .commit();

@@ -11,4 +11,5 @@ public class MapListRow {
 
     TextView rowTitle, rowDescription;
     CircleImageView rowProfileImageView;
+    String idLawyer;
 }

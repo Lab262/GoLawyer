@@ -1,8 +1,10 @@
 package mobigap.golawyer.Map;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -31,11 +33,12 @@ import mobigap.golawyer.Requests.LawyerRequest;
 import mobigap.golawyer.Requests.Requester;
 import mobigap.golawyer.Requests.UserRequest;
 
-public class MapListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class MapListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, SearchView.OnQueryTextListener {
 
     ListView listView;
-    private ProgressDialog progressDialog;
     private MapListAdapter adapter;
+    private SearchView searchView;
+    private ArrayList<LawyerModel> lawyerModelArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +51,10 @@ public class MapListActivity extends AppCompatActivity implements AdapterView.On
 
     private void getInstanceViews(){
         this.listView = (ListView) findViewById(R.id.mapListView);
+        this.searchView = (SearchView) findViewById(R.id.searchViewList);
     }
 
     private void setPropertiesView(){
-        SearchView searchView = (SearchView) findViewById(R.id.searchViewList);
 
         int searchSrcTextId = getResources().getIdentifier("android:id/search_src_text", null, null);
         EditText searchEditText = (EditText) searchView.findViewById(searchSrcTextId);
@@ -66,15 +69,13 @@ public class MapListActivity extends AppCompatActivity implements AdapterView.On
         ImageView searchButtonImage = (ImageView) searchView.findViewById(searchButtonId);
         searchButtonImage.setColorFilter(getResources().getColor(R.color.white));
 
-    }
+        searchView.setOnQueryTextListener(this);
 
-    @Override
-    public void onStart() {
-        super.onStart();
     }
 
     private void loadRequestedLawyersList() {
-        adapter = new MapListAdapter(getApplicationContext(), ApplicationState.sharedState().getLawyersRequestModels());
+        lawyerModelArrayList = ApplicationState.sharedState().getLawyersRequestModels();
+        adapter = new MapListAdapter(getApplicationContext(), lawyerModelArrayList);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
         getImageLawyers();
@@ -106,7 +107,58 @@ public class MapListActivity extends AppCompatActivity implements AdapterView.On
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Bundle bundle = new Bundle();
-        bundle.putInt(Requester.keyMessage,i);
+        bundle.putString(Requester.keyMessage,((MapListRow)view.getTag()).idLawyer);
         ActivityManager.changeActivity(MapListActivity.this, ProfileLawyerActivity.class,bundle);
     }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        searchView.clearFocus();
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        filterList(newText);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                resetFilter();
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        refreshList();
+    }
+
+    public void filterList(String stringFilter){
+        ArrayList<LawyerModel> arrayFiltered = new ArrayList<>();
+        for (LawyerModel lawyerModel : lawyerModelArrayList){
+            if (lawyerModel.getName().toLowerCase().contains(stringFilter.toLowerCase())){
+                arrayFiltered.add(lawyerModel);
+            }
+        }
+        if (!arrayFiltered.isEmpty()){
+            adapter.updateData(arrayFiltered);
+        }
+    }
+
+    public void resetFilter(){
+        adapter.updateData(lawyerModelArrayList);
+    }
+
+    public void refreshList(){
+        adapter = new MapListAdapter(this, lawyerModelArrayList);
+        listView.setAdapter(adapter);
+    }
+
+
 }
