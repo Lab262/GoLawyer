@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -163,7 +164,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this.getActivity(),
                         Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-        }else {
+        } else {
             mMap.setMyLocationEnabled(true);
             mMap.setOnInfoWindowClickListener(this);
             buildGoogleApiClient();
@@ -210,7 +211,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
     @Override
     public void onLocationChanged(Location location) {
 
-        if (currentLocationMarker!=null){
+        if (currentLocationMarker != null) {
             currentLocationMarker.remove();
         }
 
@@ -231,6 +232,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
 
     private void getLawyers() {
         progressDialog = FeedbackManager.createProgressDialog(getActivity(), getString(R.string.placeholder_message_dialog));
+
+        if (userLatLng == null) {
+            userLatLng = new LatLng(-15,-18);
+        }
 
         LawyerRequest.getLawyers(String.valueOf(userLatLng.latitude), String.valueOf(userLatLng.longitude), new JsonHttpResponseHandler() {
             @Override
