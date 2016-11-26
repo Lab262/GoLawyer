@@ -74,7 +74,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
     private static final int PERMISSION_LOCATION = 1;
     private static final int GPS_RESULT = 1;
     private ProgressDialog progressDialog;
-    private HashMap<LatLng, Integer> markerHashMap = new HashMap<>();
+    private HashMap<LatLng, String> markerHashMap = new HashMap<>();
 
     public MapFragment() {
         // Required empty public constructor
@@ -152,7 +152,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
         for (int i = 0; i < lawyerModelArrayList.size(); i++) {
             LawyerModel lawyerModel = lawyerModelArrayList.get(i);
             MarkerOptions markerOptions = createMarkerMap(lawyerModel.getLatitude(), lawyerModel.getLongitude(), lawyerModel.getName());
-            markerHashMap.put(markerOptions.getPosition(), i);
+            markerHashMap.put(markerOptions.getPosition(), lawyerModel.getIdLawyer());
             mMap.addMarker(markerOptions);
         }
     }
@@ -290,9 +290,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        Integer position = markerHashMap.get(marker.getPosition());
+        String idLawyer = markerHashMap.get(marker.getPosition());
         Bundle bundle = new Bundle();
-        bundle.putInt(Requester.keyMessage, position);
+        bundle.putString(Requester.keyMessage, idLawyer);
         ActivityManager.changeActivity(getActivity(), ProfileLawyerActivity.class, bundle);
     }
 
