@@ -222,12 +222,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         currentLocationMarker = mMap.addMarker(markerOptions);
 
-//        //zoom to current position:
-//        CameraPosition cameraPosition = new CameraPosition.Builder()
-//                .target(userLatLng).zoom(14).build();
-//
-//        mMap.animateCamera(CameraUpdateFactory
-//                .newCameraPosition(cameraPosition));
+        //zoom to current position:
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(userLatLng).zoom(14).build();
+
+        mMap.animateCamera(CameraUpdateFactory
+                .newCameraPosition(cameraPosition));
     }
 
     private void getLawyers() {

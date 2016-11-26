@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:padding="20dp"
     android:clickable="true"
     android:orientation="horizontal"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="mobigap.golawyer.Profile.Information.ProfileInformationListRow">
+    tools:context="mobigap.golawyer.Profile.Information.ProfileInformationListRow"
+    android:padding="20dp">
 
 
     <TextView
@@ -17,7 +17,10 @@
         android:layout_height="wrap_content"
         android:textColor="@color/blueApp"
         android:textStyle="bold"
-        android:text="Title:" />
+        android:text="Title:"
+        android:maxWidth="150dp"
+        android:textAlignment="textStart"
+        android:layout_gravity="center_vertical" />
 
     <EditText
         android:text="TextView"

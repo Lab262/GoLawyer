@@ -49,6 +49,8 @@ public class BottomBarActivity extends AppCompatActivity implements AHBottomNavi
         AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.name_bottom_bar_service, R.drawable.bottom_bar_icon_service, R.color.blueApp);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.name_bottom_bar_profile, R.drawable.bottom_bar_icon_profile, R.color.blueApp);
 
+        bottomBar.setTitleState(AHBottomNavigation.TitleState.ALWAYS_HIDE);
+
         bottomBar.addItem(item1);
         bottomBar.addItem(item2);
         bottomBar.addItem(item3);
@@ -57,7 +59,6 @@ public class BottomBarActivity extends AppCompatActivity implements AHBottomNavi
         bottomBar.setAccentColor(Color.parseColor("#F63D2B"));
         bottomBar.setInactiveColor(Color.parseColor("#747474"));
         bottomBar.setForceTint(true);
-        bottomBar.setForceTitlesDisplay(true);
         bottomBar.setColored(true);
         bottomBar.setCurrentItem(bottomBarOption.ordinal());
         bottomBar.setOnTabSelectedListener(this);
