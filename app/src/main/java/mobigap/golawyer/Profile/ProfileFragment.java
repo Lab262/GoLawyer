@@ -61,9 +61,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private UserModel currentUser;
     private byte[] profileImageBytes;
     private final int CONST_IMAGE_BLUR = 25;
-    private Button makeProposalButton;
     private LawyerModel lawyerModel;
     private int positionLawyer;
+    private final int id_make_proposal_button = 10;
+    private final int id_logout_button = 0;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -93,7 +94,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         this.view = inflater.inflate(R.layout.fragment_profile, container, false);
         defaultInflater = inflater;
 
-        makeProposalButton = (Button) this.view.findViewById(R.id.makeProposalButton);
         //Case if your profile
 
         getInstanceViews();
@@ -101,14 +101,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         if (lawyerModel==null){
             currentUser = ApplicationState.sharedState().getCurrentUser(getActivity().getApplicationContext());
-            makeProposalButton.setVisibility(View.INVISIBLE);
             getDataProfile();
             getImage(currentUser.getPhoto());
         }else {
             getImage(lawyerModel.getPhoto());
             setPropertiesViewsLawyer();
             adjustLayoutListViewLawyer();
-            makeProposalButton.setOnClickListener(this);
         }
 
 
@@ -145,6 +143,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         profileInformationListView = (ListView) this.view.findViewById(R.id.profileInformationListView);
         loadRequestedProfileInformationList(getProfileData(getDataModels()));
         profileInformationListView.addHeaderView(header);
+        profileInformationListView.addFooterView(createMakeProposalButton());
     }
 
     private ArrayList<UserDataModel> getDataModels(){
@@ -160,12 +159,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private ImageButton createLogoutButton(){
 
         ImageButton logoutButton = new ImageButton(getActivity());
-        logoutButton.setId(0);
+        logoutButton.setId(Integer.valueOf(id_logout_button));
         logoutButton.setBackgroundColor(Color.WHITE);
         logoutButton.setImageResource(R.drawable.button_logout);
         logoutButton.setOnClickListener(this);
         logoutButton.setPadding(0,10,0,10);
         return logoutButton;
+    }
+
+    private ImageButton createMakeProposalButton(){
+
+        ImageButton makeProposalButton = new ImageButton(getActivity());
+        makeProposalButton.setId(Integer.valueOf(id_make_proposal_button));
+        makeProposalButton.setBackgroundColor(Color.WHITE);
+        makeProposalButton.setImageResource(R.drawable.button_make_proposal);
+        makeProposalButton.setOnClickListener(this);
+        makeProposalButton.setPadding(0,10,0,10);
+        return makeProposalButton;
     }
 
     private void getInstanceViews(){
@@ -270,11 +280,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 ActivityManager.changeActivity(getActivity(), DetailEvaluationActivity.class, bundle);
                 break;
             //Logout button
-            case 0:
+            case id_logout_button:
                 ApplicationState.sharedState().clearCurrentUser(getActivity().getApplicationContext());
                 ActivityManager.changeActivityAndRemoveParentActivity(getActivity(), LoginActivity.class);
                 break;
-            case R.id.makeProposalButton:
+            case id_make_proposal_button:
                 break;
         }
     }

@@ -2,25 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Profile.ProfileFragment">
+    tools:context=".Profile.ProfileFragment"
+    android:orientation="vertical">
 
-    <RelativeLayout
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/makeProposalButton"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/button_make_proposal" />
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/profileInformationListView" />
-    </RelativeLayout>
+        android:layout_height="match_parent"
+        android:id="@+id/profileInformationListView" />
 
 </LinearLayout>

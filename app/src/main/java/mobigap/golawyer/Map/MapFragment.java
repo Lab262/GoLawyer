@@ -74,7 +74,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
     private Marker currentLocationMarker;
 
     private static final int PERMISSION_LOCATION = 1;
-    private static final int GPS_RESULT = 1;
+    private static final int ZOOM_USER = 10;
+    private static final int ZOOM_LAWYER = 14;
     private ProgressDialog progressDialog;
     private SearchView searchView;
     private HashMap<LatLng, String> markerHashMap = new HashMap<>();
@@ -322,7 +323,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
 
                 //zoom to current position:
                 CameraPosition cameraPosition = new CameraPosition.Builder()
-                        .target(userLatLng).zoom(14).build();
+                        .target(userLatLng).zoom(ZOOM_USER).build();
 
                 mMap.animateCamera(CameraUpdateFactory
                         .newCameraPosition(cameraPosition));
@@ -375,7 +376,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
             LawyerModel lawyerModel = arrayFiltered.get(0);
             LatLng lawyerLatLng = new LatLng(lawyerModel.getLatitude(),lawyerModel.getLongitude());
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(lawyerLatLng).zoom(14).build();
+                    .target(lawyerLatLng).zoom(ZOOM_LAWYER).build();
 
             mMap.animateCamera(CameraUpdateFactory
                     .newCameraPosition(cameraPosition));
