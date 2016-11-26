@@ -1,6 +1,7 @@
 package mobigap.golawyer.Map;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -59,7 +61,7 @@ import mobigap.golawyer.Requests.Requester;
 public class MapFragment extends Fragment implements OnMapReadyCallback,
         DialogInterface.OnClickListener, LocationSource.OnLocationChangedListener,
         GoogleMap.OnInfoWindowClickListener, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, LocationListener {
+        GoogleApiClient.OnConnectionFailedListener, LocationListener, SearchView.OnQueryTextListener {
 
     private OnFragmentInteractionListener mListener;
 
@@ -74,7 +76,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
     private static final int PERMISSION_LOCATION = 1;
     private static final int GPS_RESULT = 1;
     private ProgressDialog progressDialog;
+    private SearchView searchView;
     private HashMap<LatLng, String> markerHashMap = new HashMap<>();
+    private ArrayList<LawyerModel> lawyerModelArrayList;
 
     public MapFragment() {
         // Required empty public constructor
@@ -103,7 +107,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
 
 
     private void setPropertiesView(View view) {
-        SearchView searchView = (SearchView) view.findViewById(R.id.searchView);
+        searchView = (SearchView) view.findViewById(R.id.searchView);
 
         int searchSrcTextId = getResources().getIdentifier("android:id/search_src_text", null, null);
         EditText searchEditText = (EditText) searchView.findViewById(searchSrcTextId);
@@ -118,6 +122,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
         ImageView searchButtonImage = (ImageView) searchView.findViewById(searchButtonId);
         searchButtonImage.setColorFilter(getResources().getColor(R.color.white));
 
+        searchView.setOnQueryTextListener(this);
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchView.getId();
+            }
+        });
     }
 
     @Override
@@ -147,7 +158,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
     }
 
     private void addPinsMap() {
-        ArrayList<LawyerModel> lawyerModelArrayList = ApplicationState.sharedState().getLawyersRequestModels();
+        lawyerModelArrayList = ApplicationState.sharedState().getLawyersRequestModels();
 
         for (int i = 0; i < lawyerModelArrayList.size(); i++) {
             LawyerModel lawyerModel = lawyerModelArrayList.get(i);
@@ -221,13 +232,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
         markerOptions.title("Você");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         currentLocationMarker = mMap.addMarker(markerOptions);
-
-        //zoom to current position:
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(userLatLng).zoom(14).build();
-
-        mMap.animateCamera(CameraUpdateFactory
-                .newCameraPosition(cameraPosition));
     }
 
     private void getLawyers() {
@@ -315,11 +319,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
                 markerOptions.title("Você");
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                 currentLocationMarker = mMap.addMarker(markerOptions);
+
+                //zoom to current position:
+                CameraPosition cameraPosition = new CameraPosition.Builder()
+                        .target(userLatLng).zoom(14).build();
+
+                mMap.animateCamera(CameraUpdateFactory
+                        .newCameraPosition(cameraPosition));
             }
 
             mLocationRequest = new LocationRequest();
-            mLocationRequest.setInterval(5000); //5 seconds
-            mLocationRequest.setFastestInterval(3000); //3 seconds
+            mLocationRequest.setInterval(15000); //5 seconds
+            mLocationRequest.setFastestInterval(10000); //3 seconds
             mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
             //mLocationRequest.setSmallestDisplacement(0.1F); //1/10 meter
 
@@ -337,6 +348,38 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        if (lawyerModelArrayList!=null){
+            filterList(query);
+        }
+        searchView.clearFocus();
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }
+
+    public void filterList(String stringFilter){
+        ArrayList<LawyerModel> arrayFiltered = new ArrayList<>();
+        for (LawyerModel lawyerModel : lawyerModelArrayList){
+            if (lawyerModel.getName().toLowerCase().contains(stringFilter.toLowerCase())){
+                arrayFiltered.add(lawyerModel);
+            }
+        }
+        if (arrayFiltered.size()==1){
+            LawyerModel lawyerModel = arrayFiltered.get(0);
+            LatLng lawyerLatLng = new LatLng(lawyerModel.getLatitude(),lawyerModel.getLongitude());
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(lawyerLatLng).zoom(14).build();
+
+            mMap.animateCamera(CameraUpdateFactory
+                    .newCameraPosition(cameraPosition));
+        }
     }
 }
 
