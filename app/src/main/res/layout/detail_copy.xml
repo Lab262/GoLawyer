@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <com.github.aakira.expandablelayout.ExpandableRelativeLayout
-        android:id="@+id/detailCopy"
+        android:id="@+id/detail_copy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:ael_duration="200"
