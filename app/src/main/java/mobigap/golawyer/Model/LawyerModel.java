@@ -27,7 +27,7 @@ public class LawyerModel {
     private byte [] imageBytes;
 
 
-    private static String keyIdLawyer = "id_advogado";
+    public static String keyIdLawyer = "id_advogado";
     private static String keyName = "nome";
     private static String keyOab = "oab";
     private static String keyMiniCurriculum = "mini_curriculo";
@@ -36,7 +36,7 @@ public class LawyerModel {
     private static String keyTotalOrders = "qtd_atendimentos";
     private static String keyTotalConcludedOrders = "qtd_atendimentos_concluidos";
     private static String keyStatus = "status_advogado";
-    private static String keyPhoto = "foto";
+    public static String keyPhoto = "foto";
     private static String keyLatitude= "latitude";
     private static String keyLongitude= "longitude";
     public static String keyItensDataModel = "itens";

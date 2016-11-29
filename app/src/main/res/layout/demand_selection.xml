@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+        android:id="@+id/demandSelection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:ael_duration="200"
+        app:ael_expanded="false"
+        app:ael_interpolator="linear"
+        app:ael_orientation="vertical">
+
+    <RadioGroup
+        android:id="@+id/selectDemandRadios"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_gravity="right"
+        android:inputType="text"
+        android:orientation="vertical">
+
+    <RadioButton
+        android:text="Cópia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/copyRadioButton"
+        android:gravity="center_vertical"
+        android:drawableRight="@drawable/radio_button_unselect"
+        android:button="@null"
+        android:paddingRight="15dp"
+        android:background="@color/blueApp"
+        android:textColor="@color/white"
+        android:fontFamily="sans-serif"
+        android:paddingLeft="20dp"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp"
+        android:textStyle="normal|bold"
+        android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black_overlay"/>
+
+        <RadioButton
+            android:text="Audiência"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/courtRadioButton"
+            android:gravity="center_vertical"
+            android:drawableRight="@drawable/radio_button_unselect"
+            android:button="@null"
+            android:paddingRight="15dp"
+            android:background="@color/blueApp"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif"
+            android:paddingLeft="20dp"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:textStyle="normal|bold"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black_overlay"/>
+
+
+        <RadioButton
+            android:text="Protocolo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/protocolRadioButton"
+            android:gravity="center_vertical"
+            android:drawableRight="@drawable/radio_button_unselect"
+            android:button="@null"
+            android:paddingRight="15dp"
+            android:background="@color/blueApp"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif"
+            android:paddingLeft="20dp"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:textStyle="normal|bold"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black_overlay"/>
+
+
+        <RadioButton
+            android:text="Distribuição"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/distributionRadioButton"
+            android:gravity="center_vertical"
+            android:drawableRight="@drawable/radio_button_unselect"
+            android:button="@null"
+            android:paddingRight="15dp"
+            android:background="@color/blueApp"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif"
+            android:paddingLeft="20dp"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:textStyle="normal|bold"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black_overlay"/>
+
+
+        <RadioButton
+            android:text="Retirar alvará"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/charterRadioButton"
+            android:gravity="center_vertical"
+            android:drawableRight="@drawable/radio_button_unselect"
+            android:button="@null"
+            android:paddingRight="15dp"
+            android:background="@color/blueApp"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif"
+            android:paddingLeft="20dp"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:textStyle="normal|bold"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black_overlay"/>
+
+
+        <RadioButton
+            android:text="Certidão"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/certificateRadioButton"
+            android:gravity="center_vertical"
+            android:drawableRight="@drawable/radio_button_unselect"
+            android:button="@null"
+            android:paddingRight="15dp"
+            android:background="@color/blueApp"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif"
+            android:paddingLeft="20dp"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:textStyle="normal|bold"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black_overlay"/>
+
+
+        <RadioButton
+            android:text="Outros"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/otherRadioButton"
+            android:gravity="center_vertical"
+            android:drawableRight="@drawable/radio_button_unselect"
+            android:button="@null"
+            android:paddingRight="15dp"
+            android:background="@color/blueApp"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif"
+            android:paddingLeft="20dp"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:textStyle="normal|bold"
+            android:textSize="16sp" />
+
+    </RadioGroup>
+
+    </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+
+</LinearLayout>

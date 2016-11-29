@@ -21,6 +21,7 @@ import mobigap.golawyer.Enums.TypeProfile;
 import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Extensions.FeedbackManager;
 import mobigap.golawyer.Extensions.ImageConvert;
+import mobigap.golawyer.LawyerServiceProposal.LawyerServiceProposalActivity;
 import mobigap.golawyer.Login.LoginActivity;
 import mobigap.golawyer.Model.EvaluationModel;
 import mobigap.golawyer.Model.LawyerModel;
@@ -285,6 +286,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 ActivityManager.changeActivityAndRemoveParentActivity(getActivity(), LoginActivity.class);
                 break;
             case id_make_proposal_button:
+                Bundle bundleProposal = new Bundle();
+                bundleProposal.putInt(LawyerModel.keyIdLawyer,positionLawyer);
+                bundleProposal.putByteArray(LawyerModel.keyPhoto,profileImageBytes);
+                ActivityManager.changeActivity(getActivity(), LawyerServiceProposalActivity.class, bundleProposal);
                 break;
         }
     }
