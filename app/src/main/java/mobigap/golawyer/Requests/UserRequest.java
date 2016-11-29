@@ -6,6 +6,8 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import java.util.HashMap;
 import java.util.Map;
 
+import mobigap.golawyer.Enums.TypeDemand;
+
 /**
  * Created by luisresende on 01/11/16.
  */
@@ -17,6 +19,7 @@ public class UserRequest {
     private static String urlRegisterUser = "SetCadastro";
     private static String urlGetProfileData = "GetDadosPerfil";
     private static String urlGetOrders = "GetPedidos";
+    private static String urlSetOrder = "SetPedido";
 
     private static String keyLogin = "login";
     private static String keyPassword = "senha";
@@ -34,6 +37,11 @@ public class UserRequest {
     private static String keyCity = "cidade";
     private static String keyState = "estado";
     private static String keyIdUser = "id_user";
+    private static String keyDemand = "demanda";
+    private static String keyValueProposal = "valor_proposta";
+    private static String keyLocal = "cartorio";
+    private static String keyObservation = "observacoes";
+    private static String keyIdLawyer = "id_advogado";
 
     public static void login(String email, String password, JsonHttpResponseHandler jsonHttpResponseHandler){
         Map<String,String> params = new HashMap<>();
@@ -84,6 +92,18 @@ public class UserRequest {
 
     public static void getImage(String urlImage, AsyncHttpResponseHandler asyncHttpResponseHandler){
         Requester.getRequest(urlImage,asyncHttpResponseHandler);
+    }
+
+    public static void setOrder(TypeDemand typeDemand, String valueProposal, String local, String observation,
+                                String idUser, String idLawyer, JsonHttpResponseHandler jsonHttpResponseHandler){
+        Map<String,String> params = new HashMap<>();
+        params.put(keyDemand,TypeDemand.getStringTypeDemand(typeDemand.ordinal()));
+        params.put(keyValueProposal,valueProposal);
+        params.put(keyLocal,local);
+        params.put(keyObservation,observation);
+        params.put(keyIdLawyer,idLawyer);
+        params.put(keyIdUser,idUser);
+        Requester.postRequest(urlSetOrder,Requester.getRequestParams(params), jsonHttpResponseHandler);
     }
 
 }

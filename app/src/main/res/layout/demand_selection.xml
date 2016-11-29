@@ -23,7 +23,7 @@
         android:orientation="vertical">
 
     <mobigap.golawyer.Extensions.CustomRadioButton
-        android:text="Cópia"
+        android:text="@string/name_radio_button_copy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/copyRadioButton"
@@ -47,7 +47,7 @@
             android:background="@color/black_overlay"/>
 
         <mobigap.golawyer.Extensions.CustomRadioButton
-            android:text="Audiência"
+            android:text="@string/name_radio_button_court"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/courtRadioButton"
@@ -71,7 +71,7 @@
 
 
         <mobigap.golawyer.Extensions.CustomRadioButton
-            android:text="Protocolo"
+            android:text="@string/name_radio_button_protocol"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/protocolRadioButton"
@@ -95,7 +95,7 @@
 
 
         <mobigap.golawyer.Extensions.CustomRadioButton
-            android:text="Distribuição"
+            android:text="@string/name_radio_button_distribution"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/distributionRadioButton"
@@ -119,7 +119,7 @@
 
 
         <mobigap.golawyer.Extensions.CustomRadioButton
-            android:text="Retirar alvará"
+            android:text="@string/name_radio_button_charter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/charterRadioButton"
@@ -143,7 +143,7 @@
 
 
         <mobigap.golawyer.Extensions.CustomRadioButton
-            android:text="Certidão"
+            android:text="@string/name_radio_button_certificate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/certificateRadioButton"
@@ -167,7 +167,7 @@
 
 
         <mobigap.golawyer.Extensions.CustomRadioButton
-            android:text="Outros"
+            android:text="@string/name_radio_button_others"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/otherRadioButton"

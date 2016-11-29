@@ -5,7 +5,9 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
+import mobigap.golawyer.Enums.TypeDemand;
 import mobigap.golawyer.R;
 
 /**
@@ -13,6 +15,8 @@ import mobigap.golawyer.R;
  */
 
 public class CustomRadioButton extends RadioButton {
+
+    private TypeDemand typeDemand;
 
     public CustomRadioButton(Context context) {
         super(context);
@@ -39,5 +43,13 @@ public class CustomRadioButton extends RadioButton {
         }else {
             this.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.radio_button_unselect, 0);
         }
+    }
+
+    public TypeDemand getTypeDemand() {
+        return typeDemand;
+    }
+
+    public void setTypeDemand(TypeDemand typeDemand) {
+        this.typeDemand = typeDemand;
     }
 }

@@ -116,13 +116,16 @@
             android:ems="10"
             android:id="@+id/observationEditText"
             android:textColorHint="@color/white"
-            android:textColor="@color/white"
+            android:textColor="@color/blueDarkApp"
             android:background="@color/white"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
             android:layout_height="150dp"
-            android:layout_marginBottom="10dp" />
+            android:layout_marginBottom="10dp"
+            android:textAlignment="gravity"
+            android:text="kljdksj"
+            android:gravity="left" />
 
     </LinearLayout>
 

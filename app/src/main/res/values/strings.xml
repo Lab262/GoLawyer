@@ -47,6 +47,17 @@
     <string name="title_alert_forgot_password">Digite seu email para recuperar sua senha: </string>
     <string name="placeholder_select_demand">Selecionar demanda</string>
     <string name="placeholder_detail_copy">Detalhe cópia</string>
+    <string name="name_radio_button_copy">Cópia</string>
+    <string name="name_radio_button_court">Audiência</string>
+    <string name="name_radio_button_protocol">Protocolo</string>
+    <string name="name_radio_button_distribution">Distribuição</string>
+    <string name="name_radio_button_charter">Retirar alvará</string>
+    <string name="name_radio_button_certificate">Certidão</string>
+    <string name="name_radio_button_others">Outros</string>
+    <string name="error_value_proposal">Erro: Campo valor da proposta faltando</string>
+    <string name="error_local_proposal">Erro: Campo local faltando</string>
+    <string name="error_observation_proposal">Erro: Campo observações faltando</string>
+
 
     <string name="accept">Aceitar </string>
     <string name="refuse">Recusar </string>
