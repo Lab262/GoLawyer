@@ -80,10 +80,8 @@ public class LawyerServiceStatusDemandDetailFragment extends ScrollView implemen
     }
 
     private void adjustListView(){
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View viewRow = inflater.inflate(R.layout.fragment_demand_information_row, null);
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) demandListView.getLayoutParams();
-        layoutParams.height = viewRow.getLayoutParams().height*demandListView.getAdapter().getCount();
+        layoutParams.height = 60*demandListView.getAdapter().getCount();
         demandListView.setLayoutParams(layoutParams);
     }
 
