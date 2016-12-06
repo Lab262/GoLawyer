@@ -1,5 +1,6 @@
 package mobigap.golawyer.Profile;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -17,15 +18,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 import de.hdodenhof.circleimageview.CircleImageView;
 import mobigap.golawyer.Extensions.CameraConfiguration;
+import mobigap.golawyer.Extensions.FeedbackManager;
 import mobigap.golawyer.Extensions.ImageConvert;
 import mobigap.golawyer.Model.ProfileInformationEditModel;
 import mobigap.golawyer.Model.UserDataModel;
+import mobigap.golawyer.Model.UserInformationModel;
 import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.Profile.Information.ProfileInformationEditListAdapter;
 import mobigap.golawyer.R;
@@ -40,6 +47,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private CircleImageView circleImageViewProfile;
     private ListView profileEditInformationListView;
     private TextView nameTextView, hasOABTextView;
+    private ProgressDialog progressDialog;
+    private ProfileInformationEditListAdapter adapter;
 
     private final int CONST_IMAGE_BLUR = 25;
     private final int SIZE_PHOTO = 350;
@@ -66,7 +75,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
         switch (item.getItemId()) {
             case R.id.action_save_edit_profile:
-                //TODO: Logica para salvar o perfil caso tenha modificado algo...
+                setDataProfile();
                 break;
         }
 
@@ -111,7 +120,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void loadRequestedProfileEditInformationList(ArrayList<ProfileInformationEditModel> profileEditInformationsRequested) {
-        ProfileInformationEditListAdapter adapter = new ProfileInformationEditListAdapter(this, profileEditInformationsRequested);
+         adapter = new ProfileInformationEditListAdapter(this, profileEditInformationsRequested);
         profileEditInformationListView.setAdapter(adapter);
     }
 
@@ -171,6 +180,46 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 }
                 break;
         }
+    }
+
+    private void setDataProfile(){
+        progressDialog = FeedbackManager.createProgressDialog(this,getString(R.string.placeholder_message_dialog));
+
+        UserRequest.updateProfileData(ApplicationState.sharedState().getCurrentUser(this).getId(), adapter.data,
+                new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                progressDialog.dismiss();
+                createToast(response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                createErrorToast();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                createErrorToast();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                createErrorToast();
+            }
+        });
+    }
+
+    private void createToast(JSONObject response){
+        FeedbackManager.createToast(this,response);
+    }
+
+    private void createErrorToast(){
+        FeedbackManager.feedbackErrorResponse(this,progressDialog);
     }
 
 

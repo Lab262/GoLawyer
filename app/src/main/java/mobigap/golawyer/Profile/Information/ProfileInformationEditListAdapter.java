@@ -87,31 +87,3 @@ public class ProfileInformationEditListAdapter extends BaseAdapter {
         return convertView;
     }
 }
-
-//class Watcher implements TextWatcher{
-//
-//    EditText editText;
-//    int position;
-//
-//    public Watcher (EditText editText, int position){
-//        this.editText = editText;
-//        this.editText.addTextChangedListener(this);
-//        this.position = position;
-//    }
-//
-//    @Override
-//    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//    }
-//
-//    @Override
-//    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//    }
-//
-//    @Override
-//    public void afterTextChanged(Editable editable) {
-//        ProfileInformationEditListAdapter.data.get(position).setField(editable.toString());
-//        System.out.println(ProfileInformationEditListAdapter.data.get(position).nameField + editable.toString());
-//    }
-//}

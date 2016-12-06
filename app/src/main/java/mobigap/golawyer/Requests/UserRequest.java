@@ -3,10 +3,14 @@ package mobigap.golawyer.Requests;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import mobigap.golawyer.Enums.TypeDemand;
+import mobigap.golawyer.Model.ProfileInformationEditModel;
+import mobigap.golawyer.Model.ProfileInformationModel;
+import mobigap.golawyer.Model.UserDataModel;
 
 /**
  * Created by luisresende on 01/11/16.
@@ -18,6 +22,7 @@ public class UserRequest {
     private static String urlForgotPassword = "SetRecuperarSenha";
     private static String urlRegisterUser = "SetCadastro";
     private static String urlGetProfileData = "GetDadosPerfil";
+    private static String urlSetProfileData = "SetDadosPerfil";
     private static String urlGetOrders = "GetPedidos";
     private static String urlSetOrder = "SetPedido";
 
@@ -104,6 +109,18 @@ public class UserRequest {
         params.put(keyIdLawyer,idLawyer);
         params.put(keyIdUser,idUser);
         Requester.postRequest(urlSetOrder,Requester.getRequestParams(params), jsonHttpResponseHandler);
+    }
+
+    public static void updateProfileData(String idUser,ArrayList<ProfileInformationEditModel> profileInformationEditModels,
+                                    JsonHttpResponseHandler jsonHttpResponseHandler){
+        Map<String,String> params = new HashMap<>();
+        params.put(keyIdUser,idUser);
+
+        for (ProfileInformationEditModel profileInformationEditModel: profileInformationEditModels){
+            params.put(profileInformationEditModel.nameFieldWS,profileInformationEditModel.field);
+        }
+
+        Requester.postRequest(urlSetProfileData,Requester.getRequestParams(params), jsonHttpResponseHandler);
     }
 
 }
