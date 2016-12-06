@@ -124,7 +124,6 @@
             android:layout_height="150dp"
             android:layout_marginBottom="10dp"
             android:textAlignment="gravity"
-            android:text="kljdksj"
             android:gravity="left" />
 
     </LinearLayout>

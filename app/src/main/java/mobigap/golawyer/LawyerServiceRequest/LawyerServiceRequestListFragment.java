@@ -38,10 +38,7 @@ public class LawyerServiceRequestListFragment extends Fragment {
     public AdapterView.OnItemClickListener clickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            Bundle requestedServiceData = new Bundle();
-            requestedServiceData.putInt("requestedServiceId", position);
-            ActivityManager.changeActivity(getContext(), LawyerServiceStatusActivity.class, requestedServiceData);
+            getOrder(((ServiceRequestModel)adapter.getItem(position)).getIdOrder(),position);
         }
     };
 
@@ -146,5 +143,42 @@ public class LawyerServiceRequestListFragment extends Fragment {
 
     private void createErrorToast(){
         FeedbackManager.feedbackErrorResponse(getActivity(),progressDialog);
+    }
+
+    private void getOrder(String idOrder, final int position){
+        progressDialog = FeedbackManager.createProgressDialog(getActivity(),getString(R.string.placeholder_message_dialog));
+
+        UserRequest.getOrder(ApplicationState.sharedState().getCurrentUser(getActivity().getApplicationContext()).getId(), idOrder,
+                new JsonHttpResponseHandler(){
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        progressDialog.dismiss();
+                        //TODO: PARSER DA RESPOSTA PARA MONTAR
+
+                        Bundle requestedServiceData = new Bundle();
+                        requestedServiceData.putInt(ServiceRequestModel.keyStatus, position);
+                        requestedServiceData.putString(ServiceRequestModel.keyIdLawyer, ((ServiceRequestModel)adapter.getItem(position)).getIdLawyer());
+                        ActivityManager.changeActivity(getContext(), LawyerServiceStatusActivity.class, requestedServiceData);
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        super.onFailure(statusCode, headers, responseString, throwable);
+                        createErrorToast();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        createErrorToast();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        createErrorToast();
+                    }
+                });
     }
 }

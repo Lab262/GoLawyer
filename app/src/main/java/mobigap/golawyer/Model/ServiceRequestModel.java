@@ -21,9 +21,9 @@ public class ServiceRequestModel {
     private String nameLawyer;
     private byte [] imageBytes;
 
-    private static String keyIdOrder = "id_pedido";
-    private static String keyIdLawyer = "id_advogado";
-    private static String keyStatus = "status";
+    public static String keyIdOrder = "id_pedido";
+    public static String keyIdLawyer = "id_advogado";
+    public static String keyStatus = "status";
     private static String keyDemand = "demanda";
     private static String keyValue = "valor";
     private static String keyStep = "passo";
@@ -78,5 +78,13 @@ public class ServiceRequestModel {
 
     public void setImageBytes(byte[] imageBytes) {
         this.imageBytes = imageBytes;
+    }
+
+    public String getIdOrder() {
+        return idOrder;
+    }
+
+    public String getIdLawyer() {
+        return idLawyer;
     }
 }

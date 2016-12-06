@@ -10,6 +10,7 @@ import java.util.Map;
 import mobigap.golawyer.Enums.TypeDemand;
 import mobigap.golawyer.Model.ProfileInformationEditModel;
 import mobigap.golawyer.Model.ProfileInformationModel;
+import mobigap.golawyer.Model.ServiceRequestModel;
 import mobigap.golawyer.Model.UserDataModel;
 
 /**
@@ -25,6 +26,7 @@ public class UserRequest {
     private static String urlSetProfileData = "SetDadosPerfil";
     private static String urlGetOrders = "GetPedidos";
     private static String urlSetOrder = "SetPedido";
+    private static String urlGetOrder = "GetFluxoDemanda";
 
     private static String keyLogin = "login";
     private static String keyPassword = "senha";
@@ -121,6 +123,13 @@ public class UserRequest {
         }
 
         Requester.postRequest(urlSetProfileData,Requester.getRequestParams(params), jsonHttpResponseHandler);
+    }
+
+    public static void getOrder(String idUser, String idOrder, JsonHttpResponseHandler jsonHttpResponseHandler){
+        Map<String,String> params = new HashMap<>();
+        params.put(keyIdUser,idUser);
+        params.put(ServiceRequestModel.keyIdOrder,idOrder);
+        Requester.postRequest(urlGetOrder,Requester.getRequestParams(params), jsonHttpResponseHandler);
     }
 
 }

@@ -1,6 +1,7 @@
 package mobigap.golawyer.LawyerServiceFollowing;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -13,10 +14,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.Header;
 import de.hdodenhof.circleimageview.CircleImageView;
 import mobigap.golawyer.Enums.ServiceStatusEnum;
+import mobigap.golawyer.Extensions.ImageConvert;
 import mobigap.golawyer.Extensions.LayoutManagerExtension;
+import mobigap.golawyer.Model.LawyerModel;
+import mobigap.golawyer.Model.ServiceRequestModel;
+import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.R;
+import mobigap.golawyer.Requests.Requester;
+import mobigap.golawyer.Requests.UserRequest;
 
 public class LawyerServiceStatusActivity extends AppCompatActivity {
 
@@ -30,6 +42,8 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
 
     private int requestedServiceId;
     private ServiceStatusEnum currentStatus = ServiceStatusEnum.DELIVERY;
+    private LawyerModel lawyerModel=null;
+    private static int CONST_IMAGE_BLUR = 25;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +53,19 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
-        this.requestedServiceId = bundle.getInt("requestedServiceId");
+        this.requestedServiceId = bundle.getInt(ServiceRequestModel.keyStatus);
+
+        String idLawyer = bundle.getString(ServiceRequestModel.keyIdLawyer);
+        ArrayList<LawyerModel> lawyerModelArrayList = ApplicationState.sharedState().getLawyersRequestModels();
+
+//        int position = -1;
+        for (LawyerModel lawyerModelArray: lawyerModelArrayList){
+            if (lawyerModelArray.getIdLawyer().equals(idLawyer)){
+                lawyerModel = lawyerModelArray;
+//                position = lawyerModelArrayList.indexOf(lawyerModelArray);
+                break;
+            }
+        }
 
         switch (this.requestedServiceId) {
             case 0:
@@ -90,8 +116,27 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
     }
 
     private void setPropertiesViews(){
-
+        getImage(lawyerModel.getPhoto());
         cameraButton.setVisibility(View.INVISIBLE);
+        hasOABTextView.setText(lawyerModel.getOab());
+        nameTextView.setText(lawyerModel.getName());
+    }
+
+    private void getImage(String photo){
+        UserRequest.getImage(photo, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                Bitmap imageBitmap = ImageConvert.getDecode64ImageStringFromByte(responseBody);
+                profileImageView.setImageBitmap(imageBitmap);
+                Bitmap blurred = ImageConvert.blurRenderScript(getApplicationContext(),imageBitmap, CONST_IMAGE_BLUR);
+                backgroundPhotoImage.setImageBitmap(blurred);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
     }
 
     public void setupServiceStatusSegment() {
@@ -102,8 +147,7 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
 
                 LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_demand_detail);
                 LawyerServiceStatusDemandDetailFragment lawyerServiceStatusDemandDetailFragment = (LawyerServiceStatusDemandDetailFragment) findViewById(R.id.serviceStatusInfoLayout);
-                lawyerServiceStatusDemandDetailFragment.setupTextsFields("Fórum de Novo Gama","Criação de contrato", "R$: 500,00","Correios -> Carta","R$: 1500,00");
-
+                //TODO: SETAR DADOS DO FLUXO DE DEMANDA
                 break;
             case PAYMENT:
                 demandImage.setImageResource(R.drawable.ic_demand_passed);
