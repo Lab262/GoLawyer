@@ -1,18 +1,13 @@
 package mobigap.golawyer.LawyerServiceFollowing;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -23,11 +18,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import mobigap.golawyer.Enums.ServiceStatusEnum;
 import mobigap.golawyer.Extensions.ImageConvert;
 import mobigap.golawyer.Extensions.LayoutManagerExtension;
+import mobigap.golawyer.LawyerServiceStatusDemand.LawyerServiceStatusDemandDetailFragment;
+import mobigap.golawyer.Model.DemandModel;
 import mobigap.golawyer.Model.LawyerModel;
-import mobigap.golawyer.Model.ServiceRequestModel;
 import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.R;
-import mobigap.golawyer.Requests.Requester;
 import mobigap.golawyer.Requests.UserRequest;
 
 public class LawyerServiceStatusActivity extends AppCompatActivity {
@@ -44,45 +39,44 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
     private ServiceStatusEnum currentStatus = ServiceStatusEnum.DELIVERY;
     private LawyerModel lawyerModel=null;
     private static int CONST_IMAGE_BLUR = 25;
+    private DemandModel demandModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lawyer_service_status);
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+        demandModel = ApplicationState.sharedState().getDemandModel();
 
-        this.requestedServiceId = bundle.getInt(ServiceRequestModel.keyStatus);
+        this.requestedServiceId = demandModel.getStep();
 
-        String idLawyer = bundle.getString(ServiceRequestModel.keyIdLawyer);
+        String idLawyer = demandModel.getIdLawyer();
         ArrayList<LawyerModel> lawyerModelArrayList = ApplicationState.sharedState().getLawyersRequestModels();
 
-//        int position = -1;
         for (LawyerModel lawyerModelArray: lawyerModelArrayList){
             if (lawyerModelArray.getIdLawyer().equals(idLawyer)){
                 lawyerModel = lawyerModelArray;
-//                position = lawyerModelArrayList.indexOf(lawyerModelArray);
                 break;
             }
         }
 
         switch (this.requestedServiceId) {
-            case 0:
+            case 1:
                 currentStatus = ServiceStatusEnum.DEMAND;
                 break;
-            case 1:
+            case 2:
                 currentStatus = ServiceStatusEnum.PAYMENT;
                 break;
-            case 2:
+            case 3:
                 currentStatus = ServiceStatusEnum.CHAT;
                 break;
-            case 3:
+            case 4:
                 currentStatus = ServiceStatusEnum.DELIVERY;
                 break;
-            case 4:
+            case 5:
                 currentStatus = ServiceStatusEnum.RATE;
                 break;
+            //TODO:ADICIONAR O PASSO 6: DEMANDA FINALIZADA
         }
 
         this.getViewInstances();
@@ -147,7 +141,7 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
 
                 LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_demand_detail);
                 LawyerServiceStatusDemandDetailFragment lawyerServiceStatusDemandDetailFragment = (LawyerServiceStatusDemandDetailFragment) findViewById(R.id.serviceStatusInfoLayout);
-                //TODO: SETAR DADOS DO FLUXO DE DEMANDA
+                lawyerServiceStatusDemandDetailFragment.setupView(demandModel.getInformationDemand(),demandModel.getTypeProfile());
                 break;
             case PAYMENT:
                 demandImage.setImageResource(R.drawable.ic_demand_passed);
@@ -214,27 +208,5 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
 
                 break;
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.service_status_action_bar_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.action_map:
-                Toast.makeText(this, "map selected", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.action_update:
-                Toast.makeText(this, "update selected", Toast.LENGTH_SHORT).show();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

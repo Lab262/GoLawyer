@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mobigap.golawyer.LawyerServiceFollowing.LawyerServiceStatusDemandDetailFragment
+<mobigap.golawyer.LawyerServiceStatusDemand.LawyerServiceStatusDemandDetailFragment
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/headerRegister"
     android:layout_width="match_parent"
@@ -16,13 +16,16 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/demandListView" />
+            android:id="@+id/demandListView"
+            android:paddingBottom="20dp" />
 
         <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="125dp"
         android:orientation="vertical"
-        android:weightSum="2">
+        android:weightSum="2"
+            android:id="@+id/buttonsLawyer"
+            android:paddingTop="0dp">
 
 
         <LinearLayout
@@ -61,6 +64,23 @@
             android:src="@drawable/button_against_proposal" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:id="@+id/buttonsClient">
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/cancelProposalButton"
+            android:layout_weight="1"
+            android:scaleType="centerInside"
+            android:background="@android:color/transparent"
+            android:src="@drawable/button_cancel" />
     </LinearLayout>
 
-</mobigap.golawyer.LawyerServiceFollowing.LawyerServiceStatusDemandDetailFragment>
+    </LinearLayout>
+
+</mobigap.golawyer.LawyerServiceStatusDemand.LawyerServiceStatusDemandDetailFragment>

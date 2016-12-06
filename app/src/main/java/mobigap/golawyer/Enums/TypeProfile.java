@@ -28,4 +28,15 @@ public enum TypeProfile {
             return "";
         }
     }
+
+    public static TypeProfile getTypeProfileByString(String typeProfile){
+        if (typeProfile.equals(nameClient)){
+            return CLIENT;
+        }else if (typeProfile.equals(nameLawyer)) {
+            return LAWYER;
+        }
+        else{
+            return null;
+        }
+    }
 }

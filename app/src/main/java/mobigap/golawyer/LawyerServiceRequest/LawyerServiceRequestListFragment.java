@@ -21,6 +21,7 @@ import cz.msebera.android.httpclient.Header;
 import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Extensions.FeedbackManager;
 import mobigap.golawyer.LawyerServiceFollowing.LawyerServiceStatusActivity;
+import mobigap.golawyer.Model.DemandModel;
 import mobigap.golawyer.Model.ServiceRequestModel;
 import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.R;
@@ -154,12 +155,14 @@ public class LawyerServiceRequestListFragment extends Fragment {
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
                         progressDialog.dismiss();
-                        //TODO: PARSER DA RESPOSTA PARA MONTAR
 
-                        Bundle requestedServiceData = new Bundle();
-                        requestedServiceData.putInt(ServiceRequestModel.keyStatus, position);
-                        requestedServiceData.putString(ServiceRequestModel.keyIdLawyer, ((ServiceRequestModel)adapter.getItem(position)).getIdLawyer());
-                        ActivityManager.changeActivity(getContext(), LawyerServiceStatusActivity.class, requestedServiceData);
+                        if (Requester.haveSuccess(response)) {
+                            DemandModel demandModel = new DemandModel(response);
+                            ApplicationState.sharedState().setDemandModel(demandModel);
+                            ActivityManager.changeActivity(getContext(), LawyerServiceStatusActivity.class);
+                        }else {
+                            createToast(response);
+                        }
                     }
 
                     @Override

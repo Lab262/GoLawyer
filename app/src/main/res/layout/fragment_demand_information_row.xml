@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    tools:context="mobigap.golawyer.LawyerServiceStatusDemand.DemandInformationRow"
+    android:orientation="horizontal"
+    android:padding="0dp"
+    android:layout_height="60dp">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:baselineAligned="false"
+        android:foregroundGravity="center"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.5">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Troy Beck"
+            android:id="@+id/demandRowTitle"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="0dp"
+            android:maxLines="1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Informação do pedido"
+            android:id="@+id/demandRowDescription"
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimary"
+            android:paddingTop="0dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:maxLines="1" />
+    </LinearLayout>
+
+</LinearLayout>
