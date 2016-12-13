@@ -18,8 +18,10 @@ public class FeedbackManager {
 
     static public void createToast(Context context, String message){
 
-        Toast toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
-        toast.show();
+        if (context!=null){
+            Toast toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
     static public void createToast(Context context, JSONObject response){

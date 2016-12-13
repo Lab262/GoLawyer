@@ -54,21 +54,23 @@ public class ImageConvert {
                 smallBitmap.getWidth(), smallBitmap.getHeight(),
                 Bitmap.Config.ARGB_8888);
 
-        RenderScript renderScript = RenderScript.create(context);
+        if (context!=null){
+            RenderScript renderScript = RenderScript.create(context);
 
-        Allocation blurInput = Allocation.createFromBitmap(renderScript, smallBitmap);
-        Allocation blurOutput = Allocation.createFromBitmap(renderScript, bitmap);
+            Allocation blurInput = Allocation.createFromBitmap(renderScript, smallBitmap);
+            Allocation blurOutput = Allocation.createFromBitmap(renderScript, bitmap);
 
-        ScriptIntrinsicBlur blur = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            blur = ScriptIntrinsicBlur.create(renderScript,
-                    Element.U8_4(renderScript));
-            blur.setInput(blurInput);
-            blur.setRadius(radius); // radius must be 0 < r <= 25
-            blur.forEach(blurOutput);
+            ScriptIntrinsicBlur blur = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                blur = ScriptIntrinsicBlur.create(renderScript,
+                        Element.U8_4(renderScript));
+                blur.setInput(blurInput);
+                blur.setRadius(radius); // radius must be 0 < r <= 25
+                blur.forEach(blurOutput);
+            }
+            blurOutput.copyTo(bitmap);
+            renderScript.destroy();
         }
-        blurOutput.copyTo(bitmap);
-        renderScript.destroy();
 
         return bitmap;
 
