@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 import de.hdodenhof.circleimageview.CircleImageView;
 import mobigap.golawyer.Enums.ServiceStatusEnum;
+import mobigap.golawyer.Enums.TypeProfile;
 import mobigap.golawyer.Extensions.ImageConvert;
 import mobigap.golawyer.Extensions.LayoutManagerExtension;
 import mobigap.golawyer.LawyerServiceStatusDemand.LawyerServiceStatusDemandDetailFragment;
@@ -150,7 +151,13 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
                 paymentImage.setImageResource(R.drawable.ic_payment_active);
                 paymentDescription.setTextColor(ContextCompat.getColor(this, R.color.blueApp));
 
-                LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_payment);
+                if (demandModel.getTypeProfile()== TypeProfile.LAWYER){
+                    LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_payment_lawyer);
+                    TextView feedbackTextView = (TextView) findViewById(R.id.feedbackTextView);
+                    feedbackTextView.setText(demandModel.getFeedbackText());
+                }else {
+                    LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_payment);
+                }
 
                 break;
             case CHAT:

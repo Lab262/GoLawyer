@@ -32,6 +32,7 @@
     <string name="placeholder_service_delivery">Modo de Envio</string>
     <string name="placeholder_service_propose_total_value">Valor total da proposta:</string>
 
+    <string name="placeholder_credit_card_flag">Bandeira do cartão: </string>
     <string name="placeholder_credit_card_name">Nome do cartão: </string>
     <string name="placeholder_credit_card_number">Número do cartão: </string>
     <string name="placeholder_credit_card_expire_date">Validade do cartão: </string>
@@ -99,5 +100,11 @@
     <string name="avalie_o_atendimento_do_profissional">Avalie o atendimento do profissional</string>
     <string name="ap_s_efetuar_sua_avalia_o_o_pagamento_ser_liberado_para_o_advogado_automaticamente">Após efetuar sua avaliação o pagamento será liberado para o advogado automaticamente.</string>
     <string name="title_activity_map">Map</string>
+
+    <string-array name="credit_card_flags_array">
+        <item>Visa</item>
+        <item>Mastercard</item>
+        <item>American Express</item>
+    </string-array>
 
 </resources>

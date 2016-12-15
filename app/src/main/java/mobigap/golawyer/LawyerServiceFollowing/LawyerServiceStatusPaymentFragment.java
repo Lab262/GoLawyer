@@ -3,9 +3,11 @@ package mobigap.golawyer.LawyerServiceFollowing;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 
 import mobigap.golawyer.R;
 
@@ -14,7 +16,7 @@ public class LawyerServiceStatusPaymentFragment extends ScrollView {
 
 
     private EditText creditCardName, creditCardNumber, creditCardExpireDate, creditCardCVV, creditCardCellphoneNumber;
-
+    private Spinner spinnerCreditCardFlag;
     private ImageButton confirmButton, cancelButton;
 
     private OnClickListener confirmClickListener = new OnClickListener() {
@@ -54,6 +56,7 @@ public class LawyerServiceStatusPaymentFragment extends ScrollView {
         this.creditCardExpireDate = (EditText)findViewById(R.id.editTextCreditCardExpireDate);
         this.creditCardCVV = (EditText)findViewById(R.id.editTextCreditCardCVV);
         this.creditCardCellphoneNumber = (EditText)findViewById(R.id.editTextCreditCardCellPhoneNumber);
+        this.spinnerCreditCardFlag = (Spinner) findViewById(R.id.spinnerCreditCardFlag);
     }
 
     public void buildButtons(){

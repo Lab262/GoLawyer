@@ -29,6 +29,9 @@ public class DemandModel {
     //Variables for step 1
     private HashMap<Integer,Pair<String,String>> informationDemand = new HashMap<>();
 
+    //Variables for step 2
+    private String feedbackText;
+
 
     private static String keyStep = "passo";
     private static String keyTypeUser = "tipo";
@@ -40,6 +43,7 @@ public class DemandModel {
     private static String keyInformationDemand = "tipos_servico";
     private static String keyValue = "valor";
     private static String keyTitle = "titulo";
+    private static String keyText = "texto";
 
     public DemandModel(JSONObject jsonObject) {
         try {
@@ -49,11 +53,13 @@ public class DemandModel {
             this.idLawyer = this.objectsItens.getString(keyIdLawyer);
             this.idUser = this.objectsItens.getString(keyIdUser);
             this.idOrder = this.objectsItens.getString(keyIdOrder);
-            this.isCounterProposal = parseStringBoolean(this.objectsItens.getString(keyCounterProposal));
 
             switch (step){
                 case 1:
                     parseStepOne();
+                    break;
+                case 2:
+                    parseStepTwo();
                     break;
             }
 
@@ -73,6 +79,8 @@ public class DemandModel {
     private void parseStepOne(){
         try {
             JSONArray jsonArray = this.objectsItens.getJSONArray(keyInformationDemand);
+            this.isCounterProposal = parseStringBoolean(this.objectsItens.getString(keyCounterProposal));
+
             for (int i=0; i<jsonArray.length();i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 Pair<String,String> pair = new Pair<>(jsonObject.getString(keyTitle),jsonObject.getString(keyValue));
@@ -81,7 +89,16 @@ public class DemandModel {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
 
+    private void parseStepTwo(){
+        if(typeProfile==TypeProfile.LAWYER) {
+            try {
+                this.feedbackText = this.objectsItens.getString(keyText);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public int getStep() {
@@ -146,5 +163,9 @@ public class DemandModel {
 
     public void setTypeProfile(TypeProfile typeProfile) {
         this.typeProfile = typeProfile;
+    }
+
+    public String getFeedbackText() {
+        return feedbackText;
     }
 }
