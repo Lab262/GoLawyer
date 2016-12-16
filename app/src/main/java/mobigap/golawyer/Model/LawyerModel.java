@@ -41,6 +41,12 @@ public class LawyerModel {
     private static String keyLongitude= "longitude";
     public static String keyItensDataModel = "itens";
 
+    public LawyerModel(ServiceRequestModel serviceRequestModel){
+        this.name = serviceRequestModel.getNameLawyer();
+        this.photo = serviceRequestModel.getProfileImageUrl();
+        this.status = serviceRequestModel.getStatus();
+    }
+
     public LawyerModel(JSONObject jsonObject){
         try {
             this.idLawyer = jsonObject.getString(keyIdLawyer);
@@ -139,5 +145,13 @@ public class LawyerModel {
 
     public String getIdLawyer() {
         return idLawyer;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

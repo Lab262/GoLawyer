@@ -22,6 +22,7 @@ import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Extensions.FeedbackManager;
 import mobigap.golawyer.LawyerServiceFollowing.LawyerServiceStatusActivity;
 import mobigap.golawyer.Model.DemandModel;
+import mobigap.golawyer.Model.LawyerModel;
 import mobigap.golawyer.Model.ServiceRequestModel;
 import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.R;
@@ -59,13 +60,14 @@ public class LawyerServiceRequestListFragment extends Fragment {
         this.listView = (ListView) this.view.findViewById(R.id.serviceRequestListView);
 
         this.listView.setOnItemClickListener(this.clickListener);
-        getDataProfile();
+
         return this.view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        getDataProfile();
     }
 
     private void loadRequestedServicesList(ArrayList<ServiceRequestModel> servicesRequested) {
@@ -158,10 +160,13 @@ public class LawyerServiceRequestListFragment extends Fragment {
 
                         if (Requester.haveSuccess(response)) {
                             DemandModel demandModel = new DemandModel(response);
+                            ServiceRequestModel serviceRequestModel = serviceRequestModels.get(position);
                             if (demandModel.getIdLawyer()==null){
-                                demandModel.setIdLawyer(String.valueOf(serviceRequestModels.get(position).getIdLawyer()));
+                                demandModel.setIdLawyer(String.valueOf(serviceRequestModel.getIdLawyer()));
                             }
                             ApplicationState.sharedState().setDemandModel(demandModel);
+                            LawyerModel lawyerModel = new LawyerModel(serviceRequestModel);
+                            ApplicationState.sharedState().setLawyerModel(lawyerModel);
                             ActivityManager.changeActivity(getContext(), LawyerServiceStatusActivity.class);
                         }else {
                             createToast(response);

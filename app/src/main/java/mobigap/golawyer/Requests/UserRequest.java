@@ -27,6 +27,7 @@ public class UserRequest {
     private static String urlGetOrders = "GetPedidos";
     private static String urlSetOrder = "SetPedido";
     private static String urlGetOrder = "GetFluxoDemanda";
+    private static String urlSetDemandOrder = "SetFluxoDemanda";
 
     private static String keyLogin = "login";
     private static String keyPassword = "senha";
@@ -49,6 +50,7 @@ public class UserRequest {
     private static String keyLocal = "cartorio";
     private static String keyObservation = "observacoes";
     private static String keyIdLawyer = "id_advogado";
+    private static String keyCancelDemand = "cancelar";
 
     public static void login(String email, String password, JsonHttpResponseHandler jsonHttpResponseHandler){
         Map<String,String> params = new HashMap<>();
@@ -130,6 +132,19 @@ public class UserRequest {
         params.put(keyIdUser,idUser);
         params.put(ServiceRequestModel.keyIdOrder,idOrder);
         Requester.postRequest(urlGetOrder,Requester.getRequestParams(params), jsonHttpResponseHandler);
+    }
+
+    private static Map<String,String> setParams(String idUser, String idOrder){
+        Map<String,String> params = new HashMap<>();
+        params.put(keyIdUser,idUser);
+        params.put(ServiceRequestModel.keyIdOrder,idOrder);
+        return params;
+    }
+
+    public static void setCancelDemandOrder(String idUser, String idOrder, JsonHttpResponseHandler jsonHttpResponseHandler){
+        Map<String,String> params = setParams(idUser,idOrder);
+        params.put(keyCancelDemand,Requester.responseSuccess);
+        Requester.postRequest(urlSetDemandOrder,Requester.getRequestParams(params), jsonHttpResponseHandler);
     }
 
 }

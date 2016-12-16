@@ -43,6 +43,8 @@ public class FeedbackManager {
         if (progressDialog!=null){
             progressDialog.dismiss();
         }
-        FeedbackManager.createToast(context,context.getString(R.string.placeholder_error_connection));
+        if (context!=null){
+            FeedbackManager.createToast(context,context.getString(R.string.placeholder_error_connection));
+        }
     }
 }

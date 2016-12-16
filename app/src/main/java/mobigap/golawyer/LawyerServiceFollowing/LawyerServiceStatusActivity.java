@@ -53,15 +53,24 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
 
         this.requestedServiceId = demandModel.getStep();
 
-        String idLawyer = demandModel.getIdLawyer();
-        ArrayList<LawyerModel> lawyerModelArrayList = ApplicationState.sharedState().getLawyersRequestModels();
+        lawyerModel = ApplicationState.sharedState().getLawyerModel();
 
-        for (LawyerModel lawyerModelArray: lawyerModelArrayList){
-            if (lawyerModelArray.getIdLawyer().equals(idLawyer)){
-                lawyerModel = lawyerModelArray;
-                break;
-            }
-        }
+//        if (demandModel.getTypeProfile()==TypeProfile.LAWYER){
+//
+//        }else {
+//            String id = demandModel.getIdLawyer();
+//            ArrayList<LawyerModel> lawyerModelArrayList = ApplicationState.sharedState().getLawyersRequestModels();
+//
+//            for (LawyerModel lawyerModelArray: lawyerModelArrayList){
+//                if (lawyerModelArray.getIdLawyer().equals(id)){
+//                    lawyerModel = lawyerModelArray;
+//                    break;
+//                }
+//            }
+//        }
+
+
+
 
         switch (this.requestedServiceId) {
             case 1:
@@ -117,7 +126,7 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
     private void setPropertiesViews(){
         getImage(lawyerModel.getPhoto());
         cameraButton.setVisibility(View.INVISIBLE);
-        hasOABTextView.setText(lawyerModel.getOab());
+        hasOABTextView.setText(lawyerModel.getStatus());
         nameTextView.setText(lawyerModel.getName());
     }
 

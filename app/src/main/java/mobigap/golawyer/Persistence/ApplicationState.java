@@ -22,6 +22,7 @@ public class ApplicationState {
     private ArrayList<UserDataModel> currentUserDataModels = null;
     private ArrayList<LawyerModel> lawyersRequestModels = null;
     private DemandModel demandModel = null;
+    private LawyerModel lawyerModel = null;
 
     private static ApplicationState ourInstance = new ApplicationState();
     private static String nameSharedPreferences = "currentUserStorage";
@@ -87,5 +88,13 @@ public class ApplicationState {
 
     public void setDemandModel(DemandModel demandModel) {
         this.demandModel = demandModel;
+    }
+
+    public LawyerModel getLawyerModel() {
+        return lawyerModel;
+    }
+
+    public void setLawyerModel(LawyerModel lawyerModel) {
+        this.lawyerModel = lawyerModel;
     }
 }

@@ -51,7 +51,7 @@ public class DemandModel {
     private String textFeedback;
 
 
-    private static String keyStep = "passo";
+    public static String keyStep = "passo";
     private static String keyTypeUser = "tipo";
     private static String keyItens = "itens";
     private static String keyIdUser = "id_user";
@@ -284,5 +284,9 @@ public class DemandModel {
 
     public String getTextCharge() {
         return textCharge;
+    }
+
+    public void setTextFeedback(String textFeedback) {
+        this.textFeedback = textFeedback;
     }
 }
