@@ -63,14 +63,26 @@ public class LawyerServiceStatusDeliveryFragment extends ScrollView {
         this.cancelButton.setOnClickListener(cancelClickListener);
     }
 
-    public void setupTextsFields(String deliveryStatusTitle, String deliveryStatusDate, String deliveryStatusDescription, TypeProfile typeProfile){
+    public void setupTextsFields(String deliveryStatusTitle, String deliveryStatusDate, String deliveryStatusDescription, TypeProfile typeProfile, Boolean isCharge){
         this.seviceStatusDeliveryDescriptionTextView.setText(deliveryStatusDescription);
         this.seviceStatusDeliveryDateTextView.setText(deliveryStatusDate);
         this.seviceStatusDeliveryTitleTextView.setText(deliveryStatusTitle);
         if (typeProfile==TypeProfile.LAWYER){
             this.confirmButton.setVisibility(GONE);
             this.cancelButton.setImageResource(R.drawable.button_cancel);
+        }else {
+            if (isCharge){
+                this.cancelButton.setImageResource(R.drawable.button_cancel);
+            }
         }
+    }
+
+    public void setupTextsFields(String textCharge){
+        this.seviceStatusDeliveryDescriptionTextView.setText(textCharge);
+        this.seviceStatusDeliveryDateTextView.setVisibility(GONE);
+        this.seviceStatusDeliveryTitleTextView.setVisibility(GONE);
+        this.confirmButton.setVisibility(GONE);
+        this.cancelButton.setImageResource(R.drawable.button_cancel);
     }
 
 }

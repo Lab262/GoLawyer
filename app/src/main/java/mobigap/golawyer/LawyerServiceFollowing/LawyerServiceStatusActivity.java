@@ -197,9 +197,13 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
 
                 LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_delivery);
                 LawyerServiceStatusDeliveryFragment lawyerServiceStatusDeliveryFragment = (LawyerServiceStatusDeliveryFragment) findViewById(R.id.serviceStatusInfoLayout);
-                lawyerServiceStatusDeliveryFragment.setupTextsFields(demandModel.getTitleCompletedDemand(),
-                        "Iniciado em " +  demandModel.getDateCompletedDemand(),
-                        demandModel.getMessageCompletedDemand(),demandModel.getTypeProfile());
+                if (demandModel.getChargeDemand() && demandModel.getTypeProfile()==TypeProfile.LAWYER){
+                    lawyerServiceStatusDeliveryFragment.setupTextsFields(demandModel.getTextCharge());
+                }else {
+                    lawyerServiceStatusDeliveryFragment.setupTextsFields(demandModel.getTitleCompletedDemand(),
+                            "Iniciado em " +  demandModel.getDateCompletedDemand(),
+                            demandModel.getMessageCompletedDemand(),demandModel.getTypeProfile(), demandModel.getChargeDemand());
+                }
                 break;
 
             case RATE:

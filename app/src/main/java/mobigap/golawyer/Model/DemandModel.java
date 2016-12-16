@@ -41,6 +41,7 @@ public class DemandModel {
     private String dateCompletedDemand;
     private String messageCompletedDemand;
     private Boolean isChargeDemand;
+    private String textCharge;
 
     //Variables for step 5
     private String textEvaluation;
@@ -64,6 +65,7 @@ public class DemandModel {
     private static String keyMessages = "mensagens_chat";
     private static String keyDate = "data_inicio";
     private static String keyChargeDemand = "flag_cobranca_demanda";
+    private static String keyTextChargeDemand  = "texto_cobranca_demanda";
     private static String keyIsEvaluate = "flag_avaliacao";
 
     public DemandModel(JSONObject jsonObject) {
@@ -155,6 +157,9 @@ public class DemandModel {
             this.titleCompletedDemand = this.objectsItens.getString(keyTitle);
             this.dateCompletedDemand = this.objectsItens.getString(keyDate);
             this.messageCompletedDemand = this.objectsItens.getString(keyText);
+            if (isChargeDemand){
+                this.textCharge = this.objectsItens.getString(keyTextChargeDemand);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -275,5 +280,9 @@ public class DemandModel {
 
     public String getTextFeedback() {
         return textFeedback;
+    }
+
+    public String getTextCharge() {
+        return textCharge;
     }
 }
