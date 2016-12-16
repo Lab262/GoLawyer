@@ -33,6 +33,7 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
     ImageButton cameraButton;
     CircleImageView profileImageView;
     TextView hasOABTextView,nameTextView;
+    View serviceStatusSegment;
 
     ImageView demandImage, paymentImage, chatImage, deliveryImage, rateImage;
     TextView demandDescription, paymentDescription, chatDescription, deliveryDescription, rateDescription;
@@ -78,7 +79,9 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
             case 5:
                 currentStatus = ServiceStatusEnum.RATE;
                 break;
-            //TODO:ADICIONAR O PASSO 6: DEMANDA FINALIZADA
+            case 6:
+                currentStatus = ServiceStatusEnum.ENDED;
+                break;
         }
 
         this.getViewInstances();
@@ -94,7 +97,7 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
         nameTextView = (TextView) profilePhotoView.findViewById(R.id.nameTextView);
         backgroundPhotoImage = (ImageView) profilePhotoView.findViewById(R.id.backgroundPhotoImage);
 
-        View serviceStatusSegment = findViewById(R.id.lawyerServiceStatusSegment);
+        serviceStatusSegment = findViewById(R.id.lawyerServiceStatusSegment);
 
         demandImage = (ImageView) serviceStatusSegment.findViewById(R.id.demandImage);
         paymentImage = (ImageView) serviceStatusSegment.findViewById(R.id.paymentImage);
@@ -218,6 +221,15 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
                 LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_rate);
                 LawyerServiceStatusRateFragment lawyerServiceStatusRateFragment = (LawyerServiceStatusRateFragment) findViewById(R.id.serviceStatusInfoLayout);
                 lawyerServiceStatusRateFragment.setupTextsFields(demandModel.getTextEvaluation(), demandModel.getEvaluate());
+
+                break;
+
+            case ENDED:
+                serviceStatusSegment.setVisibility(View.INVISIBLE);
+
+                LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_rate);
+                LawyerServiceStatusRateFragment lawyerServiceStatusEndedFragment = (LawyerServiceStatusRateFragment) findViewById(R.id.serviceStatusInfoLayout);
+                lawyerServiceStatusEndedFragment.setupTextsFields(demandModel.getTextFeedback(), demandModel.getTypeProfile());
 
                 break;
         }

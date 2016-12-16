@@ -46,6 +46,9 @@ public class DemandModel {
     private String textEvaluation;
     private Boolean isEvaluate;
 
+    //Variables for step 6
+    private String textFeedback;
+
 
     private static String keyStep = "passo";
     private static String keyTypeUser = "tipo";
@@ -68,26 +71,31 @@ public class DemandModel {
             this.step = Integer.parseInt(jsonObject.getString(keyStep));
             this.typeProfile = TypeProfile.getTypeProfileByString(jsonObject.getString(keyTypeUser));
             this.objectsItens = jsonObject.getJSONArray(keyItens).getJSONObject(0);
-            this.idLawyer = this.objectsItens.getString(keyIdLawyer);
-            this.idUser = this.objectsItens.getString(keyIdUser);
-            this.idOrder = this.objectsItens.getString(keyIdOrder);
+            if (step!=6) {
 
-            switch (step){
-                case 1:
-                    parseStepOne();
-                    break;
-                case 2:
-                    parseStepTwo();
-                    break;
-                case 3:
-                    parseStepThree();
-                    break;
-                case 4:
-                    parseStepFour();
-                    break;
-                case 5:
-                    parseStepFive();
-                    break;
+                this.idLawyer = this.objectsItens.getString(keyIdLawyer);
+                this.idUser = this.objectsItens.getString(keyIdUser);
+                this.idOrder = this.objectsItens.getString(keyIdOrder);
+
+                switch (step) {
+                    case 1:
+                        parseStepOne();
+                        break;
+                    case 2:
+                        parseStepTwo();
+                        break;
+                    case 3:
+                        parseStepThree();
+                        break;
+                    case 4:
+                        parseStepFour();
+                        break;
+                    case 5:
+                        parseStepFive();
+                        break;
+                }
+            }else {
+                parseStepSix();
             }
 
         } catch (JSONException e) {
@@ -156,6 +164,14 @@ public class DemandModel {
         try {
             this.isEvaluate = parseStringBoolean(this.objectsItens.getString(keyIsEvaluate));
             this.textEvaluation = this.objectsItens.getString(keyText);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void parseStepSix(){
+        try {
+            this.textFeedback = this.objectsItens.getString(keyText);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -255,5 +271,9 @@ public class DemandModel {
 
     public Boolean getEvaluate() {
         return isEvaluate;
+    }
+
+    public String getTextFeedback() {
+        return textFeedback;
     }
 }

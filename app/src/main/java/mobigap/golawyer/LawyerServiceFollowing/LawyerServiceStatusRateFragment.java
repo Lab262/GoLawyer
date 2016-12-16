@@ -9,6 +9,7 @@ import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import mobigap.golawyer.Enums.TypeProfile;
 import mobigap.golawyer.R;
 
 
@@ -78,8 +79,19 @@ public class LawyerServiceStatusRateFragment extends ScrollView {
             this.confirmButton.setVisibility(GONE);
             this.serviceStatusRateTitle.setText(seviceStatusDeliveryDescriptionTextView);
         }
+    }
 
-
+    public void setupTextsFields(String seviceStatusDeliveryDescriptionTextView, TypeProfile typeProfile){
+        this.ratingBar.setVisibility(GONE);
+        this.serviceStatusRateCommentEditText.setVisibility(GONE);
+        this.seviceStatusDeliveryDescriptionTextView.setVisibility(GONE);
+        this.serviceStatusRateTitle.setText(seviceStatusDeliveryDescriptionTextView);
+        this.seviceStatusDeliveryDescriptionTextView.setText(seviceStatusDeliveryDescriptionTextView);
+        if (typeProfile==TypeProfile.CLIENT){
+            this.confirmButton.setImageResource(R.drawable.button_new_demand);
+        }else {
+            this.confirmButton.setVisibility(GONE);
+        }
     }
 
 }

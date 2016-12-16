@@ -158,6 +158,9 @@ public class LawyerServiceRequestListFragment extends Fragment {
 
                         if (Requester.haveSuccess(response)) {
                             DemandModel demandModel = new DemandModel(response);
+                            if (demandModel.getIdLawyer()==null){
+                                demandModel.setIdLawyer(String.valueOf(serviceRequestModels.get(position).getIdLawyer()));
+                            }
                             ApplicationState.sharedState().setDemandModel(demandModel);
                             ActivityManager.changeActivity(getContext(), LawyerServiceStatusActivity.class);
                         }else {
