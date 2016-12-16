@@ -65,8 +65,8 @@
                 android:id="@+id/deliveryConfirmButton"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/button_finalize" />
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_button_confirm" />
 
             <ImageButton
                 android:layout_width="match_parent"
@@ -74,8 +74,8 @@
                 android:id="@+id/deliveryCancelButton"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/button_cancel" />
+                android:scaleType="centerInside"
+                android:src="@drawable/button_charge" />
         </LinearLayout>
 
     </LinearLayout>

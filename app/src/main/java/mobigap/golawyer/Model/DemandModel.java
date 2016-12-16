@@ -36,6 +36,12 @@ public class DemandModel {
     //Variables for step 3
     private ArrayList<ServiceStatusChatModel> messagesChat = new ArrayList<>();
 
+    //Variables for step 4
+    private String titleCompletedDemand;
+    private String dateCompletedDemand;
+    private String messageCompletedDemand;
+    private Boolean isChargeDemand;
+
 
     private static String keyStep = "passo";
     private static String keyTypeUser = "tipo";
@@ -49,6 +55,8 @@ public class DemandModel {
     private static String keyTitle = "titulo";
     private static String keyText = "texto";
     private static String keyMessages = "mensagens_chat";
+    private static String keyDate = "data_inicio";
+    private static String keyChargeDemand = "flag_cobranca_demanda";
 
     public DemandModel(JSONObject jsonObject) {
         try {
@@ -68,6 +76,9 @@ public class DemandModel {
                     break;
                 case 3:
                     parseStepThree();
+                    break;
+                case 4:
+                    parseStepFour();
                     break;
             }
 
@@ -117,6 +128,17 @@ public class DemandModel {
                 ServiceStatusChatModel serviceStatusChatModel = new ServiceStatusChatModel(jsonObject);
                 messagesChat.add(serviceStatusChatModel);
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void parseStepFour(){
+        try {
+            this.isChargeDemand = parseStringBoolean(this.objectsItens.getString(keyChargeDemand));
+            this.titleCompletedDemand = this.objectsItens.getString(keyTitle);
+            this.dateCompletedDemand = this.objectsItens.getString(keyDate);
+            this.messageCompletedDemand = this.objectsItens.getString(keyText);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -192,5 +214,21 @@ public class DemandModel {
 
     public ArrayList<ServiceStatusChatModel> getMessagesChat() {
         return messagesChat;
+    }
+
+    public String getTitleCompletedDemand() {
+        return titleCompletedDemand;
+    }
+
+    public String getDateCompletedDemand() {
+        return dateCompletedDemand;
+    }
+
+    public String getMessageCompletedDemand() {
+        return messageCompletedDemand;
+    }
+
+    public Boolean getChargeDemand() {
+        return isChargeDemand;
     }
 }

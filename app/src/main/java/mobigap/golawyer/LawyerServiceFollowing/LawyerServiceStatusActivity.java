@@ -194,9 +194,11 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
 
                 LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_delivery);
                 LawyerServiceStatusDeliveryFragment lawyerServiceStatusDeliveryFragment = (LawyerServiceStatusDeliveryFragment) findViewById(R.id.serviceStatusInfoLayout);
-                lawyerServiceStatusDeliveryFragment.setupTextsFields("Por favor, aguarde a finalização da demanda","Iniciado em 31/05/2016 ás 13:00 h", "Você poderá cancelar a demanda a qualquer momento. O pagamento será extornado mas fique atento para não ser classificado negativamente.");
-
+                lawyerServiceStatusDeliveryFragment.setupTextsFields(demandModel.getTitleCompletedDemand(),
+                        "Iniciado em " +  demandModel.getDateCompletedDemand(),
+                        demandModel.getMessageCompletedDemand(),demandModel.getTypeProfile());
                 break;
+
             case RATE:
                 demandImage.setImageResource(R.drawable.ic_demand_passed);
                 demandDescription.setTextColor(ContextCompat.getColor(this, R.color.blueLightApp));
