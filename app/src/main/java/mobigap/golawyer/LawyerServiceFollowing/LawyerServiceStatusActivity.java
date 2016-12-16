@@ -217,8 +217,7 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
 
                 LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_rate);
                 LawyerServiceStatusRateFragment lawyerServiceStatusRateFragment = (LawyerServiceStatusRateFragment) findViewById(R.id.serviceStatusInfoLayout);
-                lawyerServiceStatusRateFragment.setupTextsFields("Avalie o atendimento do profissional","", "Após efetuar sua avaliação o pagamento será liberado para o advogado automaticamente.");
-
+                lawyerServiceStatusRateFragment.setupTextsFields(demandModel.getTextEvaluation(), demandModel.getEvaluate());
 
                 break;
         }

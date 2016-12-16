@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -19,6 +20,8 @@ public class LawyerServiceStatusRateFragment extends ScrollView {
     private EditText serviceStatusRateCommentEditText;
 
     private ImageButton confirmButton;
+
+    private RatingBar ratingBar;
 
     private OnClickListener confirmClickListener = new OnClickListener() {
         @Override
@@ -55,6 +58,7 @@ public class LawyerServiceStatusRateFragment extends ScrollView {
         this.serviceStatusRateTitle = (TextView) findViewById(R.id.serviceStatusRateTitle);
         this.serviceStatusRateCommentEditText = (EditText) findViewById(R.id.serviceStatusRateCommentEditText);
         this.seviceStatusDeliveryDescriptionTextView = (TextView) findViewById(R.id.seviceStatusDeliveryDescriptionTextView);
+        this.ratingBar = (RatingBar) findViewById(R.id.ratingBar);
 
     }
 
@@ -64,10 +68,17 @@ public class LawyerServiceStatusRateFragment extends ScrollView {
 
     }
 
-    public void setupTextsFields(String serviceStatusRateTitle, String serviceStatusRateCommentEditText, String seviceStatusDeliveryDescriptionTextView){
-        this.serviceStatusRateTitle.setText(serviceStatusRateTitle);
-        this.serviceStatusRateCommentEditText.setText(serviceStatusRateCommentEditText);
-        this.seviceStatusDeliveryDescriptionTextView.setText(seviceStatusDeliveryDescriptionTextView);
+    public void setupTextsFields(String seviceStatusDeliveryDescriptionTextView, Boolean isEvaluate){
+        if (!isEvaluate){
+            this.seviceStatusDeliveryDescriptionTextView.setText(seviceStatusDeliveryDescriptionTextView);
+        }else {
+            this.ratingBar.setVisibility(GONE);
+            this.serviceStatusRateCommentEditText.setVisibility(GONE);
+            this.seviceStatusDeliveryDescriptionTextView.setVisibility(GONE);
+            this.confirmButton.setVisibility(GONE);
+            this.serviceStatusRateTitle.setText(seviceStatusDeliveryDescriptionTextView);
+        }
+
 
     }
 

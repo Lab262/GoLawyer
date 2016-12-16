@@ -42,6 +42,10 @@ public class DemandModel {
     private String messageCompletedDemand;
     private Boolean isChargeDemand;
 
+    //Variables for step 5
+    private String textEvaluation;
+    private Boolean isEvaluate;
+
 
     private static String keyStep = "passo";
     private static String keyTypeUser = "tipo";
@@ -57,6 +61,7 @@ public class DemandModel {
     private static String keyMessages = "mensagens_chat";
     private static String keyDate = "data_inicio";
     private static String keyChargeDemand = "flag_cobranca_demanda";
+    private static String keyIsEvaluate = "flag_avaliacao";
 
     public DemandModel(JSONObject jsonObject) {
         try {
@@ -79,6 +84,9 @@ public class DemandModel {
                     break;
                 case 4:
                     parseStepFour();
+                    break;
+                case 5:
+                    parseStepFive();
                     break;
             }
 
@@ -139,6 +147,15 @@ public class DemandModel {
             this.titleCompletedDemand = this.objectsItens.getString(keyTitle);
             this.dateCompletedDemand = this.objectsItens.getString(keyDate);
             this.messageCompletedDemand = this.objectsItens.getString(keyText);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void parseStepFive(){
+        try {
+            this.isEvaluate = parseStringBoolean(this.objectsItens.getString(keyIsEvaluate));
+            this.textEvaluation = this.objectsItens.getString(keyText);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -230,5 +247,13 @@ public class DemandModel {
 
     public Boolean getChargeDemand() {
         return isChargeDemand;
+    }
+
+    public String getTextEvaluation() {
+        return textEvaluation;
+    }
+
+    public Boolean getEvaluate() {
+        return isEvaluate;
     }
 }
