@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import mobigap.golawyer.Model.ServiceStatusChatModel;
 import mobigap.golawyer.R;
 
@@ -15,22 +17,22 @@ import mobigap.golawyer.R;
  */
 public class LawyerServiceStatusChatListAdapter extends BaseAdapter {
 
-    private static ServiceStatusChatModel[] data;
+    private static ArrayList<ServiceStatusChatModel> data;
     private Context context;
 
-    public LawyerServiceStatusChatListAdapter(Context context, ServiceStatusChatModel[] data) {
+    public LawyerServiceStatusChatListAdapter(Context context, ArrayList<ServiceStatusChatModel> data) {
         this.context = context;
         this.data = data;
     }
 
     @Override
     public int getCount() {
-        return data.length;
+        return data.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return data[position];
+        return data.get(position);
     }
 
     @Override
@@ -42,7 +44,7 @@ public class LawyerServiceStatusChatListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         LawyerServiceStatusChatListRow row;
-        ServiceStatusChatModel currentModel = data[position];
+        ServiceStatusChatModel currentModel = data.get(position);
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

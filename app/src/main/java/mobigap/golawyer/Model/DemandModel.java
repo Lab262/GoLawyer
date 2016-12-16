@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import mobigap.golawyer.Enums.TypeProfile;
@@ -32,6 +33,9 @@ public class DemandModel {
     //Variables for step 2
     private String feedbackText;
 
+    //Variables for step 3
+    private ArrayList<ServiceStatusChatModel> messagesChat = new ArrayList<>();
+
 
     private static String keyStep = "passo";
     private static String keyTypeUser = "tipo";
@@ -44,6 +48,7 @@ public class DemandModel {
     private static String keyValue = "valor";
     private static String keyTitle = "titulo";
     private static String keyText = "texto";
+    private static String keyMessages = "mensagens_chat";
 
     public DemandModel(JSONObject jsonObject) {
         try {
@@ -60,6 +65,9 @@ public class DemandModel {
                     break;
                 case 2:
                     parseStepTwo();
+                    break;
+                case 3:
+                    parseStepThree();
                     break;
             }
 
@@ -98,6 +106,19 @@ public class DemandModel {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void parseStepThree(){
+        try {
+            JSONArray jsonArray = this.objectsItens.getJSONArray(keyMessages);
+            for (int i=0; i<jsonArray.length();i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                ServiceStatusChatModel serviceStatusChatModel = new ServiceStatusChatModel(jsonObject);
+                messagesChat.add(serviceStatusChatModel);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
@@ -167,5 +188,9 @@ public class DemandModel {
 
     public String getFeedbackText() {
         return feedbackText;
+    }
+
+    public ArrayList<ServiceStatusChatModel> getMessagesChat() {
+        return messagesChat;
     }
 }

@@ -19,6 +19,7 @@ import mobigap.golawyer.Enums.ServiceStatusEnum;
 import mobigap.golawyer.Enums.TypeProfile;
 import mobigap.golawyer.Extensions.ImageConvert;
 import mobigap.golawyer.Extensions.LayoutManagerExtension;
+import mobigap.golawyer.LawyerServiceFollowing.LawyerServiceStatusChat.LawyerServiceStatusChatListFragment;
 import mobigap.golawyer.LawyerServiceStatusDemand.LawyerServiceStatusDemandDetailFragment;
 import mobigap.golawyer.Model.DemandModel;
 import mobigap.golawyer.Model.LawyerModel;
@@ -171,7 +172,11 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
                 chatDescription.setTextColor(ContextCompat.getColor(this, R.color.blueApp));
 
                 LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_chat_list);
-
+                LawyerServiceStatusChatListFragment lawyerServiceStatusChatListFragment = (LawyerServiceStatusChatListFragment) findViewById(R.id.serviceStatusInfoLayout);
+                lawyerServiceStatusChatListFragment.setChatModels(demandModel.getMessagesChat());
+                lawyerServiceStatusChatListFragment.adjustButtons(demandModel.getTypeProfile());
+                lawyerServiceStatusChatListFragment.loadChatItemsList();
+                lawyerServiceStatusChatListFragment.adjustListView();
 
                 break;
             case DELIVERY:
