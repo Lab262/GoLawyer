@@ -96,7 +96,7 @@ public class LawyerServiceStatusDeliveryFragment extends ScrollView implements V
     private void cancelDemandOrder(){
         progressDialog = FeedbackManager.createProgressDialog(getContext(),getResources().getString(R.string.placeholder_message_dialog));
 
-        UserRequest.setCancelDemandOrder(ApplicationState.sharedState().getDemandModel().getIdUser(), ApplicationState.sharedState().getDemandModel().getIdOrder(),
+        UserRequest.setCancelDemandOrder(getContext(), ApplicationState.sharedState().getDemandModel().getIdOrder(),
                 new JsonHttpResponseHandler(){
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

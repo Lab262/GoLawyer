@@ -1,5 +1,7 @@
 package mobigap.golawyer.Requests;
 
+import android.content.Context;
+
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -12,6 +14,7 @@ import mobigap.golawyer.Model.ProfileInformationEditModel;
 import mobigap.golawyer.Model.ProfileInformationModel;
 import mobigap.golawyer.Model.ServiceRequestModel;
 import mobigap.golawyer.Model.UserDataModel;
+import mobigap.golawyer.Persistence.ApplicationState;
 
 /**
  * Created by luisresende on 01/11/16.
@@ -59,6 +62,10 @@ public class UserRequest {
     private static String keyDemandPaymentExpirationDate= "validade_cartao";
     private static String keyDemandPaymentCVV = "cvv_cartao";
     private static String keyDemandPaymentCellphoneNumber = "numero_celular";
+
+    //Step Three
+    private static String keyDemandChatMessage = "mensagem";
+    private static String keyDemandChatFinalize = "finalizar_demanda";
 
     public static void login(String email, String password, JsonHttpResponseHandler jsonHttpResponseHandler){
         Map<String,String> params = new HashMap<>();
@@ -142,29 +149,43 @@ public class UserRequest {
         Requester.postRequest(urlGetOrder,Requester.getRequestParams(params), jsonHttpResponseHandler);
     }
 
-    private static Map<String,String> setParams(String idUser, String idOrder){
+    private static Map<String,String> setParams(Context context, String idOrder){
         Map<String,String> params = new HashMap<>();
-        params.put(keyIdUser,idUser);
+        params.put(keyIdUser, ApplicationState.sharedState().getCurrentUser(context).getId());
         params.put(ServiceRequestModel.keyIdOrder,idOrder);
         return params;
     }
 
-    public static void setCancelDemandOrder(String idUser, String idOrder, JsonHttpResponseHandler jsonHttpResponseHandler){
-        Map<String,String> params = setParams(idUser,idOrder);
+    public static void setCancelDemandOrder(Context context, String idOrder, JsonHttpResponseHandler jsonHttpResponseHandler){
+        Map<String,String> params = setParams(context,idOrder);
         params.put(keyCancelDemand,Requester.responseSuccess);
         Requester.postRequest(urlSetDemandOrder,Requester.getRequestParams(params), jsonHttpResponseHandler);
     }
 
-    public static void setDemandStepPaymentOrder(String idUser, String idOrder, String flag, String name,
+    public static void setDemandStepPaymentOrder(Context context, String idOrder, String flag, String name,
                                                  String number, String expirationDate, String cvv, String cellphone,
                                                  JsonHttpResponseHandler jsonHttpResponseHandler){
-        Map<String,String> params = setParams(idUser,idOrder);
+        Map<String,String> params = setParams(context,idOrder);
         params.put(keyDemandPaymentFlag,flag);
         params.put(keyDemandPaymentName,name);
         params.put(keyDemandPaymentNumber,number);
         params.put(keyDemandPaymentExpirationDate,expirationDate);
         params.put(keyDemandPaymentCVV,cvv);
         params.put(keyDemandPaymentCellphoneNumber,cellphone);
+        Requester.postRequest(urlSetDemandOrder,Requester.getRequestParams(params), jsonHttpResponseHandler);
+    }
+
+    public static void setDemandStepChatMessageOrder(Context context, String idOrder, String message,
+                                                     JsonHttpResponseHandler jsonHttpResponseHandler){
+        Map<String,String> params = setParams(context,idOrder);
+        params.put(keyDemandChatMessage,message);
+        Requester.postRequest(urlSetDemandOrder,Requester.getRequestParams(params), jsonHttpResponseHandler);
+    }
+
+    public static void setDemandStepChatMessageOrder(Context context, String idOrder,
+                                                     JsonHttpResponseHandler jsonHttpResponseHandler){
+        Map<String,String> params = setParams(context,idOrder);
+        params.put(keyDemandChatFinalize,Requester.responseSuccess);
         Requester.postRequest(urlSetDemandOrder,Requester.getRequestParams(params), jsonHttpResponseHandler);
     }
 

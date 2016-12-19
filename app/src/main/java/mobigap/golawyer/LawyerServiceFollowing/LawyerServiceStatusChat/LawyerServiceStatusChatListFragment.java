@@ -52,6 +52,8 @@ public class LawyerServiceStatusChatListFragment extends LinearLayout implements
 
             String typedText = newChatMessageEditText.getText().toString();
 
+            setDemandMessageOrder(typedText);
+
             ServiceStatusChatModel serviceStatusChatModel = new ServiceStatusChatModel(ApplicationState.sharedState().getCurrentUser(getContext()).getName(),currentDate ,typedText);
             chatModels.add(serviceStatusChatModel);
             loadChatItemsList();
@@ -95,7 +97,7 @@ public class LawyerServiceStatusChatListFragment extends LinearLayout implements
 
     public void adjustListView(){
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) listView.getLayoutParams();
-        layoutParams.height = 100*(listView.getCount()+1);
+        layoutParams.height = 80*(listView.getCount()+1);
     }
 
     public  void adjustButtons(TypeProfile typeProfile){
@@ -112,6 +114,7 @@ public class LawyerServiceStatusChatListFragment extends LinearLayout implements
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.confirmServiceStatusChatButton:
+                finalizeDemandChatOrder();
                 break;
             case R.id.cancelServiceStatusChatButton:
                 cancelDemandOrder();
@@ -122,7 +125,7 @@ public class LawyerServiceStatusChatListFragment extends LinearLayout implements
     private void cancelDemandOrder(){
         progressDialog = FeedbackManager.createProgressDialog(getContext(),getResources().getString(R.string.placeholder_message_dialog));
 
-        UserRequest.setCancelDemandOrder(ApplicationState.sharedState().getDemandModel().getIdUser(), ApplicationState.sharedState().getDemandModel().getIdOrder(),
+        UserRequest.setCancelDemandOrder(getContext(), ApplicationState.sharedState().getDemandModel().getIdOrder(),
                 new JsonHttpResponseHandler(){
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -160,5 +163,72 @@ public class LawyerServiceStatusChatListFragment extends LinearLayout implements
 
     private void createErrorToast(){
         FeedbackManager.feedbackErrorResponse(getContext(),progressDialog);
+    }
+
+    private void setDemandMessageOrder(String message){
+        progressDialog = FeedbackManager.createProgressDialog(getContext(),getResources().getString(R.string.placeholder_message_dialog));
+
+        UserRequest.setDemandStepChatMessageOrder(getContext(), ApplicationState.sharedState().getDemandModel().getIdOrder(),
+                message, new JsonHttpResponseHandler(){
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        progressDialog.dismiss();
+                        createToast(response);
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        super.onFailure(statusCode, headers, responseString, throwable);
+                        createErrorToast();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        createErrorToast();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        createErrorToast();
+                    }
+                });
+    }
+
+    private void finalizeDemandChatOrder(){
+        progressDialog = FeedbackManager.createProgressDialog(getContext(),getResources().getString(R.string.placeholder_message_dialog));
+
+        UserRequest.setDemandStepChatMessageOrder(getContext(), ApplicationState.sharedState().getDemandModel().getIdOrder(),
+                new JsonHttpResponseHandler(){
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        progressDialog.dismiss();
+                        createToast(response);
+                        if (Requester.haveSuccess(response)){
+                            ((LawyerServiceStatusActivity) getContext()).finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        super.onFailure(statusCode, headers, responseString, throwable);
+                        createErrorToast();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        createErrorToast();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        createErrorToast();
+                    }
+                });
     }
 }

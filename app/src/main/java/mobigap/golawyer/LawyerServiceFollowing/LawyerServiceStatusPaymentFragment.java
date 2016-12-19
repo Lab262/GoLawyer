@@ -79,7 +79,7 @@ public class LawyerServiceStatusPaymentFragment extends ScrollView implements Vi
     private void cancelDemandOrder(){
         progressDialog = FeedbackManager.createProgressDialog(getContext(),getResources().getString(R.string.placeholder_message_dialog));
 
-        UserRequest.setCancelDemandOrder(ApplicationState.sharedState().getDemandModel().getIdUser(), ApplicationState.sharedState().getDemandModel().getIdOrder(),
+        UserRequest.setCancelDemandOrder(getContext(), ApplicationState.sharedState().getDemandModel().getIdOrder(),
                 new JsonHttpResponseHandler(){
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -122,7 +122,7 @@ public class LawyerServiceStatusPaymentFragment extends ScrollView implements Vi
     private void setDemandOrder(){
         progressDialog = FeedbackManager.createProgressDialog(getContext(),getResources().getString(R.string.placeholder_message_dialog));
 
-        UserRequest.setDemandStepPaymentOrder(ApplicationState.sharedState().getDemandModel().getIdUser(), ApplicationState.sharedState().getDemandModel().getIdOrder(),
+        UserRequest.setDemandStepPaymentOrder(getContext(), ApplicationState.sharedState().getDemandModel().getIdOrder(),
                 spinnerCreditCardFlag.getSelectedItem().toString(),creditCardName.getText().toString(),creditCardNumber.getText().toString(),
                 creditCardExpireDate.getText().toString(),creditCardCVV.getText().toString(),creditCardCellphoneNumber.getText().toString(),
                 new JsonHttpResponseHandler(){
