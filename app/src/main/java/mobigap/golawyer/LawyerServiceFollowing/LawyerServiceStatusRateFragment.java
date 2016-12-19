@@ -13,7 +13,7 @@ import mobigap.golawyer.Enums.TypeProfile;
 import mobigap.golawyer.R;
 
 
-public class LawyerServiceStatusRateFragment extends ScrollView {
+public class LawyerServiceStatusRateFragment extends ScrollView implements View.OnClickListener {
 
 
     private TextView serviceStatusRateTitle, seviceStatusDeliveryDescriptionTextView;
@@ -23,21 +23,6 @@ public class LawyerServiceStatusRateFragment extends ScrollView {
     private ImageButton confirmButton;
 
     private RatingBar ratingBar;
-
-    private OnClickListener confirmClickListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-        }
-    };
-
-    private OnClickListener cancelClickListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-        }
-    };
-
 
     public LawyerServiceStatusRateFragment(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -65,7 +50,7 @@ public class LawyerServiceStatusRateFragment extends ScrollView {
 
     public void buildButtons(){
         this.confirmButton = (ImageButton)findViewById(R.id.rateConfirmButton);
-        this.confirmButton.setOnClickListener(confirmClickListener);
+        this.confirmButton.setOnClickListener(this);
 
     }
 
@@ -94,4 +79,12 @@ public class LawyerServiceStatusRateFragment extends ScrollView {
         }
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.rateConfirmButton:
+                break;
+        }
+
+    }
 }

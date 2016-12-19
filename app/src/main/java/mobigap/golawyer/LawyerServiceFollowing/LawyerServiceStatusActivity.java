@@ -166,8 +166,8 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
 
                 if (demandModel.getTypeProfile()== TypeProfile.LAWYER){
                     LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_payment_lawyer);
-                    TextView feedbackTextView = (TextView) findViewById(R.id.feedbackTextView);
-                    feedbackTextView.setText(demandModel.getFeedbackText());
+                    LawyerServiceStatusPaymentLawyerFragment lawyerServiceStatusPaymentLawyerFragment = (LawyerServiceStatusPaymentLawyerFragment) findViewById(R.id.serviceStatusInfoLayout);
+                    lawyerServiceStatusPaymentLawyerFragment.setUpViews(demandModel.getFeedbackText());
                 }else {
                     LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_payment);
                 }

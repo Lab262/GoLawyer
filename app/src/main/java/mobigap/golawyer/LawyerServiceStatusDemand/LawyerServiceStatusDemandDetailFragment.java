@@ -120,11 +120,10 @@ public class LawyerServiceStatusDemandDetailFragment extends ScrollView implemen
         switch (view.getId()){
             case R.id.acceptButton:
                 break;
-            case R.id.refuseButton:
-                break;
             case R.id.againstProposalButton:
                 break;
             case R.id.cancelProposalButton:
+            case R.id.refuseButton:
                 cancelDemandOrder();
                 break;
         }
