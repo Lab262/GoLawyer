@@ -35,6 +35,7 @@ public class FeedbackManager {
     static public ProgressDialog createProgressDialog (Context context, String message){
         ProgressDialog dialog = new ProgressDialog(context);
         dialog.setMessage(message);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
         return dialog;
     }

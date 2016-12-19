@@ -70,6 +70,11 @@ public class UserRequest {
     //Step Four
     private static String keyDemandDeliveryCharge = "cobrar_demanda";
 
+    //Step Five
+    private static String keyDemandEvaluationStars = "estrelas";
+    private static String keyDemandEvaluationComment = "comentario";
+
+
     public static void login(String email, String password, JsonHttpResponseHandler jsonHttpResponseHandler){
         Map<String,String> params = new HashMap<>();
         params.put(keyLogin,email);
@@ -196,6 +201,14 @@ public class UserRequest {
                                               JsonHttpResponseHandler jsonHttpResponseHandler){
         Map<String,String> params = setParams(context,idOrder);
         params.put(keyDemandDeliveryCharge,Requester.responseSuccess);
+        Requester.postRequest(urlSetDemandOrder,Requester.getRequestParams(params), jsonHttpResponseHandler);
+    }
+
+    public static void setEvaluationDemandOrder(Context context, String idOrder, String stars, String comment,
+                                            JsonHttpResponseHandler jsonHttpResponseHandler){
+        Map<String,String> params = setParams(context,idOrder);
+        params.put(keyDemandEvaluationStars,stars);
+        params.put(keyDemandEvaluationComment,comment);
         Requester.postRequest(urlSetDemandOrder,Requester.getRequestParams(params), jsonHttpResponseHandler);
     }
 
