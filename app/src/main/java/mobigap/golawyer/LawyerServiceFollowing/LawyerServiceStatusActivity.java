@@ -43,7 +43,7 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
     private LawyerModel lawyerModel=null;
     private static int CONST_IMAGE_BLUR = 25;
     private DemandModel demandModel;
-    private byte[] profileImageBytes;
+    private LawyerServiceStatusRateFragment lawyerServiceStatusEndedFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,11 +124,13 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
         UserRequest.getImage(photo, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                if (currentStatus==ServiceStatusEnum.ENDED){
+                    lawyerServiceStatusEndedFragment.setUpProfileImageBytes(responseBody);
+                }
                 Bitmap imageBitmap = ImageConvert.getDecode64ImageStringFromByte(responseBody);
                 profileImageView.setImageBitmap(imageBitmap);
                 Bitmap blurred = ImageConvert.blurRenderScript(getApplicationContext(),imageBitmap, CONST_IMAGE_BLUR);
                 backgroundPhotoImage.setImageBitmap(blurred);
-                profileImageBytes = responseBody;
             }
 
             @Override
@@ -231,18 +233,9 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
             case ENDED:
                 serviceStatusSegment.setVisibility(View.INVISIBLE);
 
-                ArrayList<LawyerModel> lawyerModelArrayList = ApplicationState.sharedState().getLawyersRequestModels();
-
-                for (LawyerModel lawyerModelArray: lawyerModelArrayList){
-                    if (lawyerModelArray.getName().equals(lawyerModel.getName())){
-                        lawyerModel = lawyerModelArray;
-                        break;
-                    }
-                }
-
                 LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_rate);
-                LawyerServiceStatusRateFragment lawyerServiceStatusEndedFragment = (LawyerServiceStatusRateFragment) findViewById(R.id.serviceStatusInfoLayout);
-                lawyerServiceStatusEndedFragment.setupTextsFields(demandModel.getTextFeedback(), demandModel.getTypeProfile(), profileImageBytes);
+                lawyerServiceStatusEndedFragment = (LawyerServiceStatusRateFragment) findViewById(R.id.serviceStatusInfoLayout);
+                lawyerServiceStatusEndedFragment.setupTextsFields(demandModel.getTextFeedback(), demandModel.getTypeProfile());
 
                 break;
         }

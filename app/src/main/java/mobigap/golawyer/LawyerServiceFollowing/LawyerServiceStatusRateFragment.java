@@ -88,19 +88,22 @@ public class LawyerServiceStatusRateFragment extends ScrollView implements View.
         }
     }
 
-    public void setupTextsFields(String seviceStatusDeliveryDescriptionTextView, TypeProfile typeProfile, byte[] profileImageBytes){
+    public void setupTextsFields(String seviceStatusDeliveryDescriptionTextView, TypeProfile typeProfile){
         this.ratingBar.setVisibility(GONE);
         this.serviceStatusRateCommentEditText.setVisibility(GONE);
         this.seviceStatusDeliveryDescriptionTextView.setVisibility(GONE);
         this.serviceStatusRateTitle.setText(seviceStatusDeliveryDescriptionTextView);
         this.seviceStatusDeliveryDescriptionTextView.setText(seviceStatusDeliveryDescriptionTextView);
-        this.profileImageBytes = profileImageBytes;
         if (typeProfile==TypeProfile.CLIENT){
             this.isClient = true;
             this.confirmButton.setImageResource(R.drawable.button_new_demand);
         }else {
             this.confirmButton.setVisibility(GONE);
         }
+    }
+
+    public void setUpProfileImageBytes(byte[] profileImageBytes){
+        this.profileImageBytes = profileImageBytes;
     }
 
     @Override
@@ -175,7 +178,7 @@ public class LawyerServiceStatusRateFragment extends ScrollView implements View.
                     JSONArray arrayLawyersRequestModel = Requester.getJsonArray(response, LawyerModel.keyItensDataModel);
                     JSONObject jsonObject = Requester.getJsonObject(arrayLawyersRequestModel, 0);
                     LawyerModel lawyerRequestModel = new LawyerModel(jsonObject);
-                    lawyerRequestModel.setImageBytes(profileImageBytes);
+                    lawyerRequestModel.setImageBytes(getProfileImageBytes());
                     ApplicationState.sharedState().setLawyerModel(lawyerRequestModel);
                     ActivityManager.changeActivity(getContext(), LawyerServiceProposalActivity.class);
 
@@ -202,5 +205,9 @@ public class LawyerServiceStatusRateFragment extends ScrollView implements View.
                 createErrorToast();
             }
         });
+    }
+
+    public byte[] getProfileImageBytes() {
+        return profileImageBytes;
     }
 }
