@@ -200,7 +200,7 @@ public class LawyerServiceStatusChatListFragment extends LinearLayout implements
     private void finalizeDemandChatOrder(){
         progressDialog = FeedbackManager.createProgressDialog(getContext(),getResources().getString(R.string.placeholder_message_dialog));
 
-        UserRequest.setDemandStepChatMessageOrder(getContext(), ApplicationState.sharedState().getDemandModel().getIdOrder(),
+        UserRequest.setFinalizeDemandOrder(getContext(), ApplicationState.sharedState().getDemandModel().getIdOrder(),
                 new JsonHttpResponseHandler(){
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

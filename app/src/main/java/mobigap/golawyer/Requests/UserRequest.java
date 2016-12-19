@@ -67,6 +67,9 @@ public class UserRequest {
     private static String keyDemandChatMessage = "mensagem";
     private static String keyDemandChatFinalize = "finalizar_demanda";
 
+    //Step Four
+    private static String keyDemandDeliveryCharge = "cobrar_demanda";
+
     public static void login(String email, String password, JsonHttpResponseHandler jsonHttpResponseHandler){
         Map<String,String> params = new HashMap<>();
         params.put(keyLogin,email);
@@ -182,10 +185,17 @@ public class UserRequest {
         Requester.postRequest(urlSetDemandOrder,Requester.getRequestParams(params), jsonHttpResponseHandler);
     }
 
-    public static void setDemandStepChatMessageOrder(Context context, String idOrder,
+    public static void setFinalizeDemandOrder(Context context, String idOrder,
                                                      JsonHttpResponseHandler jsonHttpResponseHandler){
         Map<String,String> params = setParams(context,idOrder);
         params.put(keyDemandChatFinalize,Requester.responseSuccess);
+        Requester.postRequest(urlSetDemandOrder,Requester.getRequestParams(params), jsonHttpResponseHandler);
+    }
+
+    public static void setChargeDemandOrder(Context context, String idOrder,
+                                              JsonHttpResponseHandler jsonHttpResponseHandler){
+        Map<String,String> params = setParams(context,idOrder);
+        params.put(keyDemandDeliveryCharge,Requester.responseSuccess);
         Requester.postRequest(urlSetDemandOrder,Requester.getRequestParams(params), jsonHttpResponseHandler);
     }
 

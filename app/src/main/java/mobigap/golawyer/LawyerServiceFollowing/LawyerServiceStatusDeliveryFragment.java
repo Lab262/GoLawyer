@@ -29,6 +29,7 @@ public class LawyerServiceStatusDeliveryFragment extends ScrollView implements V
 
     private ImageButton confirmButton, cancelButton;
     private ProgressDialog progressDialog;
+    private Boolean isCharge = false;
 
     public LawyerServiceStatusDeliveryFragment(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -64,11 +65,12 @@ public class LawyerServiceStatusDeliveryFragment extends ScrollView implements V
         this.seviceStatusDeliveryDescriptionTextView.setText(deliveryStatusDescription);
         this.seviceStatusDeliveryDateTextView.setText(deliveryStatusDate);
         this.seviceStatusDeliveryTitleTextView.setText(deliveryStatusTitle);
+        this.isCharge = isCharge;
         if (typeProfile==TypeProfile.LAWYER){
             this.confirmButton.setVisibility(GONE);
             this.cancelButton.setImageResource(R.drawable.button_cancel);
         }else {
-            if (isCharge){
+            if (this.isCharge){
                 this.cancelButton.setImageResource(R.drawable.button_cancel);
             }
         }
@@ -86,9 +88,14 @@ public class LawyerServiceStatusDeliveryFragment extends ScrollView implements V
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.deliveryConfirmButton:
+                finalizeDemandChatOrder();
                 break;
             case R.id.deliveryCancelButton:
-                cancelDemandOrder();
+                if (isCharge){
+                    cancelDemandOrder();
+                }else {
+                    chargeDemandOrder();
+                }
                 break;
         }
     }
@@ -134,5 +141,75 @@ public class LawyerServiceStatusDeliveryFragment extends ScrollView implements V
 
     private void createErrorToast(){
         FeedbackManager.feedbackErrorResponse(getContext(),progressDialog);
+    }
+
+    private void chargeDemandOrder(){
+        progressDialog = FeedbackManager.createProgressDialog(getContext(),getResources().getString(R.string.placeholder_message_dialog));
+
+        UserRequest.setChargeDemandOrder(getContext(), ApplicationState.sharedState().getDemandModel().getIdOrder(),
+                new JsonHttpResponseHandler(){
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        progressDialog.dismiss();
+                        createToast(response);
+                        if (Requester.haveSuccess(response)){
+                            ((LawyerServiceStatusActivity) getContext()).finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        super.onFailure(statusCode, headers, responseString, throwable);
+                        createErrorToast();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        createErrorToast();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        createErrorToast();
+                    }
+                });
+    }
+
+    private void finalizeDemandChatOrder(){
+        progressDialog = FeedbackManager.createProgressDialog(getContext(),getResources().getString(R.string.placeholder_message_dialog));
+
+        UserRequest.setFinalizeDemandOrder(getContext(), ApplicationState.sharedState().getDemandModel().getIdOrder(),
+                new JsonHttpResponseHandler(){
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        progressDialog.dismiss();
+                        createToast(response);
+                        if (Requester.haveSuccess(response)){
+                            ((LawyerServiceStatusActivity) getContext()).finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        super.onFailure(statusCode, headers, responseString, throwable);
+                        createErrorToast();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        createErrorToast();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        createErrorToast();
+                    }
+                });
     }
 }
