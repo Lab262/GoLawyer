@@ -43,6 +43,7 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
     private LawyerModel lawyerModel=null;
     private static int CONST_IMAGE_BLUR = 25;
     private DemandModel demandModel;
+    private byte[] profileImageBytes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,41 +56,30 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
 
         lawyerModel = ApplicationState.sharedState().getLawyerModel();
 
-//        if (demandModel.getTypeProfile()==TypeProfile.LAWYER){
-//
-//        }else {
-//            String id = demandModel.getIdLawyer();
-//            ArrayList<LawyerModel> lawyerModelArrayList = ApplicationState.sharedState().getLawyersRequestModels();
-//
-//            for (LawyerModel lawyerModelArray: lawyerModelArrayList){
-//                if (lawyerModelArray.getIdLawyer().equals(id)){
-//                    lawyerModel = lawyerModelArray;
-//                    break;
-//                }
-//            }
-//        }
-
-
-
-
         switch (this.requestedServiceId) {
             case 1:
                 currentStatus = ServiceStatusEnum.DEMAND;
+                setTitle(getString(R.string.title_activity_service_status_demand));
                 break;
             case 2:
                 currentStatus = ServiceStatusEnum.PAYMENT;
+                setTitle(getString(R.string.title_activity_service_status_payment));
                 break;
             case 3:
                 currentStatus = ServiceStatusEnum.CHAT;
+                setTitle(getString(R.string.title_activity_service_status_chat));
                 break;
             case 4:
                 currentStatus = ServiceStatusEnum.DELIVERY;
+                setTitle(getString(R.string.title_activity_service_status_delivery));
                 break;
             case 5:
                 currentStatus = ServiceStatusEnum.RATE;
+                setTitle(getString(R.string.title_activity_service_status_rate));
                 break;
             case 6:
                 currentStatus = ServiceStatusEnum.ENDED;
+                setTitle(getString(R.string.title_activity_service_status_ended));
                 break;
         }
 
@@ -138,6 +128,7 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
                 profileImageView.setImageBitmap(imageBitmap);
                 Bitmap blurred = ImageConvert.blurRenderScript(getApplicationContext(),imageBitmap, CONST_IMAGE_BLUR);
                 backgroundPhotoImage.setImageBitmap(blurred);
+                profileImageBytes = responseBody;
             }
 
             @Override
@@ -240,9 +231,18 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
             case ENDED:
                 serviceStatusSegment.setVisibility(View.INVISIBLE);
 
+                ArrayList<LawyerModel> lawyerModelArrayList = ApplicationState.sharedState().getLawyersRequestModels();
+
+                for (LawyerModel lawyerModelArray: lawyerModelArrayList){
+                    if (lawyerModelArray.getName().equals(lawyerModel.getName())){
+                        lawyerModel = lawyerModelArray;
+                        break;
+                    }
+                }
+
                 LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_rate);
                 LawyerServiceStatusRateFragment lawyerServiceStatusEndedFragment = (LawyerServiceStatusRateFragment) findViewById(R.id.serviceStatusInfoLayout);
-                lawyerServiceStatusEndedFragment.setupTextsFields(demandModel.getTextFeedback(), demandModel.getTypeProfile());
+                lawyerServiceStatusEndedFragment.setupTextsFields(demandModel.getTextFeedback(), demandModel.getTypeProfile(), profileImageBytes);
 
                 break;
         }

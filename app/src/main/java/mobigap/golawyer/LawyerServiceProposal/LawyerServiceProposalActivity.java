@@ -59,6 +59,7 @@ public class LawyerServiceProposalActivity extends AppCompatActivity implements 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lawyer_service_proposal);
+        setTitle(getString(R.string.title_activity_proposal));
         Bundle extras = getIntent().getExtras();
 
         getInstanceViews();
@@ -68,9 +69,13 @@ public class LawyerServiceProposalActivity extends AppCompatActivity implements 
             int positionLawyer = extras.getInt(LawyerModel.keyIdLawyer);
             profileImageBytes = extras.getByteArray(LawyerModel.keyPhoto);
             lawyerModel = ApplicationState.sharedState().getLawyersRequestModels().get(positionLawyer);
-            setPropertiesViewsLawyer();
-            setPropertysRadioButtons();
+        }else {
+            lawyerModel = ApplicationState.sharedState().getLawyerModel();
+            profileImageBytes = lawyerModel.getImageBytes();
         }
+
+        setPropertiesViewsLawyer();
+        setPropertysRadioButtons();
     }
 
     private void getInstanceViews(){

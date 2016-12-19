@@ -52,7 +52,7 @@ public class UserRequest {
     private static String keyValueProposal = "valor_proposta";
     private static String keyLocal = "cartorio";
     private static String keyObservation = "observacoes";
-    private static String keyIdLawyer = "id_advogado";
+    public static String keyIdLawyer = "id_advogado";
     private static String keyCancelDemand = "cancelar";
 
     //Step Two

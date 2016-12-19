@@ -44,6 +44,7 @@ public class MapListActivity extends AppCompatActivity implements AdapterView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_list);
+        setTitle(getString(R.string.title_activity_map_list));
         getInstanceViews();
         setPropertiesView();
         loadRequestedLawyersList();

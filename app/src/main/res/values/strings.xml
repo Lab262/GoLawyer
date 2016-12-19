@@ -100,6 +100,15 @@
     <string name="avalie_o_atendimento_do_profissional">Avalie o atendimento do profissional</string>
     <string name="ap_s_efetuar_sua_avalia_o_o_pagamento_ser_liberado_para_o_advogado_automaticamente">Após efetuar sua avaliação o pagamento será liberado para o advogado automaticamente.</string>
     <string name="title_activity_map">Map</string>
+    <string name="title_activity_map_list">Lista</string>
+    <string name="title_activity_profile">Perfil</string>
+    <string name="title_activity_proposal">Proposta de Serviço</string>
+    <string name="title_activity_service_status_demand">Solicitação de Serviço</string>
+    <string name="title_activity_service_status_payment">Pagamento</string>
+    <string name="title_activity_service_status_chat">Chat</string>
+    <string name="title_activity_service_status_delivery">Entrega</string>
+    <string name="title_activity_service_status_rate">Avaliação</string>
+    <string name="title_activity_service_status_ended">Serviço Finalizado</string>
 
     <string-array name="credit_card_flags_array">
         <item>Visa</item>

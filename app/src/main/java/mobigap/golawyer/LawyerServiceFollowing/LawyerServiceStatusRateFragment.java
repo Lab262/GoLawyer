@@ -2,6 +2,7 @@ package mobigap.golawyer.LawyerServiceFollowing;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
@@ -17,9 +18,13 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 import mobigap.golawyer.Enums.TypeProfile;
+import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Extensions.FeedbackManager;
+import mobigap.golawyer.LawyerServiceProposal.LawyerServiceProposalActivity;
+import mobigap.golawyer.Model.LawyerModel;
 import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.R;
+import mobigap.golawyer.Requests.LawyerRequest;
 import mobigap.golawyer.Requests.Requester;
 import mobigap.golawyer.Requests.UserRequest;
 
@@ -38,6 +43,8 @@ public class LawyerServiceStatusRateFragment extends ScrollView implements View.
     private ProgressDialog progressDialog;
 
     private Boolean isClient = false;
+
+    private byte[] profileImageBytes;
 
     public LawyerServiceStatusRateFragment(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -81,12 +88,13 @@ public class LawyerServiceStatusRateFragment extends ScrollView implements View.
         }
     }
 
-    public void setupTextsFields(String seviceStatusDeliveryDescriptionTextView, TypeProfile typeProfile){
+    public void setupTextsFields(String seviceStatusDeliveryDescriptionTextView, TypeProfile typeProfile, byte[] profileImageBytes){
         this.ratingBar.setVisibility(GONE);
         this.serviceStatusRateCommentEditText.setVisibility(GONE);
         this.seviceStatusDeliveryDescriptionTextView.setVisibility(GONE);
         this.serviceStatusRateTitle.setText(seviceStatusDeliveryDescriptionTextView);
         this.seviceStatusDeliveryDescriptionTextView.setText(seviceStatusDeliveryDescriptionTextView);
+        this.profileImageBytes = profileImageBytes;
         if (typeProfile==TypeProfile.CLIENT){
             this.isClient = true;
             this.confirmButton.setImageResource(R.drawable.button_new_demand);
@@ -100,7 +108,7 @@ public class LawyerServiceStatusRateFragment extends ScrollView implements View.
         switch (view.getId()){
             case R.id.rateConfirmButton:
                 if (isClient){
-
+                    getLawyer();
                 }else {
                     evaluationDemandOrder();
                 }
@@ -151,5 +159,48 @@ public class LawyerServiceStatusRateFragment extends ScrollView implements View.
 
     private void createErrorToast(){
         FeedbackManager.feedbackErrorResponse(getContext(),progressDialog);
+    }
+
+    private void getLawyer() {
+        progressDialog = FeedbackManager.createProgressDialog(getContext(), getContext().getString(R.string.placeholder_message_dialog));
+
+        LawyerRequest.getLawyer(ApplicationState.sharedState().getDemandModel().getIdLawyer(), new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                progressDialog.dismiss();
+                ApplicationState.sharedState().setLawyersRequestModels(null);
+                if (Requester.haveSuccess(response)) {
+                    //Get ServiceRequestModel
+                    JSONArray arrayLawyersRequestModel = Requester.getJsonArray(response, LawyerModel.keyItensDataModel);
+                    JSONObject jsonObject = Requester.getJsonObject(arrayLawyersRequestModel, 0);
+                    LawyerModel lawyerRequestModel = new LawyerModel(jsonObject);
+                    lawyerRequestModel.setImageBytes(profileImageBytes);
+                    ApplicationState.sharedState().setLawyerModel(lawyerRequestModel);
+                    ActivityManager.changeActivity(getContext(), LawyerServiceProposalActivity.class);
+
+                } else {
+                    createToast(response);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                createErrorToast();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                createErrorToast();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                createErrorToast();
+            }
+        });
     }
 }

@@ -18,6 +18,7 @@ public class ProfileLawyerActivity extends AppCompatActivity implements OnFragme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_lawyer);
+        setTitle(getString(R.string.title_activity_profile));
 
         Bundle bundleExtras = getIntent().getExtras();
         if (bundleExtras!=null){

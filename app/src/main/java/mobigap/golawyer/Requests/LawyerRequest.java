@@ -12,6 +12,7 @@ import java.util.Map;
 public class LawyerRequest {
 
     private static String urlGetLawyers = "GetAdvogados";
+    private static String urlGetLawyer = "GetAdvogado";
 
     private static String keyType = "tipo"; //Gps
     private static String keyLatitude = "latitude";
@@ -25,6 +26,12 @@ public class LawyerRequest {
         params.put(keyLatitude,latitude);
         params.put(keyLogitude,longitude);
         Requester.postRequest(urlGetLawyers,Requester.getRequestParams(params), jsonHttpResponseHandler);
+    }
+
+    public static void getLawyer(String idLawyer, JsonHttpResponseHandler jsonHttpResponseHandler){
+        Map<String,String> params = new HashMap<>();
+        params.put(UserRequest.keyIdLawyer,idLawyer);
+        Requester.postRequest(urlGetLawyer,Requester.getRequestParams(params), jsonHttpResponseHandler);
     }
 
 }
