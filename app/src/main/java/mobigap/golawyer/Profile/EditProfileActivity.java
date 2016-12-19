@@ -33,13 +33,14 @@ import mobigap.golawyer.Extensions.ImageConvert;
 import mobigap.golawyer.Model.ProfileInformationEditModel;
 import mobigap.golawyer.Model.UserDataModel;
 import mobigap.golawyer.Model.UserInformationModel;
+import mobigap.golawyer.Model.UserModel;
 import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.Profile.Information.ProfileInformationEditListAdapter;
 import mobigap.golawyer.R;
 import mobigap.golawyer.Requests.Requester;
 import mobigap.golawyer.Requests.UserRequest;
 
-public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener {
+public class  EditProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     private View header;
     private ImageButton cameraButton;
@@ -185,13 +186,20 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private void setDataProfile(){
         progressDialog = FeedbackManager.createProgressDialog(this,getString(R.string.placeholder_message_dialog));
 
-        UserRequest.updateProfileData(ApplicationState.sharedState().getCurrentUser(this).getId(), adapter.data,
+        final String photo = ImageConvert.getEncoded64ImageStringFromImageView(circleImageViewProfile);
+
+        UserRequest.updateProfileData(ApplicationState.sharedState().getCurrentUser(this).getId(), photo, adapter.data,
                 new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 progressDialog.dismiss();
                 createToast(response);
+                if (Requester.haveSuccess(response)){
+                    UserModel userModel = new UserModel(response);
+                    ApplicationState.sharedState().setCurrentUser(userModel,getApplicationContext());
+                    finish();
+                }
             }
 
             @Override

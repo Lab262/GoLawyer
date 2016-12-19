@@ -50,7 +50,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
 
-    private View view,header;
+    private View view,header,footer;
     private ImageButton ratingButton;
     private ListView profileInformationListView;
     private CircleImageView circleImageViewProfile;
@@ -59,7 +59,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private ProgressDialog progressDialog;
     private LayoutInflater defaultInflater;
     private ArrayList<UserDataModel> userDataModels;
-    private UserModel currentUser;
+    private UserModel currentUser = null;
     private byte[] profileImageBytes;
     private final int CONST_IMAGE_BLUR = 25;
     private LawyerModel lawyerModel;
@@ -100,7 +100,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         getInstanceViews();
         adjustLayout();
 
-        if (lawyerModel==null){
+        if (lawyerModel==null) {
             currentUser = ApplicationState.sharedState().getCurrentUser(getActivity().getApplicationContext());
             getDataProfile();
             getImage(currentUser.getPhoto());
@@ -110,9 +110,19 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             adjustLayoutListViewLawyer();
         }
 
-
-
         return this.view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (lawyerModel==null && profileInformationListView!=null){
+            profileInformationListView.removeHeaderView(header);
+            profileInformationListView.removeFooterView(footer);
+            currentUser = ApplicationState.sharedState().getCurrentUser(getActivity().getApplicationContext());
+            getDataProfile();
+            getImage(currentUser.getPhoto());
+        }
     }
 
 
@@ -137,14 +147,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         profileInformationListView = (ListView) this.view.findViewById(R.id.profileInformationListView);
         loadRequestedProfileInformationList(getProfileData(userDataModels));
         profileInformationListView.addHeaderView(header);
-        profileInformationListView.addFooterView(createLogoutButton());
+        footer = createLogoutButton();
+        profileInformationListView.addFooterView(footer);
     }
 
     private void adjustLayoutListViewLawyer() {
         profileInformationListView = (ListView) this.view.findViewById(R.id.profileInformationListView);
         loadRequestedProfileInformationList(getProfileData(getDataModels()));
         profileInformationListView.addHeaderView(header);
-        profileInformationListView.addFooterView(createMakeProposalButton());
+        footer = createMakeProposalButton();
+        profileInformationListView.addFooterView(footer);
     }
 
     private ArrayList<UserDataModel> getDataModels(){

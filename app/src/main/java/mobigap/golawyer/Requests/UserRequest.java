@@ -138,10 +138,11 @@ public class UserRequest {
         Requester.postRequest(urlSetOrder,Requester.getRequestParams(params), jsonHttpResponseHandler);
     }
 
-    public static void updateProfileData(String idUser,ArrayList<ProfileInformationEditModel> profileInformationEditModels,
+    public static void updateProfileData(String idUser, String photo, ArrayList<ProfileInformationEditModel> profileInformationEditModels,
                                     JsonHttpResponseHandler jsonHttpResponseHandler){
         Map<String,String> params = new HashMap<>();
         params.put(keyIdUser,idUser);
+        params.put(keyPhoto,photo);
 
         for (ProfileInformationEditModel profileInformationEditModel: profileInformationEditModels){
             params.put(profileInformationEditModel.nameFieldWS,profileInformationEditModel.field);
