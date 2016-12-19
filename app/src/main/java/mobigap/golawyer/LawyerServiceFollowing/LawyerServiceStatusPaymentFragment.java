@@ -68,6 +68,7 @@ public class LawyerServiceStatusPaymentFragment extends ScrollView implements Vi
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.paymentConfirmButton:
+                setDemandOrder();
                 break;
             case R.id.paymentCancelButton:
                 cancelDemandOrder();
@@ -116,5 +117,42 @@ public class LawyerServiceStatusPaymentFragment extends ScrollView implements Vi
 
     private void createErrorToast(){
         FeedbackManager.feedbackErrorResponse(getContext(),progressDialog);
+    }
+
+    private void setDemandOrder(){
+        progressDialog = FeedbackManager.createProgressDialog(getContext(),getResources().getString(R.string.placeholder_message_dialog));
+
+        UserRequest.setDemandStepPaymentOrder(ApplicationState.sharedState().getDemandModel().getIdUser(), ApplicationState.sharedState().getDemandModel().getIdOrder(),
+                spinnerCreditCardFlag.getSelectedItem().toString(),creditCardName.getText().toString(),creditCardNumber.getText().toString(),
+                creditCardExpireDate.getText().toString(),creditCardCVV.getText().toString(),creditCardCellphoneNumber.getText().toString(),
+                new JsonHttpResponseHandler(){
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        progressDialog.dismiss();
+                        createToast(response);
+                        if (Requester.haveSuccess(response)){
+                            ((LawyerServiceStatusActivity) getContext()).finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        super.onFailure(statusCode, headers, responseString, throwable);
+                        createErrorToast();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        createErrorToast();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        createErrorToast();
+                    }
+                });
     }
 }

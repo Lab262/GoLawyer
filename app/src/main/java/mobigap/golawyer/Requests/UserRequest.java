@@ -52,6 +52,14 @@ public class UserRequest {
     private static String keyIdLawyer = "id_advogado";
     private static String keyCancelDemand = "cancelar";
 
+    //Step Two
+    private static String keyDemandPaymentFlag = "bandeira";
+    private static String keyDemandPaymentName = "nome_cartao";
+    private static String keyDemandPaymentNumber = "numero_cartao";
+    private static String keyDemandPaymentExpirationDate= "validade_cartao";
+    private static String keyDemandPaymentCVV = "cvv_cartao";
+    private static String keyDemandPaymentCellphoneNumber = "numero_celular";
+
     public static void login(String email, String password, JsonHttpResponseHandler jsonHttpResponseHandler){
         Map<String,String> params = new HashMap<>();
         params.put(keyLogin,email);
@@ -144,6 +152,19 @@ public class UserRequest {
     public static void setCancelDemandOrder(String idUser, String idOrder, JsonHttpResponseHandler jsonHttpResponseHandler){
         Map<String,String> params = setParams(idUser,idOrder);
         params.put(keyCancelDemand,Requester.responseSuccess);
+        Requester.postRequest(urlSetDemandOrder,Requester.getRequestParams(params), jsonHttpResponseHandler);
+    }
+
+    public static void setDemandStepPaymentOrder(String idUser, String idOrder, String flag, String name,
+                                                 String number, String expirationDate, String cvv, String cellphone,
+                                                 JsonHttpResponseHandler jsonHttpResponseHandler){
+        Map<String,String> params = setParams(idUser,idOrder);
+        params.put(keyDemandPaymentFlag,flag);
+        params.put(keyDemandPaymentName,name);
+        params.put(keyDemandPaymentNumber,number);
+        params.put(keyDemandPaymentExpirationDate,expirationDate);
+        params.put(keyDemandPaymentCVV,cvv);
+        params.put(keyDemandPaymentCellphoneNumber,cellphone);
         Requester.postRequest(urlSetDemandOrder,Requester.getRequestParams(params), jsonHttpResponseHandler);
     }
 
