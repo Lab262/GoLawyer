@@ -11,9 +11,7 @@ import java.util.Map;
 
 import mobigap.golawyer.Enums.TypeDemand;
 import mobigap.golawyer.Model.ProfileInformationEditModel;
-import mobigap.golawyer.Model.ProfileInformationModel;
 import mobigap.golawyer.Model.ServiceRequestModel;
-import mobigap.golawyer.Model.UserDataModel;
 import mobigap.golawyer.Persistence.ApplicationState;
 
 /**

@@ -5,7 +5,6 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.widget.RadioButton;
-import android.widget.TextView;
 
 import mobigap.golawyer.Enums.TypeDemand;
 import mobigap.golawyer.R;

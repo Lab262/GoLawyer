@@ -1,10 +1,6 @@
 package mobigap.golawyer.Profile.Information;
 
 import android.content.Context;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import mobigap.golawyer.Model.ProfileInformationEditModel;
 import mobigap.golawyer.R;

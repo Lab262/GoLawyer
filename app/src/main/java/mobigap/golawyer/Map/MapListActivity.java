@@ -1,7 +1,5 @@
 package mobigap.golawyer.Map;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -13,23 +11,15 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 import mobigap.golawyer.Extensions.ActivityManager;
-import mobigap.golawyer.Extensions.FeedbackManager;
 import mobigap.golawyer.Model.LawyerModel;
-import mobigap.golawyer.Model.LawyerRowModel;
 import mobigap.golawyer.Persistence.ApplicationState;
-import mobigap.golawyer.Profile.ProfileFragment;
 import mobigap.golawyer.Profile.ProfileLawyerActivity;
 import mobigap.golawyer.R;
-import mobigap.golawyer.Requests.LawyerRequest;
 import mobigap.golawyer.Requests.Requester;
 import mobigap.golawyer.Requests.UserRequest;
 

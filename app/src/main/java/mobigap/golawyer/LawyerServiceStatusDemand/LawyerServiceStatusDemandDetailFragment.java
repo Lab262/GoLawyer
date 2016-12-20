@@ -3,10 +3,8 @@ package mobigap.golawyer.LawyerServiceStatusDemand;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v4.util.Pair;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -14,27 +12,18 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import cz.msebera.android.httpclient.Header;
 import mobigap.golawyer.Enums.TypeProfile;
-import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Extensions.FeedbackManager;
-import mobigap.golawyer.Extensions.ImageConvert;
 import mobigap.golawyer.LawyerServiceFollowing.LawyerServiceStatusActivity;
-import mobigap.golawyer.Model.DemandModel;
-import mobigap.golawyer.Model.LawyerModel;
-import mobigap.golawyer.Model.ServiceRequestModel;
 import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.R;
 import mobigap.golawyer.Requests.Requester;

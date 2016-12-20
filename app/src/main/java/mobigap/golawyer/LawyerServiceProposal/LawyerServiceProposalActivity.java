@@ -2,14 +2,12 @@ package mobigap.golawyer.LawyerServiceProposal;
 
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -19,22 +17,16 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Objects;
-
 import cz.msebera.android.httpclient.Header;
 import de.hdodenhof.circleimageview.CircleImageView;
 import mobigap.golawyer.Enums.TypeDemand;
-import mobigap.golawyer.Extensions.ActivityManager;
 import mobigap.golawyer.Extensions.CustomRadioButton;
 import mobigap.golawyer.Extensions.FeedbackManager;
 import mobigap.golawyer.Extensions.ImageConvert;
 import mobigap.golawyer.Model.EvaluationModel;
 import mobigap.golawyer.Model.LawyerModel;
-import mobigap.golawyer.Model.ServiceRequestModel;
 import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.R;
-import mobigap.golawyer.Requests.Requester;
 import mobigap.golawyer.Requests.UserRequest;
 
 public class LawyerServiceProposalActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener{

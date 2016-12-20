@@ -32,7 +32,6 @@ import mobigap.golawyer.Extensions.FeedbackManager;
 import mobigap.golawyer.Extensions.ImageConvert;
 import mobigap.golawyer.Model.ProfileInformationEditModel;
 import mobigap.golawyer.Model.UserDataModel;
-import mobigap.golawyer.Model.UserInformationModel;
 import mobigap.golawyer.Model.UserModel;
 import mobigap.golawyer.Persistence.ApplicationState;
 import mobigap.golawyer.Profile.Information.ProfileInformationEditListAdapter;

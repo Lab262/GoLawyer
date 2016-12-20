@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import mobigap.golawyer.Extensions.ImageConvert;
 import mobigap.golawyer.Model.LawyerModel;
-import mobigap.golawyer.Model.LawyerRowModel;
 import mobigap.golawyer.R;
 
 /**

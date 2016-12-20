@@ -2,7 +2,6 @@ package mobigap.golawyer.Model;
 
 import android.text.InputType;
 
-import java.util.Objects;
 
 /**
  * Created by luisresende on 16/11/16.

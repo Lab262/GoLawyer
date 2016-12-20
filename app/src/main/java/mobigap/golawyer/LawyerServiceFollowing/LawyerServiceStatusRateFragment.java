@@ -2,7 +2,6 @@ package mobigap.golawyer.LawyerServiceFollowing;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;

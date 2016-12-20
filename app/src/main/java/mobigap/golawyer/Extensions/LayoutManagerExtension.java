@@ -1,7 +1,6 @@
 package mobigap.golawyer.Extensions;
 
 import android.app.Activity;
-import android.view.View;
 import android.view.ViewStub;
 
 /**
