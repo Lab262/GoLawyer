@@ -148,7 +148,7 @@ public class LawyerServiceStatusActivity extends AppCompatActivity {
 
                 LayoutManagerExtension.addLayout(this,R.id.serviceStatusInfoStub,R.layout.fragment_lawyer_service_status_demand_detail);
                 LawyerServiceStatusDemandDetailFragment lawyerServiceStatusDemandDetailFragment = (LawyerServiceStatusDemandDetailFragment) findViewById(R.id.serviceStatusInfoLayout);
-                lawyerServiceStatusDemandDetailFragment.setupView(demandModel.getInformationDemand(),demandModel.getTypeProfile());
+                lawyerServiceStatusDemandDetailFragment.setupView(demandModel.getInformationDemand(),demandModel.getTypeProfile(), demandModel.getCounterProposal());
                 break;
             case PAYMENT:
                 demandImage.setImageResource(R.drawable.ic_demand_passed);

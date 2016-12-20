@@ -55,6 +55,14 @@ public class UserRequest {
     public static String keyIdLawyer = "id_advogado";
     private static String keyCancelDemand = "cancelar";
 
+    //Step One
+    private static String keyDemandResponseProposal = "resposta_proposta";
+    private static String keyDemandResponseCounterProposal = "resposta_contraproposta";
+    private static String keyDemandValueCounterProposal = "valor_contraproposta";
+    private static String acceptProposal = "aceita";
+    private static String refuseProposal = "recusa";
+    private static String counterProposal = "contraproposta";
+
     //Step Two
     private static String keyDemandPaymentFlag = "bandeira";
     private static String keyDemandPaymentName = "nome_cartao";
@@ -163,6 +171,37 @@ public class UserRequest {
         params.put(keyIdUser, ApplicationState.sharedState().getCurrentUser(context).getId());
         params.put(ServiceRequestModel.keyIdOrder,idOrder);
         return params;
+    }
+
+    public static void setResponseProposalDemandOrder(Context context, String idOrder, Boolean isAcceptProposal,  JsonHttpResponseHandler jsonHttpResponseHandler){
+        Map<String,String> params = setParams(context,idOrder);
+        String responseProposal = "";
+        if (isAcceptProposal){
+            responseProposal = acceptProposal;
+        }else {
+            responseProposal = refuseProposal;
+        }
+        params.put(keyDemandResponseProposal,responseProposal);
+        Requester.postRequest(urlSetDemandOrder,Requester.getRequestParams(params), jsonHttpResponseHandler);
+    }
+
+    public static void setCounterProposalDemandOrder(Context context, String idOrder, String valueProposal,  JsonHttpResponseHandler jsonHttpResponseHandler){
+        Map<String,String> params = setParams(context,idOrder);
+        params.put(keyDemandResponseProposal,counterProposal);
+        params.put(keyDemandValueCounterProposal,valueProposal);
+        Requester.postRequest(urlSetDemandOrder,Requester.getRequestParams(params), jsonHttpResponseHandler);
+    }
+
+    public static void setResponseCounterProposalDemandOrder(Context context, String idOrder, Boolean isAcceptProposal,  JsonHttpResponseHandler jsonHttpResponseHandler){
+        Map<String,String> params = setParams(context,idOrder);
+        String responseProposal = "";
+        if (isAcceptProposal){
+            responseProposal = acceptProposal;
+        }else {
+            responseProposal = refuseProposal;
+        }
+        params.put(keyDemandResponseCounterProposal,responseProposal);
+        Requester.postRequest(urlSetDemandOrder,Requester.getRequestParams(params), jsonHttpResponseHandler);
     }
 
     public static void setCancelDemandOrder(Context context, String idOrder, JsonHttpResponseHandler jsonHttpResponseHandler){

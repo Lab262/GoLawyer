@@ -1,5 +1,6 @@
 package mobigap.golawyer.LawyerServiceStatusDemand;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -7,6 +8,8 @@ import android.support.v4.util.Pair;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -48,6 +51,12 @@ public class LawyerServiceStatusDemandDetailFragment extends ScrollView implemen
     private ImageButton acceptButton, refuseButton, againstProposalButton, cancelButton;
     private LinearLayout buttonsLawyer, buttonsClient;
     private ProgressDialog progressDialog;
+    private Boolean isCounterProposal;
+
+    //Variables for dialog counterProposal
+    private Dialog counterProposalDialog;
+    private EditText valueCounterProposalEditText;
+    private ImageButton sendCounterProposalButton, cancelCounterProposalButton;
 
     public LawyerServiceStatusDemandDetailFragment(Context context){
         super(context);
@@ -92,11 +101,21 @@ public class LawyerServiceStatusDemandDetailFragment extends ScrollView implemen
         this.cancelButton.setOnClickListener(this);
     }
 
-    private void adjustLayoutButtons(TypeProfile typeProfile){
+    private void adjustLayoutButtons(TypeProfile typeProfile, Boolean isCounterProposal){
+        this.isCounterProposal = isCounterProposal;
         if (typeProfile==TypeProfile.CLIENT){
-            this.buttonsLawyer.setVisibility(GONE);
+            if (this.isCounterProposal){
+                this.buttonsClient.setVisibility(GONE);
+                this.againstProposalButton.setVisibility(GONE);
+            }else {
+                this.buttonsLawyer.setVisibility(GONE);
+            }
         }else {
-            this.buttonsClient.setVisibility(GONE);
+            if (this.isCounterProposal){
+                this.buttonsLawyer.setVisibility(GONE);
+            }else {
+                this.buttonsClient.setVisibility(GONE);
+            }
         }
 
     }
@@ -107,8 +126,8 @@ public class LawyerServiceStatusDemandDetailFragment extends ScrollView implemen
         demandListView.setLayoutParams(layoutParams);
     }
 
-    public void setupView(HashMap<Integer,Pair<String,String>> informationDemand, TypeProfile typeProfile){
-        adjustLayoutButtons(typeProfile);
+    public void setupView(HashMap<Integer,Pair<String,String>> informationDemand, TypeProfile typeProfile, Boolean isCounterProposal){
+        adjustLayoutButtons(typeProfile, isCounterProposal);
         DemandListAdapter adapter = new DemandListAdapter(getContext(),informationDemand);
         demandListView.setAdapter(adapter);
         demandListView.setEnabled(false);
@@ -119,12 +138,33 @@ public class LawyerServiceStatusDemandDetailFragment extends ScrollView implemen
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.acceptButton:
+                if (this.isCounterProposal){
+                    responseCounterProposalDemandOrder(true);
+                }else {
+                    responseProposalDemandOrder(true);
+                }
                 break;
             case R.id.againstProposalButton:
+                showCounterProposalDialog();
+                break;
+            case R.id.refuseButton:
+                if (this.isCounterProposal){
+                    responseCounterProposalDemandOrder(false);
+                }else {
+                    responseProposalDemandOrder(false);
+                }
                 break;
             case R.id.cancelProposalButton:
-            case R.id.refuseButton:
                 cancelDemandOrder();
+                break;
+
+            //Case counter proposal dialog
+            case R.id.sendCounterProposalButton:
+                counterProposalDialog.dismiss();
+                setCounterProposalDemandOrder(valueCounterProposalEditText.getText().toString());
+                break;
+            case R.id.cancelCounterProposalButton:
+                counterProposalDialog.dismiss();
                 break;
         }
 
@@ -171,5 +211,126 @@ public class LawyerServiceStatusDemandDetailFragment extends ScrollView implemen
 
     private void createErrorToast(){
         FeedbackManager.feedbackErrorResponse(getContext(),progressDialog);
+    }
+
+    private void responseProposalDemandOrder(Boolean accept){
+        progressDialog = FeedbackManager.createProgressDialog(getContext(),getResources().getString(R.string.placeholder_message_dialog));
+
+        UserRequest.setResponseProposalDemandOrder(getContext(), ApplicationState.sharedState().getDemandModel().getIdOrder(), accept,
+                new JsonHttpResponseHandler(){
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        progressDialog.dismiss();
+                        createToast(response);
+                        if (Requester.haveSuccess(response)){
+                            ((LawyerServiceStatusActivity) getContext()).finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        super.onFailure(statusCode, headers, responseString, throwable);
+                        createErrorToast();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        createErrorToast();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        createErrorToast();
+                    }
+                });
+    }
+
+    private void responseCounterProposalDemandOrder(Boolean accept){
+        progressDialog = FeedbackManager.createProgressDialog(getContext(),getResources().getString(R.string.placeholder_message_dialog));
+
+        UserRequest.setResponseCounterProposalDemandOrder(getContext(), ApplicationState.sharedState().getDemandModel().getIdOrder(), accept,
+                new JsonHttpResponseHandler(){
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        progressDialog.dismiss();
+                        createToast(response);
+                        if (Requester.haveSuccess(response)){
+                            ((LawyerServiceStatusActivity) getContext()).finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        super.onFailure(statusCode, headers, responseString, throwable);
+                        createErrorToast();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        createErrorToast();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        createErrorToast();
+                    }
+                });
+    }
+
+    private void setCounterProposalDemandOrder(String valueProposal){
+        progressDialog = FeedbackManager.createProgressDialog(getContext(),getResources().getString(R.string.placeholder_message_dialog));
+
+        UserRequest.setCounterProposalDemandOrder(getContext(), ApplicationState.sharedState().getDemandModel().getIdOrder(), valueProposal,
+                new JsonHttpResponseHandler(){
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        progressDialog.dismiss();
+                        createToast(response);
+                        if (Requester.haveSuccess(response)){
+                            ((LawyerServiceStatusActivity) getContext()).finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        super.onFailure(statusCode, headers, responseString, throwable);
+                        createErrorToast();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        createErrorToast();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        createErrorToast();
+                    }
+                });
+    }
+
+    private void showCounterProposalDialog(){
+        counterProposalDialog = new Dialog(getContext());
+        counterProposalDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        counterProposalDialog.setCancelable(false);
+        counterProposalDialog.setContentView(R.layout.fragment_dialog_counter_proposal);
+
+        valueCounterProposalEditText = (EditText) counterProposalDialog.findViewById(R.id.valueCounterProposalEditText);
+        sendCounterProposalButton = (ImageButton) counterProposalDialog.findViewById(R.id.sendCounterProposalButton);
+        cancelCounterProposalButton = (ImageButton) counterProposalDialog.findViewById(R.id.cancelCounterProposalButton);
+
+        sendCounterProposalButton.setOnClickListener(this);
+        cancelCounterProposalButton.setOnClickListener(this);
+
+        counterProposalDialog.show();
     }
 }
